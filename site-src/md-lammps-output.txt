@@ -1,0 +1,8 @@
+Pore width = 8.000 nm
+Trajectory = 0 to 10000 ps
+Averaging window = 2000 to 10000 ps
+Blocks plotted = 20
+Full blocks inside averaging window = 16
+Mean-profile theta = 120.40 deg
+Block SD inside window = 2.49 deg
+Fit flags = ()

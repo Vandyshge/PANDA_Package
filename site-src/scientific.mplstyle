@@ -1,0 +1,30 @@
+# Shared defaults for research and publication figures.
+font.family: sans-serif
+font.sans-serif: DejaVu Sans
+mathtext.fontset: dejavusans
+font.size: 10
+font.weight: normal
+axes.labelsize: 10
+axes.titlesize: 10
+axes.titleweight: normal
+axes.labelweight: normal
+legend.fontsize: 8
+axes.linewidth: 0.8
+axes.facecolor: white
+axes.grid: False
+figure.facecolor: white
+xtick.labelsize: 10
+ytick.labelsize: 10
+xtick.direction: in
+ytick.direction: in
+xtick.top: True
+ytick.right: True
+lines.linewidth: 1.2
+legend.frameon: False
+figure.autolayout: False
+figure.constrained_layout.use: False
+savefig.bbox: standard
+savefig.dpi: 600
+savefig.facecolor: white
+pdf.fonttype: 42
+ps.fonttype: 42

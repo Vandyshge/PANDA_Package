@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="PANDA documentation for contact angles and interface shapes in confined liquids.">
+<title>Overview · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html" aria-current="page">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html">User guide</a><a href="api.html">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html" aria-current="page">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / Start here / Overview</p>
+<div class="hero">
+  <div><p class="eyebrow">Python library for molecular simulation</p>
+  <h1>From density to contact angle</h1>
+  <p>PANDA fits analytical models to one-dimensional density profiles of confined liquids. Estimate a contact angle, identify plausible interface shapes, and compare results across trajectory blocks.</p>
+  <a class="button" href="quickstart.html">Run the quick start →</a></div>
+  <figure><img src="profile-light.png?v=9a675e5e00" alt="A synthetic slit-pore roll profile and its analytical fit nearly overlap at 120.61 degrees" width="920" height="610">
+  <figcaption>Synthetic slit-pore roll · fitted θ = 120.61°</figcaption></figure>
+</div>
+<section><h2 id="start-with-your-data">Start with your data</h2>
+<div class="cards">
+<a class="card" href="quickstart.html"><h3>Try a synthetic profile →</h3><p>Recover a known angle in a slit pore in a few lines of Python.</p></a>
+<a class="card" href="trajectories.html"><h3>Analyze a trajectory →</h3><p>Load simulation frames, compute density, and fit blocks.</p></a>
+<a class="card" href="cli.html"><h3>Use the command line →</h3><p>Run the same workflow with shell commands or a TOML file.</p></a>
+</div></section><section><h2 id="what-panda-supports">What PANDA supports</h2>
+<p>The name stands for Predicting Angle from Nanoscale Density Analysis. The library covers slit, triangular, square, and cylindrical pores. The <a href="geometries.html">shape catalog</a> identifies which models can fit density and which supply surface terms for stability diagrams.</p>
+<p>Explore the related <a href="https://vandyshge.github.io/PANDA_Polygon/">PANDA Polygon</a> geometry models and the <a href="https://vandyshge.github.io/PANDA_Dynamic/">PANDA Dynamic</a> two-angle method.</p></section>
+<nav class="pager" aria-label="Adjacent pages"><span></span><a href="installation.html">Installation →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#start-with-your-data">Start with your data</a><a href="#what-panda-supports">What PANDA supports</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

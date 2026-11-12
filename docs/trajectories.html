@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Read a GROMACS or LAMMPS trajectory, inspect the contact angle across the full run, and fit a selected averaging window.">
+<title>From a trajectory · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html" aria-current="true">User guide</a><a href="api.html">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html" aria-current="page">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / User guide / From a trajectory</p><h1>From a trajectory</h1><p class="lead">Read a GROMACS or LAMMPS trajectory, inspect the contact angle across the full run, and fit a selected averaging window.</p><section><h2 id="download-and-run-the-examples">Download and run the examples</h2>
+<p>Extract <a href="md-trajectory-examples.zip?v=10ns" download>md-trajectory-examples.zip</a> and <a href="installation.html#optional-dependencies">install PANDA with the <code>md</code> and <code>plot</code> extras</a>. Run these commands from the extracted directory. Both examples use the same 201 independently generated particle frames, spanning 0–10 ns at 50 ps intervals. The input angle is 120°. The time axis exercises the trajectory workflow on synthetic coordinates.</p>
+<div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">python md_gromacs.py
+python md_lammps.py</code></pre></div><p>Each script writes an NPZ with the full-run block profiles, an NPZ with the averaged profile, and a PNG with three diagnostic panels.</p></section><section><h2 id="choose-an-example">Choose an example</h2>
+<ul>
+<li id="gromacs"><a href="trajectory-gromacs.html">GROMACS</a> · GRO topology, XTC trajectory, and residue selections.</li>
+<li id="lammps"><a href="trajectory-lammps.html">LAMMPS</a> · DATA topology, custom dump, atom types, and timestep.</li>
+<li id="full-trajectory-and-averaging-window"><a id="plot-trajectory-diagnostics" href="trajectory-averaging.html">Full trajectory and averaging window</a> · profile, density map, and angle history.</li>
+<li id="run-the-block-analysis-on-example-data"><a href="block-example.html">Fit saved blocks</a> · reuse existing density profiles.</li>
+</ul></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="triangle-example.html">← Triangular filament</a><a href="trajectory-gromacs.html">GROMACS →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#download-and-run-the-examples">Download and run the examples</a><a href="#choose-an-example">Choose an example</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

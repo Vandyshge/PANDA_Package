@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use the full angle history to show which frames contribute to the reported fit.">
+<title>Trajectory averaging · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html" aria-current="true">User guide</a><a href="api.html">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage" aria-current="page">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / User guide / Trajectory averaging</p><h1>Trajectory averaging</h1><p class="lead">Use the full angle history to show which frames contribute to the reported fit.</p><section><h2 id="full-trajectory-and-averaging-window">Full trajectory and averaging window</h2>
+<p>Panel (a) shows the density map centered on the roll axis and the slit midplane. Panel (b) shows the density profile and its fit, with the slit midplane at <em>z/H</em> = 0. Both panels use the same 2–10 ns averaging window.</p>
+<p>Panel (c) shows all twenty 0.5 ns blocks across 0–10 ns. Open markers show the four early blocks. Green shading begins at 2 ns, and the horizontal dashed line gives the angle from fitting the averaged profile.</p>
+<figure class="cell-figure"><img src="md-trajectory-diagnostics.png?v=0611730285" alt="Centered green density map, centered fitted profile, and angle across twenty time blocks with averaging from 2 ns"><figcaption>GROMACS-format example. <a href="md-trajectory-diagnostics.png" download>Download PNG</a>.</figcaption></figure>
+<p>Each block marker is placed at the midpoint of its sampled frames. PANDA drops an incomplete final block. The reported standard deviation uses the complete plotted blocks whose sampled frames lie within the averaging window. For production data, inspect equilibration before choosing the averaging start and account for temporal correlation when choosing the block length.</p>
+</section><section><h2 id="shared-python-workflow">Shared Python workflow</h2><details><summary>Show the analysis and plotting code</summary><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-string">&quot;&quot;&quot;Analyze a slit-pore roll from a GROMACS or LAMMPS trajectory.&quot;&quot;&quot;</span>
+
+<span class="syntax-keyword">from</span> pathlib <span class="syntax-keyword">import</span> Path
+
+<span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
+<span class="syntax-keyword">import</span> numpy <span class="syntax-keyword">as</span> np
+<span class="syntax-keyword">from</span> matplotlib.colors <span class="syntax-keyword">import</span> LinearSegmentedColormap
+
+<span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> SlitPore, density_map, density_profile, fit_blocks
+<span class="syntax-keyword">from</span> panda_md.core.timing <span class="syntax-keyword">import</span> to_picoseconds
+
+
+STYLE = Path(__file__).with_name(<span class="syntax-string">&quot;scientific.mplstyle&quot;</span>)
+GREEN = <span class="syntax-string">&quot;#276647&quot;</span>
+MAP_COLORS = LinearSegmentedColormap.from_list(
+    <span class="syntax-string">&quot;pore_density&quot;</span>, [<span class="syntax-string">&quot;#fcfdfb&quot;</span>, <span class="syntax-string">&quot;#e6f0e2&quot;</span>, <span class="syntax-string">&quot;#a5c8a8&quot;</span>, <span class="syntax-string">&quot;#589467&quot;</span>, <span class="syntax-string">&quot;#245a3a&quot;</span>]
+)
+
+
+<span class="syntax-keyword">def</span> plot_diagnostics(density, result, width, rho_bulk, times, window, midpoint, angles, included, target):
+    <span class="syntax-keyword">with</span> plt.style.context(STYLE):
+        fig = plt.figure(figsize=(<span class="syntax-number">6.4</span>, <span class="syntax-number">8.4</span>))
+        map_ax = fig.add_axes([<span class="syntax-number">0.14</span>, <span class="syntax-number">0.61</span>, <span class="syntax-number">0.80</span>, <span class="syntax-number">0.80</span> * <span class="syntax-number">6.4</span> * <span class="syntax-number">0.55</span> / <span class="syntax-number">8.4</span>])
+        profile_ax = fig.add_axes([<span class="syntax-number">0.14</span>, <span class="syntax-number">0.35</span>, <span class="syntax-number">0.80</span>, <span class="syntax-number">0.185</span>])
+        block_ax = fig.add_axes([<span class="syntax-number">0.14</span>, <span class="syntax-number">0.09</span>, <span class="syntax-number">0.80</span>, <span class="syntax-number">0.185</span>])
+        <span class="syntax-keyword">for</span> index, ax <span class="syntax-keyword">in</span> <span class="syntax-builtin">enumerate</span>((map_ax, profile_ax, block_ax)):
+            ax.text(<span class="syntax-number">0</span>, <span class="syntax-number">1.025</span>, <span class="syntax-string">f&quot;({chr(97 + index)})&quot;</span>, transform=ax.transAxes, va=<span class="syntax-string">&quot;bottom&quot;</span>)
+
+        mesh = map_ax.pcolormesh(
+            density.length_edges_nm / width, density.height_edges_nm / width,
+            density.density_per_nm3.T / rho_bulk, shading=<span class="syntax-string">&quot;flat&quot;</span>, cmap=MAP_COLORS, vmin=<span class="syntax-number">0</span>,
+        )
+        <span class="syntax-keyword">for</span> lower, upper <span class="syntax-keyword">in</span> ((-<span class="syntax-number">0.55</span>, -<span class="syntax-number">0.5</span>), (<span class="syntax-number">0.5</span>, <span class="syntax-number">0.55</span>)):
+            map_ax.axhspan(lower, upper, color=<span class="syntax-string">&quot;#d6d9d4&quot;</span>, linewidth=<span class="syntax-number">0</span>)
+        map_ax.<span class="syntax-builtin">set</span>(xlim=(-<span class="syntax-number">1</span>, <span class="syntax-number">1</span>), ylim=(-<span class="syntax-number">0.55</span>, <span class="syntax-number">0.55</span>), xlabel=<span class="syntax-string">&quot;$x/H$&quot;</span>, ylabel=<span class="syntax-string">&quot;$z/H$&quot;</span>,
+                   xticks=np.linspace(-<span class="syntax-number">1</span>, <span class="syntax-number">1</span>, <span class="syntax-number">5</span>), yticks=(-<span class="syntax-number">0.5</span>, <span class="syntax-number">0</span>, <span class="syntax-number">0.5</span>))
+        map_ax.set_aspect(<span class="syntax-string">&quot;equal&quot;</span>)
+        color_ax = map_ax.inset_axes([<span class="syntax-number">0.06</span>, <span class="syntax-number">0.20</span>, <span class="syntax-number">0.022</span>, <span class="syntax-number">0.55</span>])
+        colorbar = fig.colorbar(mesh, cax=color_ax, ticks=(<span class="syntax-number">0</span>, <span class="syntax-number">0.5</span>, <span class="syntax-number">1</span>))
+        colorbar.ax.tick_params(labelsize=<span class="syntax-number">8</span>, length=<span class="syntax-number">2</span>)
+        colorbar.ax.text(-<span class="syntax-number">0.25</span>, <span class="syntax-number">1.06</span>, <span class="syntax-string">r&quot;$\rho/\rho_\mathrm{bulk}$&quot;</span>,
+                         transform=colorbar.ax.transAxes, fontsize=<span class="syntax-number">8</span>)
+
+        profile_ax.axvline(<span class="syntax-number">0</span>, color=<span class="syntax-string">&quot;#b9c2b8&quot;</span>, linestyle=<span class="syntax-string">&quot;:&quot;</span>, linewidth=<span class="syntax-number">0.8</span>)
+        profile_ax.plot(result.coordinate, result.data, <span class="syntax-string">&quot;o&quot;</span>, ms=<span class="syntax-number">3</span>, mfc=<span class="syntax-string">&quot;white&quot;</span>,
+                        mec=<span class="syntax-string">&quot;#5f766a&quot;</span>, mew=<span class="syntax-number">0.8</span>, label=<span class="syntax-string">&quot;Sampled profile&quot;</span>)
+        profile_ax.plot(result.coordinate, result.model_curve, color=GREEN, label=<span class="syntax-string">&quot;PANDA fit&quot;</span>)
+        profile_ax.<span class="syntax-builtin">set</span>(xlim=(-<span class="syntax-number">0.5</span>, <span class="syntax-number">0.5</span>), xlabel=<span class="syntax-string">&quot;$z/H$&quot;</span>, ylabel=<span class="syntax-string">r&quot;$\rho/\rho_\mathrm{bulk}$&quot;</span>,
+                       xticks=np.linspace(-<span class="syntax-number">0.5</span>, <span class="syntax-number">0.5</span>, <span class="syntax-number">5</span>))
+        profile_ax.legend(loc=<span class="syntax-string">&quot;lower center&quot;</span>, ncol=<span class="syntax-number">2</span>)
+
+        start, end = window / <span class="syntax-number">1000</span>
+        midpoint_ns = midpoint / <span class="syntax-number">1000</span>
+        block_ax.axvspan(start, end, color=<span class="syntax-string">&quot;#e7f0df&quot;</span>, label=<span class="syntax-string">f&quot;Average: {start:g}–{end:g} ns&quot;</span>)
+        block_ax.axvline(start, color=GREEN, linestyle=<span class="syntax-string">&quot;:&quot;</span>, linewidth=<span class="syntax-number">1</span>)
+        block_ax.plot(midpoint_ns, angles, color=<span class="syntax-string">&quot;#a4aca5&quot;</span>, linewidth=<span class="syntax-number">0.9</span>)
+        block_ax.plot(midpoint_ns[~included], angles[~included], <span class="syntax-string">&quot;o&quot;</span>, ms=<span class="syntax-number">4</span>, mfc=<span class="syntax-string">&quot;white&quot;</span>, mec=<span class="syntax-string">&quot;#687870&quot;</span>)
+        block_ax.plot(midpoint_ns[included], angles[included], <span class="syntax-string">&quot;o&quot;</span>, ms=<span class="syntax-number">4</span>, color=GREEN)
+        block_ax.axhline(result.values[<span class="syntax-string">&quot;theta&quot;</span>], color=<span class="syntax-string">&quot;#a45d2b&quot;</span>, linestyle=<span class="syntax-string">&quot;--&quot;</span>,
+                         linewidth=<span class="syntax-number">1.1</span>, label=<span class="syntax-string">&quot;Fit of averaged profile&quot;</span>)
+        block_ax.<span class="syntax-builtin">set</span>(xlim=np.asarray(times) / <span class="syntax-number">1000</span>, xlabel=<span class="syntax-string">&quot;Time (ns)&quot;</span>, ylabel=<span class="syntax-string">r&quot;$\theta$ (deg)&quot;</span>)
+        block_ax.margins(y=<span class="syntax-number">0.22</span>)
+        block_ax.legend(loc=<span class="syntax-string">&quot;upper right&quot;</span>, ncol=<span class="syntax-number">2</span>)
+        fig.savefig(target, dpi=<span class="syntax-number">200</span>)
+        plt.close(fig)
+
+
+<span class="syntax-keyword">def</span> analyze(traj, *, walls, liquid, rho_bulk, average_from, average_to, block, prefix):
+    prefix = Path(prefix)
+    times = traj.times_ps()
+    first_ps, last_ps = <span class="syntax-builtin">float</span>(times[<span class="syntax-number">0</span>]), <span class="syntax-builtin">float</span>(times[-<span class="syntax-number">1</span>])
+    average_start = to_picoseconds(average_from)
+    average_end = to_picoseconds(average_to)
+    <span class="syntax-keyword">if</span> <span class="syntax-keyword">not</span> first_ps &lt;= average_start &lt; average_end &lt;= last_ps:
+        <span class="syntax-keyword">raise</span> <span class="syntax-builtin">ValueError</span>(<span class="syntax-string">&quot;The averaging window must lie within the trajectory.&quot;</span>)
+    pore = SlitPore.from_trajectory(traj, walls=walls, liquid=liquid, time=average_from)
+    profiles = density_profile(
+        traj, pore, liquid, start=first_ps, block=block,
+        bins=<span class="syntax-number">80</span>, centering=<span class="syntax-string">&quot;pore&quot;</span>,
+    )
+    average_profile = density_profile(
+        traj, pore, liquid, start=average_from, stop=average_to,
+        bins=<span class="syntax-number">80</span>, centering=<span class="syntax-string">&quot;pore&quot;</span>,
+    ).mean()
+    roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
+    result = roll.fit(average_profile, density_bulk_per_nm3=rho_bulk)
+    blocks = fit_blocks(roll, profiles, result.spec)
+    midpoint = (blocks.block_start_ps + blocks.block_stop_ps) / <span class="syntax-number">2</span>
+    angles = blocks.values(<span class="syntax-string">&quot;theta&quot;</span>)
+    included = (blocks.block_start_ps &gt;= average_start) &amp; (blocks.block_stop_ps &lt;= average_end)
+
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Pore width = {pore.width_nm:.3f} nm&quot;</span>)
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Trajectory = {first_ps:g} to {last_ps:g} ps&quot;</span>)
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Averaging window = {average_start:g} to {average_end:g} ps&quot;</span>)
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Blocks plotted = {len(angles)}&quot;</span>)
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Full blocks inside averaging window = {np.count_nonzero(included)}&quot;</span>)
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Mean-profile theta = {result.values[&#x27;theta&#x27;]:.2f} deg&quot;</span>)
+    <span class="syntax-keyword">if</span> np.count_nonzero(included) &gt;= <span class="syntax-number">2</span>:
+        <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Block SD inside window = {np.std(angles[included], ddof=1):.2f} deg&quot;</span>)
+    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Fit flags = {result.problems()}&quot;</span>)
+
+    profiles.save(prefix.with_name(prefix.name + <span class="syntax-string">&quot;-blocks.npz&quot;</span>))
+    average_profile.save(prefix.with_name(prefix.name + <span class="syntax-string">&quot;-average.npz&quot;</span>))
+    density = density_map(
+        traj, pore, liquid, shape=<span class="syntax-string">&quot;roll&quot;</span>, start=average_from, stop=average_to, bins=(<span class="syntax-number">65</span>, <span class="syntax-number">40</span>),
+    )
+    plot_diagnostics(
+        density, result, pore.width_nm, rho_bulk, (first_ps, last_ps),
+        np.array([average_start, average_end]), midpoint, angles, included,
+        prefix.with_name(prefix.name + <span class="syntax-string">&quot;-diagnostics.png&quot;</span>),
+    )</code></pre></div></details></section><section><h2 id="check-the-profile">Check the profile</h2>
+<p>Match the bulk density to the selected particle representation. Check wall selections, centering, bin width, and the periodic box geometry. Reload the full-run profiles with <code>ProfileSet.load("gromacs-blocks.npz")</code> and the averaged profile with <code>DensityProfile.load("gromacs-average.npz")</code>. Use the corresponding <code>lammps-</code> filenames for that run.</p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="trajectory-lammps.html">← LAMMPS</a><a href="block-example.html">Fit saved blocks →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#full-trajectory-and-averaging-window">Full trajectory and averaging window</a><a href="#shared-python-workflow">Shared Python workflow</a><a href="#check-the-profile">Check the profile</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

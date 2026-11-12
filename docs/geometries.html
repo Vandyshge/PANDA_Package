@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A pore defines the confinement geometry. A named shape defines the analytical interface inside it.">
+<title>Pores and shapes · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html" aria-current="page">User guide</a><a href="api.html">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html" aria-current="page">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / User guide / Pores and shapes</p><h1>Pores and shapes</h1><p class="lead">A pore defines the confinement geometry. A named shape defines the analytical interface inside it.</p><section><h2 id="set-up-a-pore">Set up a pore</h2>
+<div class="table"><table><thead><tr><th>Geometry</th><th>Python class</th><th>Characteristic size</th></tr></thead><tbody>
+<tr><td>Slit</td><td><code>SlitPore</code></td><td>Wall-to-wall width H</td></tr>
+<tr><td>Triangle</td><td><code>TrianglePore</code></td><td>Side length a</td></tr>
+<tr><td>Square</td><td><code>SquarePore</code></td><td>Side length a</td></tr>
+<tr><td>Cylinder</td><td><code>CylinderPore</code></td><td>Tube diameter D</td></tr>
+</tbody></table></div>
+<p><code>pore.interface("roll")</code> selects an analytical model for the slit. Polygon names encode the number of walls touched (<code>w</code>) and corners occupied (<code>c</code>).</p>
+</section><section><h2 id="shape-catalog">Shape catalog</h2>
+<p>This snapshot lists 26 shapes. Of these, 18 supply a density profile and 24 supply surface terms. Availability describes the implemented formulas. Check the individual angle and volume-fraction limits before fitting.</p>
+<form class="filters">
+<label>Pore <select name="pore"><option value="">All pores</option><option value="slit">Slit</option><option value="triangle">Triangle</option><option value="square">Square</option><option value="cylinder">Cylinder</option></select></label>
+<label>Operation <select name="operation"><option value="">All operations</option><option value="profile">Density profile</option><option value="surface">Surface terms</option></select></label>
+<output aria-live="polite"></output></form>
+<div class="table"><table><thead><tr><th>Pore</th><th>Shape</th><th>Density profile</th><th>Surface terms</th></tr></thead><tbody><tr data-pore="slit" data-profile="1" data-surface="1"><td>Slit</td><td><code>droplet</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="slit" data-profile="1" data-surface="1"><td>Slit</td><td><code>roll</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="slit" data-profile="1" data-surface="1"><td>Slit</td><td><code>worm</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="slit" data-profile="1" data-surface="1"><td>Slit</td><td><code>layer</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="slit" data-profile="1" data-surface="0"><td>Slit</td><td><code>doughnut</code></td><td>Yes</td><td>—</td></tr><tr data-pore="slit" data-profile="1" data-surface="0"><td>Slit</td><td><code>perforation</code></td><td>Yes</td><td>—</td></tr><tr data-pore="triangle" data-profile="1" data-surface="1"><td>Triangle</td><td><code>capsule_w3c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="1" data-surface="1"><td>Triangle</td><td><code>droplet_w1c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="1" data-surface="1"><td>Triangle</td><td><code>filament_w0c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="1" data-surface="1"><td>Triangle</td><td><code>filament_w3c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>droplet_w2c0</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>droplet_w3c0</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>filament_w0c0_straight</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>filament_w1c0</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>filament_w2c0</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>filament_w2c1</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>filament_w3c1</code></td><td>—</td><td>Yes</td></tr><tr data-pore="triangle" data-profile="0" data-surface="1"><td>Triangle</td><td><code>filament_w3c2</code></td><td>—</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>capsule_w4c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>droplet_w1c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>droplet_w2c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>droplet_w2c1</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>filament_w0c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>filament_w0c0_straight</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="square" data-profile="1" data-surface="1"><td>Square</td><td><code>filament_w1c0</code></td><td>Yes</td><td>Yes</td></tr><tr data-pore="cylinder" data-profile="1" data-surface="1"><td>Cylinder</td><td><code>capsule</code></td><td>Yes</td><td>Yes</td></tr></tbody></table></div>
+<p>Run <code>panda shapes --pore triangle</code> to see the installed version’s models, parameter bounds, and regimes.</p>
+</section><section><h2 id="limits-of-the-models">Limits of the models</h2>
+<p>Slit and cylindrical contact-angle models cover the non-wetting side of 90°. Some polygon models have narrower domains. Models such as a flat <code>layer</code> have no contact-angle parameter. Check <code>model.is_feasible(...)</code> and <code>model.phi_limits(...)</code> for the specific shape.</p></section><section><h2 id="examples">Examples</h2><p id="fit-a-triangular-filament"><a href="triangle-example.html">Fit a triangular filament</a></p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="quickstart.html">← Quick start</a><a href="triangle-example.html">Triangular filament →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#set-up-a-pore">Set up a pore</a><a href="#shape-catalog">Shape catalog</a><a href="#limits-of-the-models">Limits of the models</a><a href="#examples">Examples</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>
