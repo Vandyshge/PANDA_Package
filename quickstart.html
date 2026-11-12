@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Generate a noisy slit-pore roll profile with a known angle, then fit it with PANDA.">
 <title>Quick start · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=2ee0840276">
+<link rel="stylesheet" href="panda-theme.css?v=913e49b019">
 <script src="search-index.js" defer></script><script src="site.js" defer></script>
 </head>
 <body>
@@ -22,33 +22,47 @@
 <aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html" aria-current="page">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / Start here / Quick start</p><h1>Quick start</h1><p class="lead">Generate a noisy slit-pore roll profile with a known angle, then fit it with PANDA.</p><section><h2 id="generate-and-fit-a-profile">Generate and fit a profile</h2>
 <p>The slit is 8 nm wide. The synthetic model uses θ = 120°, a layer thickness of 0.03 times the slit width, and a liquid volume fraction of 0.40.</p>
-<div class="code"><pre><code>from panda_md import SlitPore, synthetic_profile
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> SlitPore, synthetic_profile
 
-pore = SlitPore(width_nm=8.0, length_nm=16.0)
-roll = pore.interface(&quot;roll&quot;)
-truth = {&quot;theta&quot;: 120.0, &quot;delta&quot;: 0.03, &quot;phi&quot;: 0.40}
+pore = SlitPore(width_nm=<span class="syntax-number">8.0</span>, length_nm=<span class="syntax-number">16.0</span>)
+roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
+truth = {<span class="syntax-string">&quot;theta&quot;</span>: <span class="syntax-number">120.0</span>, <span class="syntax-string">&quot;delta&quot;</span>: <span class="syntax-number">0.03</span>, <span class="syntax-string">&quot;phi&quot;</span>: <span class="syntax-number">0.40</span>}
 profile = synthetic_profile(
-    roll, truth, density_bulk_per_nm3=30.0,
-    noise_std=0.005, seed=0,
+    roll, truth, density_bulk_per_nm3=<span class="syntax-number">30.0</span>,
+    noise_std=<span class="syntax-number">0.005</span>, seed=<span class="syntax-number">0</span>,
 )
 result = roll.fit(
-    profile, optimize=[&quot;theta&quot;, &quot;delta&quot;], density_bulk_per_nm3=30.0,
+    profile, optimize=[<span class="syntax-string">&quot;theta&quot;</span>, <span class="syntax-string">&quot;delta&quot;</span>], density_bulk_per_nm3=<span class="syntax-number">30.0</span>,
 )
-print(f&quot;theta = {result.values[&#x27;theta&#x27;]:.2f} deg&quot;)
-print(f&quot;delta/H = {result.values[&#x27;delta&#x27;]:.4f}&quot;)
-print(f&quot;phi = {result.values[&#x27;phi&#x27;]:.4f}&quot;)
-print(f&quot;L1 loss = {result.loss:.5f}&quot;)
-print(result.problems())</code></pre></div></section><section><h2 id="read-the-result">Read the result</h2><div class="code"><pre><code>theta = 120.61 deg
+<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;theta = {result.values[&#x27;theta&#x27;]:.2f} deg&quot;</span>)
+<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;delta/H = {result.values[&#x27;delta&#x27;]:.4f}&quot;</span>)
+<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;phi = {result.values[&#x27;phi&#x27;]:.4f}&quot;</span>)
+<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;L1 loss = {result.loss:.5f}&quot;</span>)
+<span class="syntax-builtin">print</span>(result.problems())</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>theta = 120.61 deg
 delta/H = 0.0301
 phi = 0.4002
 L1 loss = 0.00377
-[]</code></pre></div>
+[]</code></pre></div></section><section><h2 id="read-the-result">Read the result</h2>
 <p>These values come from the archived run for this example. PANDA optimizes θ and δ. It derives φ from the profile using the supplied bulk density. The last line is the list of fit flags.</p>
 <p><a href="quickstart.py" download>Download the Python example</a> · <a href="roll-profile.csv" download>Download the normalized profile and fit</a></p>
-</section><section><h2 id="use-your-own-data">Use your own data</h2>
+</section><section><h2 id="plot-the-fit-and-residuals">Plot the fit and residuals</h2>
+<p>With the <code>plot</code> extra installed, run this cell after fitting. The residual is the observed normalized density minus the fitted curve at each bin.</p>
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
+<span class="syntax-keyword">from</span> panda_md.plotting <span class="syntax-keyword">import</span> plot_fit
+
+fig, (fit_ax, residual_ax) = plt.subplots(
+    <span class="syntax-number">2</span>, <span class="syntax-number">1</span>, sharex=<span class="syntax-keyword">True</span>, height_ratios=(<span class="syntax-number">2</span>, <span class="syntax-number">1</span>), layout=<span class="syntax-string">&quot;constrained&quot;</span>
+)
+plot_fit(result, ax=fit_ax)
+fit_ax.set_xlabel(<span class="syntax-string">&quot;&quot;</span>)
+residual_ax.axhline(<span class="syntax-number">0</span>, color=<span class="syntax-string">&quot;0.5&quot;</span>, linewidth=<span class="syntax-number">1</span>)
+residual_ax.plot(result.coordinate, result.data - result.model_curve, <span class="syntax-string">&quot;.&quot;</span>, markersize=<span class="syntax-number">3</span>)
+residual_ax.<span class="syntax-builtin">set</span>(xlabel=<span class="syntax-string">&quot;Reduced coordinate, z/H&quot;</span>, ylabel=<span class="syntax-string">&quot;Data − fit&quot;</span>)
+fig.savefig(<span class="syntax-string">&quot;roll-fit.png&quot;</span>, dpi=<span class="syntax-number">150</span>)
+plt.show()</code></pre></div><figure class="cell-figure"><img src="roll-fit-residuals.png" alt="Analytical fit and synthetic slit-pore density above the signed residuals at each bin"><figcaption>Plot from the archived synthetic roll fit. <a href="roll-fit-residuals.png" download>Download PNG</a>.</figcaption></figure></section><section><h2 id="use-your-own-data">Use your own data</h2>
 <p>Follow the <a href="trajectories.html">trajectory guide</a> for simulation output. If you already have a density profile, see <a href="fitting.html#fit-a-saved-profile">fitting a saved profile</a>.</p></section>
 <nav class="pager" aria-label="Adjacent pages"><a href="installation.html">← Installation</a><a href="geometries.html">Pores and shapes →</a></nav></main>
-<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#generate-and-fit-a-profile">Generate and fit a profile</a><a href="#read-the-result">Read the result</a><a href="#use-your-own-data">Use your own data</a></nav></aside>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#generate-and-fit-a-profile">Generate and fit a profile</a><a href="#read-the-result">Read the result</a><a href="#plot-the-fit-and-residuals">Plot the fit and residuals</a><a href="#use-your-own-data">Use your own data</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
 <dialog aria-label="Search documentation">

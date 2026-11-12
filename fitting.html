@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Fit a candidate interface, inspect its diagnostics, and compare models in the physically accessible domain.">
 <title>Fitting and interpretation · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=2ee0840276">
+<link rel="stylesheet" href="panda-theme.css?v=913e49b019">
 <script src="search-index.js" defer></script><script src="site.js" defer></script>
 </head>
 <body>
@@ -22,16 +22,16 @@
 <aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html" aria-current="page">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / Fitting and interpretation</p><h1>Fitting and interpretation</h1><p class="lead">Fit a candidate interface, inspect its diagnostics, and compare models in the physically accessible domain.</p><section><h2 id="fit-a-saved-profile">Fit a saved profile</h2>
 <p>A headerless CSV contains coordinate in nm, number density in nm⁻³, and an optional uncertainty column. Center the coordinates consistently with the analytical pore. The normalized CSV in the quick start is for plotting.</p>
-<div class="code"><pre><code>from panda_md import DensityProfile, SlitPore
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> DensityProfile, SlitPore
 
-profile = DensityProfile.load(&quot;density.csv&quot;)
-pore = SlitPore(width_nm=8.0, length_nm=16.0)
-result = pore.interface(&quot;roll&quot;).fit(
-    profile, optimize=[&quot;theta&quot;, &quot;delta&quot;],
-    bounds={&quot;theta&quot;: (95.0, 175.0)}, density_bulk_per_nm3=33.1,
+profile = DensityProfile.load(<span class="syntax-string">&quot;density.csv&quot;</span>)
+pore = SlitPore(width_nm=<span class="syntax-number">8.0</span>, length_nm=<span class="syntax-number">16.0</span>)
+result = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>).fit(
+    profile, optimize=[<span class="syntax-string">&quot;theta&quot;</span>, <span class="syntax-string">&quot;delta&quot;</span>],
+    bounds={<span class="syntax-string">&quot;theta&quot;</span>: (<span class="syntax-number">95.0</span>, <span class="syntax-number">175.0</span>)}, density_bulk_per_nm3=<span class="syntax-number">33.1</span>,
 )
-print(result.summary())
-print(result.problems())</code></pre></div></section><section><h2 id="parameters-and-normalization">Parameters and normalization</h2>
+<span class="syntax-builtin">print</span>(result.summary())
+<span class="syntax-builtin">print</span>(result.problems())</code></pre></div></section><section><h2 id="parameters-and-normalization">Parameters and normalization</h2>
 <p><code>theta</code> is the contact angle in degrees for the analyzed phase. <code>delta</code> is the effective wall-layer thickness as a fraction of the characteristic pore size. <code>phi</code> is the analyzed liquid’s volume fraction. <code>shift</code> is an offset along the profile coordinate in pore-size units, fixed at zero by default.</p>
 <p>With bulk normalization, PANDA divides the input density by ρ<sub>bulk</sub> and can estimate φ from the profile. With mean normalization, supply the profile’s particle count and pore volume, and fix or optimize φ if the bulk density is unavailable.</p>
 </section><section><h2 id="fit-diagnostics">Fit diagnostics</h2>

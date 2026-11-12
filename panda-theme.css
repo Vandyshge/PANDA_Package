@@ -54,8 +54,22 @@ p code,li code,td code,dd code{background:var(--light);padding:2px 4px;border-ra
 .code{position:relative;margin:16px 0}
 pre{padding:18px 92px 18px 18px;background:#f1f5f9;color:#243447;border:1px solid #d5dee8;border-radius:8px;overflow:auto;margin:0;line-height:1.65}
 pre code{font-size:inherit}
-.copy{position:absolute;right:8px;top:8px;font-size:12px;background:#fff;border-color:#c5d1de;color:#243447}
+.cell-label{padding:8px 14px;background:#e8eef5;color:#40556b;font-size:12px;font-weight:700;border:1px solid #d5dee8;border-bottom:0;border-radius:8px 8px 0 0}
+.code pre,.cell-output pre{padding:14px 18px;border-radius:0 0 8px 8px}
+.copy{position:absolute;right:8px;top:4px;font-size:12px;padding:3px 9px;background:#fff;border-color:#c5d1de;color:#243447}
 .copy:hover{background:#e6edf5}
+.cell-output{margin:0 0 18px}
+.code:has(+ .cell-output){margin-bottom:8px}
+.cell-output .cell-label{background:#f5f7f9}
+.cell-output pre{background:#fafbfc}
+.syntax-keyword{color:#673c99;font-weight:700}
+.syntax-string{color:#27613d}
+.syntax-number{color:#985011}
+.syntax-builtin{color:#1d5a90}
+.syntax-comment{color:#516378;font-style:italic}
+.cell-figure{margin:16px 0 24px;padding:12px;border:1px solid var(--line);border-radius:6px}
+.cell-figure img{display:block;width:100%;max-width:660px;height:auto;margin:0 auto}
+.cell-figure figcaption{margin-top:8px;font-size:14px;color:var(--muted)}
 .table{overflow:auto}
 table{border-collapse:collapse;width:100%;font-size:14px}
 td,th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}

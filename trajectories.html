@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Build a density profile from molecular-dynamics frames, then fit the average and compare time blocks.">
 <title>From a trajectory · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=2ee0840276">
+<link rel="stylesheet" href="panda-theme.css?v=913e49b019">
 <script src="search-index.js" defer></script><script src="site.js" defer></script>
 </head>
 <body>
@@ -22,26 +22,36 @@
 <aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html" aria-current="page">From a trajectory</a><a href="fitting.html">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / From a trajectory</p><h1>From a trajectory</h1><p class="lead">Build a density profile from molecular-dynamics frames, then fit the average and compare time blocks.</p><section><h2 id="load-the-simulation">Load the simulation</h2>
 <p>Install the <code>md</code> extra. The example uses GROMACS files. MDAnalysis also supports formats such as LAMMPS. Replace the topology, trajectory, selections, equilibration cutoff, and bulk density with values for your simulation.</p>
-<div class="code"><pre><code>import panda_md as panda
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> panda_md <span class="syntax-keyword">as</span> panda
 
-traj = panda.load_trajectory(&quot;system.tpr&quot;, &quot;system.xtc&quot;)
-pore = panda.SlitPore.from_trajectory(traj, walls=&quot;resname GRAPHITE&quot;)
+traj = panda.load_trajectory(<span class="syntax-string">&quot;system.tpr&quot;</span>, <span class="syntax-string">&quot;system.xtc&quot;</span>)
+pore = panda.SlitPore.from_trajectory(traj, walls=<span class="syntax-string">&quot;resname GRAPHITE&quot;</span>)
 profiles = panda.density_profile(
-    traj, pore, &quot;resname WATER and name OW&quot;,
-    start=&quot;2 ns&quot;, block=&quot;1 ns&quot;, bins=200, centering=&quot;pore&quot;,
+    traj, pore, <span class="syntax-string">&quot;resname WATER and name OW&quot;</span>,
+    start=<span class="syntax-string">&quot;2 ns&quot;</span>, block=<span class="syntax-string">&quot;1 ns&quot;</span>, bins=<span class="syntax-number">200</span>, centering=<span class="syntax-string">&quot;pore&quot;</span>,
 )
-profiles.save(&quot;water.npz&quot;)</code></pre></div></section><section><h2 id="fit-and-compare-time-blocks">Fit and compare time blocks</h2><div class="code"><pre><code>roll = pore.interface(&quot;roll&quot;)
-spec = panda.FitSpec(density_bulk_per_nm3=33.1)
-result = roll.fit(profiles.mean(), density_bulk_per_nm3=33.1)
+profiles.save(<span class="syntax-string">&quot;water.npz&quot;</span>)</code></pre></div></section><section><h2 id="fit-and-compare-time-blocks">Fit and compare time blocks</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
+spec = panda.FitSpec(density_bulk_per_nm3=<span class="syntax-number">33.1</span>)
+result = roll.fit(profiles.mean(), density_bulk_per_nm3=<span class="syntax-number">33.1</span>)
 blocks = panda.fit_blocks(roll, profiles, spec)
-print(result.summary())
-print(blocks.std(&quot;theta&quot;))</code></pre></div>
+<span class="syntax-builtin">print</span>(result.summary())
+<span class="syntax-builtin">print</span>(blocks.std(<span class="syntax-string">&quot;theta&quot;</span>))</code></pre></div>
 <p>The fit of the mean profile and the mean of the individual block fits are distinct estimates. Choose blocks long enough to reduce correlation and inspect per-block flags before interpreting the spread or standard error.</p>
-</section><section><h2 id="check-the-profile">Check the profile</h2>
+</section><section><h2 id="plot-trajectory-diagnostics">Plot trajectory diagnostics</h2>
+<p>With the <code>plot</code> extra, plot the fitted angle at each block midpoint and inspect the two-dimensional density map. Both plots depend on the trajectory and selections above.</p>
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
+<span class="syntax-keyword">from</span> panda_md.plotting <span class="syntax-keyword">import</span> plot_blocks, plot_density_map
+
+plot_blocks(blocks, parameter=<span class="syntax-string">&quot;theta&quot;</span>)
+density = panda.density_map(
+    traj, pore, <span class="syntax-string">&quot;resname WATER and name OW&quot;</span>, shape=<span class="syntax-string">&quot;roll&quot;</span>, start=<span class="syntax-string">&quot;2 ns&quot;</span>
+)
+plot_density_map(density)
+plt.show()</code></pre></div></section><section><h2 id="check-the-profile">Check the profile</h2>
 <p>Match the bulk density to the selected particle representation. Check wall selections, centering, bin width, and the periodic box geometry. Use <code>density_map(..., shape="roll")</code> to inspect the two-dimensional morphology if multiple models fit similarly.</p>
 <p>For saved results use <code>ProfileSet.load("water.npz")</code>. For a single profile use <code>DensityProfile.load(...)</code>.</p></section>
 <nav class="pager" aria-label="Adjacent pages"><a href="geometries.html">← Pores and shapes</a><a href="fitting.html">Fitting and interpretation →</a></nav></main>
-<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#load-the-simulation">Load the simulation</a><a href="#fit-and-compare-time-blocks">Fit and compare time blocks</a><a href="#check-the-profile">Check the profile</a></nav></aside>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#load-the-simulation">Load the simulation</a><a href="#fit-and-compare-time-blocks">Fit and compare time blocks</a><a href="#plot-trajectory-diagnostics">Plot trajectory diagnostics</a><a href="#check-the-profile">Check the profile</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
 <dialog aria-label="Search documentation">

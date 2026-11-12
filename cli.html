@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Use panda to build profiles, fit a known shape, or compare candidate models from the shell.">
 <title>Command line · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=2ee0840276">
+<link rel="stylesheet" href="panda-theme.css?v=913e49b019">
 <script src="search-index.js" defer></script><script src="site.js" defer></script>
 </head>
 <body>
@@ -20,12 +20,12 @@
 </div></header>
 <div class="layout">
 <aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html">Fitting and interpretation</a><a href="cli.html" aria-current="page">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
-<main id="main"><p class="crumb">Documentation / User guide / Command line</p><h1>Command line</h1><p class="lead">Use panda to build profiles, fit a known shape, or compare candidate models from the shell.</p><section><h2 id="inspect-available-models">Inspect available models</h2><div class="code"><pre><code>panda shapes --pore slit
+<main id="main"><p class="crumb">Documentation / User guide / Command line</p><h1>Command line</h1><p class="lead">Use panda to build profiles, fit a known shape, or compare candidate models from the shell.</p><section><h2 id="inspect-available-models">Inspect available models</h2><div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">panda shapes --pore slit
 panda profile --help
-panda fit --help</code></pre></div></section><section><h2 id="create-a-profile-and-fit-it">Create a profile and fit it</h2><div class="code"><pre><code>panda profile system.tpr system.xtc --walls &quot;resname GRAPHITE&quot; --select &quot;resname WATER and name OW&quot; --start &quot;2 ns&quot; --block &quot;1 ns&quot; -o water.npz --pore-output pore.json
+panda fit --help</code></pre></div></section><section><h2 id="create-a-profile-and-fit-it">Create a profile and fit it</h2><div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">panda profile system.tpr system.xtc --walls &quot;resname GRAPHITE&quot; --select &quot;resname WATER and name OW&quot; --start &quot;2 ns&quot; --block &quot;1 ns&quot; -o water.npz --pore-output pore.json
 panda fit water.npz --pore-file pore.json --shape roll --rho-bulk 33.1 --blocks -o result.json</code></pre></div>
 <p>Use <code>--shape auto</code> to compare supported candidates and <code>--plot fit.png</code> with the plotting extra. The exit codes are 0 for success, 1 for an input error, and 2 for a completed fit with diagnostic flags.</p>
-</section><section><h2 id="save-the-workflow-in-toml">Save the workflow in TOML</h2><div class="code"><pre><code>[pore]
+</section><section><h2 id="save-the-workflow-in-toml">Save the workflow in TOML</h2><div class="code"><div class="cell-label">TOML</div><pre><code class="language-toml">[pore]
 type = &quot;slit&quot;
 wall_selection = &quot;resname GRAPHITE&quot;
 
