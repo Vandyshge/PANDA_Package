@@ -52,7 +52,7 @@ result = filament.fit(profile, density_bulk_per_nm3=<span class="syntax-number">
 <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Fit theta = {result.values[&#x27;theta&#x27;]:.2f} deg&quot;</span>)
 <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Flags: {result.problems()}&quot;</span>)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>Input theta = 150.00 deg
 Fit theta = 149.83 deg
-Flags: []</code></pre></div><p>With the <code>plot</code> extra, draw the fitted curve over the synthetic data.</p><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
+Flags: ()</code></pre></div><p>With the <code>plot</code> extra, draw the fitted curve over the synthetic data.</p><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
 <span class="syntax-keyword">from</span> panda_md.plotting <span class="syntax-keyword">import</span> plot_fit
 
 ax = plot_fit(result)

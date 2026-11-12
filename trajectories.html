@@ -37,7 +37,33 @@ blocks = panda.fit_blocks(roll, profiles, spec)
 <span class="syntax-builtin">print</span>(result.summary())
 <span class="syntax-builtin">print</span>(blocks.std(<span class="syntax-string">&quot;theta&quot;</span>))</code></pre></div>
 <p>The fit of the mean profile and the mean of the individual block fits are distinct estimates. Choose blocks long enough to reduce correlation and inspect per-block flags before interpreting the spread or standard error.</p>
-</section><section><h2 id="plot-trajectory-diagnostics">Plot trajectory diagnostics</h2>
+<p>The numerical output for this cell depends on your trajectory. The next example shows what it looks like with a downloadable set of profiles.</p>
+</section><section><h2 id="run-the-block-analysis-on-example-data">Run the block analysis on example data</h2>
+<p>Download <a href="synthetic-roll-blocks.npz" download>synthetic-roll-blocks.npz</a> into the working directory. The file contains eight independent synthetic profiles generated with a 120° contact angle.</p>
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> ProfileSet, SlitPore, fit_blocks
+
+profiles = ProfileSet.load(<span class="syntax-string">&quot;synthetic-roll-blocks.npz&quot;</span>)
+pore = SlitPore(width_nm=<span class="syntax-number">8.0</span>, length_nm=<span class="syntax-number">16.0</span>)
+roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
+result = roll.fit(profiles.mean(), density_bulk_per_nm3=<span class="syntax-number">30.0</span>)
+blocks = fit_blocks(roll, profiles, result.spec)
+<span class="syntax-builtin">print</span>(result.summary())
+<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Block SD = {blocks.std(&#x27;theta&#x27;):.3f} deg&quot;</span>)
+<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Block mean = {blocks.mean(&#x27;theta&#x27;):.3f} deg&quot;</span>)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>slit/roll  regime: non_wetting  loss: 0.0008747
+   theta = 119.985  (free)
+   delta = 0.0301568  (free)
+     phi = 0.400031  (fixed)
+   shift = 0  (fixed)
+Block SD = 0.273 deg
+Block mean = 119.992 deg</code></pre></div><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
+
+angles = blocks.values(<span class="syntax-string">&quot;theta&quot;</span>)
+fig, ax = plt.subplots()
+ax.plot(<span class="syntax-builtin">range</span>(<span class="syntax-number">1</span>, <span class="syntax-builtin">len</span>(angles) + <span class="syntax-number">1</span>), angles, <span class="syntax-string">&quot;o-&quot;</span>, label=<span class="syntax-string">&quot;Block fit&quot;</span>)
+ax.axhline(<span class="syntax-number">120</span>, linestyle=<span class="syntax-string">&quot;--&quot;</span>, label=<span class="syntax-string">&quot;Input angle&quot;</span>)
+ax.<span class="syntax-builtin">set</span>(xlabel=<span class="syntax-string">&quot;Synthetic block&quot;</span>, ylabel=<span class="syntax-string">&quot;Contact angle (deg)&quot;</span>)
+ax.legend()
+plt.show()</code></pre></div><figure class="cell-figure"><img src="synthetic-block-angles.png" alt="Eight synthetic block angle estimates scattered around the input angle of 120 degrees"><figcaption>Each marker is a separate fit. The dashed line marks the 120° input. <a href="synthetic-block-angles.csv" download>Download the block angles</a>.</figcaption></figure></section><section><h2 id="plot-trajectory-diagnostics">Plot trajectory diagnostics</h2>
 <p>With the <code>plot</code> extra, plot the fitted angle at each block midpoint and inspect the two-dimensional density map. Both plots depend on the trajectory and selections above.</p>
 <div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
 <span class="syntax-keyword">from</span> panda_md.plotting <span class="syntax-keyword">import</span> plot_blocks, plot_density_map
@@ -51,7 +77,7 @@ plt.show()</code></pre></div></section><section><h2 id="check-the-profile">Check
 <p>Match the bulk density to the selected particle representation. Check wall selections, centering, bin width, and the periodic box geometry. Use <code>density_map(..., shape="roll")</code> to inspect the two-dimensional morphology if multiple models fit similarly.</p>
 <p>For saved results use <code>ProfileSet.load("water.npz")</code>. For a single profile use <code>DensityProfile.load(...)</code>.</p></section>
 <nav class="pager" aria-label="Adjacent pages"><a href="geometries.html">← Pores and shapes</a><a href="fitting.html">Fitting and interpretation →</a></nav></main>
-<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#load-the-simulation">Load the simulation</a><a href="#fit-and-compare-time-blocks">Fit and compare time blocks</a><a href="#plot-trajectory-diagnostics">Plot trajectory diagnostics</a><a href="#check-the-profile">Check the profile</a></nav></aside>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#load-the-simulation">Load the simulation</a><a href="#fit-and-compare-time-blocks">Fit and compare time blocks</a><a href="#run-the-block-analysis-on-example-data">Run the block analysis on example data</a><a href="#plot-trajectory-diagnostics">Plot trajectory diagnostics</a><a href="#check-the-profile">Check the profile</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
 <dialog aria-label="Search documentation">

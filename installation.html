@@ -29,8 +29,9 @@ python -m venv .venv</code></pre></div>
 <div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">python -m pip install .</code></pre></div>
 </section><section><h2 id="optional-dependencies">Optional dependencies</h2>
 <p>From the same checkout, install the <code>md</code> extra for trajectory input and <code>plot</code> for Matplotlib figures.</p>
-<div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">python -m pip install &quot;.[md,plot]&quot;</code></pre></div></section><section><h2 id="check-the-installation">Check the installation</h2><div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">python -c &quot;import panda_md; print(panda_md.__version__)&quot;
-panda --help</code></pre></div></section>
+<div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">python -m pip install &quot;.[md,plot]&quot;</code></pre></div></section><section><h2 id="check-the-installation">Check the installation</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> panda_md
+
+<span class="syntax-builtin">print</span>(<span class="syntax-string">&quot;PANDA import OK&quot;</span>)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>PANDA import OK</code></pre></div><p>Run <code>panda --help</code> in a shell to list the available commands.</p></section>
 <nav class="pager" aria-label="Adjacent pages"><a href="index.html">← Overview</a><a href="quickstart.html">Quick start →</a></nav></main>
 <aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#install-from-source">Install from source</a><a href="#optional-dependencies">Optional dependencies</a><a href="#check-the-installation">Check the installation</a></nav></aside>
 </div>
