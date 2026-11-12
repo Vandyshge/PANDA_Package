@@ -52,9 +52,10 @@ h3{font-size:17px;line-height:1.35;margin-bottom:8px}
 code,pre{font-family:var(--mono);font-size:.86em}
 p code,li code,td code,dd code{background:var(--light);padding:2px 4px;border-radius:3px;overflow-wrap:anywhere}
 .code{position:relative;margin:16px 0}
-pre{padding:18px 92px 18px 18px;background:#1d2a20;color:#e9f5df;border-radius:8px;overflow:auto;margin:0;line-height:1.65}
+pre{padding:18px 92px 18px 18px;background:#f1f5f9;color:#243447;border:1px solid #d5dee8;border-radius:8px;overflow:auto;margin:0;line-height:1.65}
 pre code{font-size:inherit}
-.copy{position:absolute;right:8px;top:8px;font-size:12px}
+.copy{position:absolute;right:8px;top:8px;font-size:12px;background:#fff;border-color:#c5d1de;color:#243447}
+.copy:hover{background:#e6edf5}
 .table{overflow:auto}
 table{border-collapse:collapse;width:100%;font-size:14px}
 td,th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
