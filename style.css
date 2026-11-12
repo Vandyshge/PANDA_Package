@@ -40,7 +40,7 @@ h3{font-size:17px;line-height:1.35;margin-bottom:8px}
 .hero p{font-size:15px;color:#d0dec8}
 .hero .eyebrow{color:#b8d7a1;font-size:11px}
 .button{display:inline-block;background:#cce8ad;border-radius:5px;color:#20371c;padding:8px 13px;font-weight:700;font-size:14px;text-decoration:none}
-.hero figure{margin:0;min-width:0}.hero figure img{width:100%;display:block}.hero figcaption{font-size:12px;color:#cbdac4;margin-top:8px;text-align:center}
+.hero figure{margin:0;min-width:0}.hero figure img{width:100%;height:auto;display:block}.hero figcaption{font-size:12px;color:#cbdac4;margin-top:8px;text-align:center}
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}
 .card{display:block;text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:17px;background:#fff;color:var(--ink)}
 .card:hover{border-color:#7ca362;background:var(--panel)}
