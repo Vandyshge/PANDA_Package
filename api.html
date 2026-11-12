@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A reference to the main objects and functions in the panda_md namespace.">
+<title>Python API · PANDA Documentation</title>
+<link rel="stylesheet" href="style.css">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><strong>PANDA</strong><span>Documentation</span></a>
+<nav aria-label="Header">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</nav></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html" aria-current="page">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / Reference / Python API</p><h1>Python API</h1><p class="lead">A reference to the main objects and functions in the panda_md namespace.</p><section><h2 id="geometry-and-fitting">Geometry and fitting</h2>
+<dl><dt><code>SlitPore</code>, <code>TrianglePore</code>, <code>SquarePore</code>, <code>CylinderPore</code></dt><dd>Store pore dimensions in nm. Call <code>pore.interface(shape)</code> to construct an <code>InterfaceModel</code>.</dd>
+<dt><code>InterfaceModel.fit(profile, **settings)</code></dt><dd>Fit one morphology to one <code>DensityProfile</code>.</dd>
+<dt><code>FitSpec</code></dt><dd>Reusable fit settings, including normalization, free and fixed parameters, and bounds.</dd>
+<dt><code>FitResult</code></dt><dd>Inspect <code>values</code>, <code>loss</code>, <code>summary()</code>, and <code>problems()</code>.</dd></dl>
+</section><section><h2 id="profiles-and-trajectories">Profiles and trajectories</h2>
+<dl><dt><code>load_trajectory(topology, *trajectory_files, **options)</code></dt><dd>Read MD files through MDAnalysis. For in-memory data use <code>ArrayTrajectory</code>.</dd>
+<dt><code>density_profile(trajectory, pore, select, ...)</code></dt><dd>Build density profiles, optionally split into time blocks.</dd>
+<dt><code>DensityProfile</code>, <code>ProfileSet</code></dt><dd>Represent one profile or a series. A profile set provides <code>mean()</code>, <code>sem()</code>, and <code>block(i)</code>.</dd>
+<dt><code>density_map(...)</code>, <code>synthetic_profile(...)</code></dt><dd>Compute a two-dimensional density map or generate a synthetic one-dimensional profile from known model parameters.</dd></dl>
+</section><section><h2 id="analysis-and-plotting">Analysis and plotting</h2>
+<dl><dt><code>fit_blocks(model, profiles, spec=None)</code></dt><dd>Fit each block and summarize parameter means and spread.</dd>
+<dt><code>compare_shapes(pore, profile, spec)</code></dt><dd>Rank fitted models and report skipped or near-indistinguishable candidates.</dd>
+<dt><code>stability_diagram(pore, *, contact_angle_deg, wall_layer, volume_fractions, length_ratios, shape_names=None)</code></dt><dd>Find minimum-energy candidates over a grid of liquid fractions and reduced pore lengths.</dd>
+<dt><code>panda_md.plotting</code></dt><dd>Optional plotting helpers including <code>plot_fit</code> and <code>plot_density_map</code>.</dd></dl>
+<p>For full signatures and extension guides, see the <a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/tree/main/docs/manual">developer manual</a> (repository access required).</p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="cli.html">← Command line</a><a href="citation.html">Citing PANDA →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#geometry-and-fitting">Geometry and fitting</a><a href="#profiles-and-trajectories">Profiles and trajectories</a><a href="#analysis-and-plotting">Analysis and plotting</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

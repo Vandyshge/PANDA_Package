@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The package is named panda-md, the Python module is panda_md, and the shell command is panda.">
+<title>Installation · PANDA Documentation</title>
+<link rel="stylesheet" href="style.css">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><strong>PANDA</strong><span>Documentation</span></a>
+<nav aria-label="Header">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</nav></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html" aria-current="page">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / Start here / Installation</p><h1>Installation</h1><p class="lead">The package is named panda-md, the Python module is panda_md, and the shell command is panda.</p><section><h2 id="install-from-source">Install from source</h2>
+<p>Use Python 3.10 or newer. This manual targets the developer repository’s 0.1.0 alpha API. The source checkout requires repository access.</p>
+<div class="code"><pre><code>git clone https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0.git</code></pre></div>
+<div class="code"><pre><code>cd PANDA_2.0
+python -m venv .venv</code></pre></div>
+<p>Activate the environment with <code>source .venv/bin/activate</code> on macOS or Linux, or <code>.venv\Scripts\Activate.ps1</code> in PowerShell.</p>
+<div class="code"><pre><code>python -m pip install .</code></pre></div>
+</section><section><h2 id="optional-dependencies">Optional dependencies</h2>
+<p>From the same checkout, install the <code>md</code> extra for trajectory input and <code>plot</code> for Matplotlib figures.</p>
+<div class="code"><pre><code>python -m pip install &quot;.[md,plot]&quot;</code></pre></div></section><section><h2 id="check-the-installation">Check the installation</h2><div class="code"><pre><code>python -c &quot;import panda_md; print(panda_md.__version__)&quot;
+panda --help</code></pre></div></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="index.html">← Overview</a><a href="quickstart.html">Quick start →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#install-from-source">Install from source</a><a href="#optional-dependencies">Optional dependencies</a><a href="#check-the-installation">Check the installation</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

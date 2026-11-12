@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Fit a candidate interface, inspect its diagnostics, and compare models in the physically accessible domain.">
+<title>Fitting and interpretation · PANDA Documentation</title>
+<link rel="stylesheet" href="style.css">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><strong>PANDA</strong><span>Documentation</span></a>
+<nav aria-label="Header">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</nav></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html" aria-current="page">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / User guide / Fitting and interpretation</p><h1>Fitting and interpretation</h1><p class="lead">Fit a candidate interface, inspect its diagnostics, and compare models in the physically accessible domain.</p><section><h2 id="fit-a-saved-profile">Fit a saved profile</h2>
+<p>A headerless CSV contains coordinate in nm, number density in nm⁻³, and an optional uncertainty column. Center the coordinates consistently with the analytical pore. The normalized CSV in the quick start is for plotting.</p>
+<div class="code"><pre><code>from panda_md import DensityProfile, SlitPore
+
+profile = DensityProfile.load(&quot;density.csv&quot;)
+pore = SlitPore(width_nm=8.0, length_nm=16.0)
+result = pore.interface(&quot;roll&quot;).fit(
+    profile, optimize=[&quot;theta&quot;, &quot;delta&quot;],
+    bounds={&quot;theta&quot;: (95.0, 175.0)}, density_bulk_per_nm3=33.1,
+)
+print(result.summary())
+print(result.problems())</code></pre></div></section><section><h2 id="parameters-and-normalization">Parameters and normalization</h2>
+<p><code>theta</code> is the contact angle in degrees for the analyzed phase. <code>delta</code> is the effective wall-layer thickness as a fraction of the characteristic pore size. <code>phi</code> is the analyzed liquid’s volume fraction. <code>shift</code> is an offset along the profile coordinate in pore-size units, fixed at zero by default.</p>
+<p>With bulk normalization, PANDA divides the input density by ρ<sub>bulk</sub> and can estimate φ from the profile. With mean normalization, supply the profile’s particle count and pore volume, and fix or optimize φ if the bulk density is unavailable.</p>
+</section><section><h2 id="fit-diagnostics">Fit diagnostics</h2>
+<p>The default L1 objective is the mean absolute deviation of the normalized profiles. PANDA runs Nelder–Mead from multiple starting points. Inspect convergence, feasibility, parameter bounds, and the <code>at_regime_boundary</code> flag. A boundary fit near 90° may indicate that the selected model’s angular range is too restrictive.</p>
+</section><section><h2 id="compare-shapes-and-stability">Compare shapes and stability</h2>
+<p><code>compare_shapes(pore, profile, spec)</code> ranks available profiles by fit loss. Near-ties can occur when different interfaces project to nearly the same one-dimensional density. Inspect the density map or snapshots before assigning a morphology.</p>
+<p><code>stability_diagram(...)</code> ranks feasible shapes by the capillary surface term S<sub>LV</sub> − cos θ S<sub>SL</sub> at prescribed angle and layer thickness. Each operation has its own set of supported shapes in the <a href="geometries.html">catalog</a>.</p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="trajectories.html">← From a trajectory</a><a href="cli.html">Command line →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#fit-a-saved-profile">Fit a saved profile</a><a href="#parameters-and-normalization">Parameters and normalization</a><a href="#fit-diagnostics">Fit diagnostics</a><a href="#compare-shapes-and-stability">Compare shapes and stability</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>
