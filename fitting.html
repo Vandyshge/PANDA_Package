@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Fit a candidate interface, inspect its diagnostics, and compare models in the physically accessible domain.">
 <title>Fitting and interpretation · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=913e49b019">
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
 <script src="search-index.js" defer></script><script src="site.js" defer></script>
 </head>
 <body>
@@ -19,7 +19,7 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html">From a trajectory</a><a href="fitting.html" aria-current="page">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html" aria-current="page">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / Fitting and interpretation</p><h1>Fitting and interpretation</h1><p class="lead">Fit a candidate interface, inspect its diagnostics, and compare models in the physically accessible domain.</p><section><h2 id="fit-a-saved-profile">Fit a saved profile</h2>
 <p>Download <a href="density.csv" download>density.csv</a> into the working directory. It contains the synthetic slit-pore profile from the quick start in physical units. A headerless input file contains coordinate in nm, number density in nm⁻³, and an optional uncertainty column. Center the coordinates consistently with the analytical pore.</p>
 <div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> DensityProfile, SlitPore
@@ -40,13 +40,12 @@ result = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>).fit
 <p>With bulk normalization, PANDA divides the input density by ρ<sub>bulk</sub> and can estimate φ from the profile. With mean normalization, supply the profile’s particle count and pore volume, and fix or optimize φ if the bulk density is unavailable.</p>
 </section><section><h2 id="fit-diagnostics">Fit diagnostics</h2>
 <p>The default L1 objective is the mean absolute deviation of the normalized profiles. PANDA runs Nelder–Mead from multiple starting points. Inspect convergence, feasibility, parameter bounds, and the <code>at_regime_boundary</code> flag. A boundary fit near 90° may indicate that the selected model’s angular range is too restrictive.</p>
-</section><section><h2 id="how-noise-and-angle-affect-recovery">How noise and angle affect recovery</h2>
-<p>The validation sweep used synthetic slit-pore rolls with 200 bins and ten noise realizations at each setting. The left panel varies the noise at θ = 120°. The right panel varies the input angle at 0.5% noise. The maximum is the largest absolute error across the ten realizations.</p>
-<figure class="cell-figure"><img src="roll-validation.png" alt="Mean and maximum absolute angle error increase with profile noise and near the high-angle limit"><figcaption>Archived validation data. <a href="validation-roll-noise.csv" download>Noise sweep CSV</a> · <a href="validation-roll-angle.csv" download>Angle sweep CSV</a>.</figcaption></figure></section><section><h2 id="compare-shapes-and-stability">Compare shapes and stability</h2>
+<p id="how-noise-and-angle-affect-recovery"><a href="validation.html">How noise and angle affect recovery</a></p>
+</section><section><h2 id="compare-shapes-and-stability">Compare shapes and stability</h2>
 <p><code>compare_shapes(pore, profile, spec)</code> ranks available profiles by fit loss. Near-ties can occur when different interfaces project to nearly the same one-dimensional density. Inspect the density map or snapshots before assigning a morphology.</p>
 <p><code>stability_diagram(...)</code> ranks feasible shapes by the capillary surface term S<sub>LV</sub> − cos θ S<sub>SL</sub> at prescribed angle and layer thickness. Each operation has its own set of supported shapes in the <a href="geometries.html">catalog</a>.</p></section>
-<nav class="pager" aria-label="Adjacent pages"><a href="trajectories.html">← From a trajectory</a><a href="cli.html">Command line →</a></nav></main>
-<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#fit-a-saved-profile">Fit a saved profile</a><a href="#parameters-and-normalization">Parameters and normalization</a><a href="#fit-diagnostics">Fit diagnostics</a><a href="#how-noise-and-angle-affect-recovery">How noise and angle affect recovery</a><a href="#compare-shapes-and-stability">Compare shapes and stability</a></nav></aside>
+<nav class="pager" aria-label="Adjacent pages"><a href="block-example.html">← Fit saved blocks</a><a href="validation.html">Angle recovery →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#fit-a-saved-profile">Fit a saved profile</a><a href="#parameters-and-normalization">Parameters and normalization</a><a href="#fit-diagnostics">Fit diagnostics</a><a href="#compare-shapes-and-stability">Compare shapes and stability</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
 <dialog aria-label="Search documentation">

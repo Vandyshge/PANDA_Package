@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Read a DATA topology and a custom trajectory dump.">
+<title>LAMMPS · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
+<script src="search-index.js" defer></script><script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html" aria-current="true">User guide</a><a href="api.html">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage" aria-current="page">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / User guide / LAMMPS</p><h1>LAMMPS</h1><p class="lead">Read a DATA topology and a custom trajectory dump.</p><section><h2 id="run-the-lammps-example">Run the LAMMPS example</h2>
+<p><a href="trajectories.html#download-and-run-the-examples">Download the example files and install the extras</a>.</p>
+<p>The example pairs an <code>atom_style atomic</code> DATA file with a custom dump. Type 1 is the wall and type 2 is the selected liquid. For your run, substitute its atom types and set <code>atom_style</code> to the columns in the DATA file’s <code>Atoms</code> section. The dump and DATA file must have matching atom IDs.</p>
+<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> load_trajectory
+
+<span class="syntax-keyword">from</span> md_workflow <span class="syntax-keyword">import</span> analyze
+
+
+traj = load_trajectory(
+    <span class="syntax-string">&quot;slit.data&quot;</span>, <span class="syntax-string">&quot;slit.lammpstrj&quot;</span>,
+    atom_style=<span class="syntax-string">&quot;id type x y z&quot;</span>,
+    dt=<span class="syntax-number">0.002</span>,  <span class="syntax-comment"># ps per integration step; dump interval is 25000 steps</span>
+)
+analyze(
+    traj,
+    walls=<span class="syntax-string">&quot;type 1&quot;</span>,
+    liquid=<span class="syntax-string">&quot;type 2&quot;</span>,
+    rho_bulk=<span class="syntax-number">3.0</span>,
+    average_from=<span class="syntax-string">&quot;2 ns&quot;</span>,
+    average_to=<span class="syntax-string">&quot;10 ns&quot;</span>,
+    block=<span class="syntax-string">&quot;0.5 ns&quot;</span>,
+    prefix=<span class="syntax-string">&quot;lammps&quot;</span>,
+)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>Pore width = 8.000 nm
+Trajectory = 0 to 10000 ps
+Averaging window = 2000 to 10000 ps
+Blocks plotted = 20
+Full blocks inside averaging window = 16
+Mean-profile theta = 120.40 deg
+Block SD inside window = 2.49 deg
+Fit flags = ()</code></pre></div></section><section><h2 id="write-a-compatible-dump">Write a compatible dump</h2>
+<p>Use the integration timestep in <strong>ps per step</strong> for Python’s <code>dt</code>. Here, 25,000 steps × 0.002 ps gives 50 ps between saved frames. With <code>units real</code>, convert the input timestep from fs to ps. With <code>units lj</code>, convert reduced distances and times consistently before using physical nm and ps labels. PANDA's MDAnalysis reader converts input Å to nm.</p>
+<div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">write_data slit.data
+dump trajectory all custom 25000 slit.lammpstrj id type x y z
+dump_modify trajectory sort id</code></pre></div><p><a href="trajectory-averaging.html">Read the diagnostic figure</a> · <a href="https://docs.lammps.org/dump.html">LAMMPS dump command</a> · <a href="https://docs.lammps.org/units.html">LAMMPS units</a></p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="trajectory-gromacs.html">← GROMACS</a><a href="trajectory-averaging.html">Trajectory averaging →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#run-the-lammps-example">Run the LAMMPS example</a><a href="#write-a-compatible-dump">Write a compatible dump</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

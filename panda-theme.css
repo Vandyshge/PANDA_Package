@@ -30,6 +30,7 @@ kbd{font:12px var(--mono);margin-left:8px;color:var(--muted)}
 .toc a{padding:5px 0;font-size:13px}
 .side a[aria-current=page],.side a:hover{background:var(--light);color:var(--green)}
 .side a[aria-current=page]{font-weight:700}
+.side .subpage{padding-left:22px;font-size:13px}
 .toc{padding-left:12px}
 main{min-width:0;padding:36px 0 42px}
 .crumb{color:var(--muted);font-size:13px;margin:0 0 20px}

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Read a GROMACS or LAMMPS trajectory, inspect the contact angle across the full run, and fit a selected averaging window.">
 <title>From a trajectory · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=913e49b019">
+<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
 <script src="search-index.js" defer></script><script src="site.js" defer></script>
 </head>
 <body>
@@ -19,172 +19,19 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="trajectories.html" aria-current="page">From a trajectory</a><a href="fitting.html">Fitting and interpretation</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html" aria-current="page">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / From a trajectory</p><h1>From a trajectory</h1><p class="lead">Read a GROMACS or LAMMPS trajectory, inspect the contact angle across the full run, and fit a selected averaging window.</p><section><h2 id="download-and-run-the-examples">Download and run the examples</h2>
-<p>Extract <a href="md-trajectory-examples.zip" download>md-trajectory-examples.zip</a> and <a href="installation.html#optional-dependencies">install PANDA with the <code>md</code> and <code>plot</code> extras</a>. Run these commands from the extracted directory. Both examples read the same synthetic particle frames written in two engine formats, with an input angle of 120°. The files are designed for testing the analysis workflow.</p>
+<p>Extract <a href="md-trajectory-examples.zip?v=10ns" download>md-trajectory-examples.zip</a> and <a href="installation.html#optional-dependencies">install PANDA with the <code>md</code> and <code>plot</code> extras</a>. Run these commands from the extracted directory. Both examples use the same 201 independently generated particle frames, spanning 0–10 ns at 50 ps intervals. The input angle is 120°. The time axis exercises the trajectory workflow on synthetic coordinates.</p>
 <div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">python md_gromacs.py
-python md_lammps.py</code></pre></div><p>Each script writes an NPZ with the full-run block profiles, an NPZ with the averaged profile, and a PNG with three diagnostic panels.</p></section><section><h2 id="gromacs">GROMACS</h2>
-<p>The example reads <code>slit.gro</code> and <code>slit.xtc</code>. For a simulation, use a matching <code>.tpr</code> or <code>.gro</code> with your trajectory, and substitute the residue and atom names from that topology. The XTC stores frame times. If counting water oxygens, use the bulk <em>oxygen number density</em> in nm⁻³.</p>
-<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> load_trajectory
-
-<span class="syntax-keyword">from</span> md_workflow <span class="syntax-keyword">import</span> analyze
-
-
-traj = load_trajectory(<span class="syntax-string">&quot;slit.gro&quot;</span>, <span class="syntax-string">&quot;slit.xtc&quot;</span>)
-analyze(
-    traj,
-    walls=<span class="syntax-string">&quot;resname WALL&quot;</span>,
-    liquid=<span class="syntax-string">&quot;resname LIQ and name O&quot;</span>,
-    rho_bulk=<span class="syntax-number">3.0</span>,
-    average_from=<span class="syntax-string">&quot;50 ps&quot;</span>,
-    average_to=<span class="syntax-string">&quot;200 ps&quot;</span>,
-    block=<span class="syntax-string">&quot;50 ps&quot;</span>,
-    prefix=<span class="syntax-string">&quot;gromacs&quot;</span>,
-)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>Pore width = 8.000 nm
-Trajectory = 0 to 200 ps
-Averaging window = 50 to 200 ps
-Blocks plotted = 4
-Full blocks inside averaging window = 3
-Mean-profile theta = 123.33 deg
-Block SD inside window = 3.81 deg
-Fit flags = ()</code></pre></div><p><a href="https://manual.gromacs.org/current/reference-manual/file-formats.html">GROMACS file formats</a> · <a href="https://userguide.mdanalysis.org/reading_and_writing.html">MDAnalysis input and topology options</a></p></section><section><h2 id="lammps">LAMMPS</h2>
-<p>The example pairs an <code>atom_style atomic</code> DATA file with a custom dump. Type 1 is the wall and type 2 is the selected liquid. For your run, substitute its atom types and set <code>atom_style</code> to the columns in the DATA file’s <code>Atoms</code> section. The dump and DATA file must have matching atom IDs.</p>
-<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> load_trajectory
-
-<span class="syntax-keyword">from</span> md_workflow <span class="syntax-keyword">import</span> analyze
-
-
-traj = load_trajectory(
-    <span class="syntax-string">&quot;slit.data&quot;</span>, <span class="syntax-string">&quot;slit.lammpstrj&quot;</span>,
-    atom_style=<span class="syntax-string">&quot;id type x y z&quot;</span>,
-    dt=<span class="syntax-number">0.002</span>,  <span class="syntax-comment"># ps per integration step; dump interval is 5000 steps</span>
-)
-analyze(
-    traj,
-    walls=<span class="syntax-string">&quot;type 1&quot;</span>,
-    liquid=<span class="syntax-string">&quot;type 2&quot;</span>,
-    rho_bulk=<span class="syntax-number">3.0</span>,
-    average_from=<span class="syntax-string">&quot;50 ps&quot;</span>,
-    average_to=<span class="syntax-string">&quot;200 ps&quot;</span>,
-    block=<span class="syntax-string">&quot;50 ps&quot;</span>,
-    prefix=<span class="syntax-string">&quot;lammps&quot;</span>,
-)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>Pore width = 8.000 nm
-Trajectory = 0 to 200 ps
-Averaging window = 50 to 200 ps
-Blocks plotted = 4
-Full blocks inside averaging window = 3
-Mean-profile theta = 123.33 deg
-Block SD inside window = 3.81 deg
-Fit flags = ()</code></pre></div>
-<p>For a compatible LAMMPS input, write the topology and dump coordinates as follows. Use the integration timestep in <strong>ps per step</strong> for Python’s <code>dt</code>. Here, 5000 steps × 0.002 ps gives 10 ps between saved frames. With <code>units real</code>, convert the input timestep from fs to ps. With <code>units lj</code>, convert reduced distances and times consistently before using physical nm and ps labels. PANDA's MDAnalysis reader converts input Å to nm.</p>
-<div class="code"><div class="cell-label">Shell</div><pre><code class="language-shell">write_data slit.data
-dump trajectory all custom 5000 slit.lammpstrj id type x y z
-dump_modify trajectory sort id</code></pre></div><p><a href="https://docs.lammps.org/dump.html">LAMMPS dump command</a> · <a href="https://docs.lammps.org/units.html">LAMMPS units</a></p></section><section><h2 id="full-trajectory-and-averaging-window">Full trajectory and averaging window</h2>
-<p id="plot-trajectory-diagnostics">The block-angle panel spans the full 0–200 ps trajectory. The gray point lies before the averaging window. The green shading and dotted line mark 50–200 ps and the start of averaging. The horizontal dashed line gives the angle fitted to the mean density profile over that window. The density map uses the same frames as the mean profile.</p>
-<p>Block points mark the midpoints of the sampled frames in each complete 50 ps block. PANDA drops an incomplete final block. The reported standard deviation uses only complete plotted blocks whose sampled frames lie inside the averaging window. For production data, choose the averaging start after inspecting equilibration and set the block length with temporal correlation in mind.</p>
-<figure class="cell-figure"><img src="md-trajectory-diagnostics.png" alt="Density fit, angle across all four time blocks with averaging starting at 50 ps, and two-dimensional density map"><figcaption>GROMACS-format example. <a href="md-trajectory-diagnostics.png" download>Download PNG</a>.</figcaption></figure><details><summary>Show the shared Python workflow</summary><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-string">&quot;&quot;&quot;Analyze a slit-pore roll from a GROMACS or LAMMPS trajectory.&quot;&quot;&quot;</span>
-
-<span class="syntax-keyword">from</span> pathlib <span class="syntax-keyword">import</span> Path
-
-<span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
-<span class="syntax-keyword">import</span> numpy <span class="syntax-keyword">as</span> np
-
-<span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> SlitPore, density_map, density_profile, fit_blocks
-<span class="syntax-keyword">from</span> panda_md.core.timing <span class="syntax-keyword">import</span> to_picoseconds
-<span class="syntax-keyword">from</span> panda_md.plotting <span class="syntax-keyword">import</span> plot_density_map, plot_fit
-
-
-<span class="syntax-keyword">def</span> analyze(traj, *, walls, liquid, rho_bulk, average_from, average_to, block, prefix):
-    prefix = Path(prefix)
-    times = traj.times_ps()
-    first_ps, last_ps = <span class="syntax-builtin">float</span>(times[<span class="syntax-number">0</span>]), <span class="syntax-builtin">float</span>(times[-<span class="syntax-number">1</span>])
-    average_start = to_picoseconds(average_from)
-    average_end = to_picoseconds(average_to)
-    <span class="syntax-keyword">if</span> <span class="syntax-keyword">not</span> first_ps &lt;= average_start &lt; average_end &lt;= last_ps:
-        <span class="syntax-keyword">raise</span> <span class="syntax-builtin">ValueError</span>(<span class="syntax-string">&quot;The averaging window must lie within the trajectory.&quot;</span>)
-    pore = SlitPore.from_trajectory(traj, walls=walls, liquid=liquid, time=average_from)
-    profiles = density_profile(
-        traj, pore, liquid, start=first_ps, block=block,
-        bins=<span class="syntax-number">80</span>, centering=<span class="syntax-string">&quot;pore&quot;</span>,
-    )
-    average_profile = density_profile(
-        traj, pore, liquid, start=average_from, stop=average_to,
-        bins=<span class="syntax-number">80</span>, centering=<span class="syntax-string">&quot;pore&quot;</span>,
-    ).mean()
-    roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
-    result = roll.fit(average_profile, density_bulk_per_nm3=rho_bulk)
-    blocks = fit_blocks(roll, profiles, result.spec)
-    midpoint = (blocks.block_start_ps + blocks.block_stop_ps) / <span class="syntax-number">2</span>
-    angles = blocks.values(<span class="syntax-string">&quot;theta&quot;</span>)
-    included = (blocks.block_start_ps &gt;= average_start) &amp; (blocks.block_stop_ps &lt;= average_end)
-
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Pore width = {pore.width_nm:.3f} nm&quot;</span>)
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Trajectory = {first_ps:g} to {last_ps:g} ps&quot;</span>)
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Averaging window = {average_start:g} to {average_end:g} ps&quot;</span>)
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Blocks plotted = {len(angles)}&quot;</span>)
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Full blocks inside averaging window = {np.count_nonzero(included)}&quot;</span>)
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Mean-profile theta = {result.values[&#x27;theta&#x27;]:.2f} deg&quot;</span>)
-    <span class="syntax-keyword">if</span> np.count_nonzero(included) &gt;= <span class="syntax-number">2</span>:
-        <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Block SD inside window = {np.std(angles[included], ddof=1):.2f} deg&quot;</span>)
-    <span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Fit flags = {result.problems()}&quot;</span>)
-
-    profiles.save(prefix.with_name(prefix.name + <span class="syntax-string">&quot;-blocks.npz&quot;</span>))
-    average_profile.save(prefix.with_name(prefix.name + <span class="syntax-string">&quot;-average.npz&quot;</span>))
-    density = density_map(
-        traj, pore, liquid, shape=<span class="syntax-string">&quot;roll&quot;</span>, start=average_from, stop=average_to, bins=(<span class="syntax-number">65</span>, <span class="syntax-number">40</span>),
-    )
-    figure = plt.figure(figsize=(<span class="syntax-number">9</span>, <span class="syntax-number">7</span>), layout=<span class="syntax-string">&quot;constrained&quot;</span>)
-    grid = figure.add_gridspec(<span class="syntax-number">2</span>, <span class="syntax-number">2</span>)
-    fit_ax = figure.add_subplot(grid[<span class="syntax-number">0</span>, <span class="syntax-number">0</span>])
-    block_ax = figure.add_subplot(grid[<span class="syntax-number">0</span>, <span class="syntax-number">1</span>])
-    map_ax = figure.add_subplot(grid[<span class="syntax-number">1</span>, :])
-    plot_fit(result, ax=fit_ax)
-    fit_ax.set_title(<span class="syntax-string">&quot;Fit of the averaged profile&quot;</span>)
-    fit_ax.legend(frameon=<span class="syntax-keyword">False</span>, loc=<span class="syntax-string">&quot;lower center&quot;</span>, fontsize=<span class="syntax-number">9</span>)
-    block_ax.axvspan(average_start, average_end, color=<span class="syntax-string">&quot;#e7f0df&quot;</span>,
-                     label=<span class="syntax-string">f&quot;Average: {average_start:g}–{average_end:g} ps&quot;</span>)
-    block_ax.axvline(average_start, color=<span class="syntax-string">&quot;#52763c&quot;</span>, linestyle=<span class="syntax-string">&quot;:&quot;</span>, linewidth=<span class="syntax-number">1.4</span>)
-    block_ax.plot(midpoint, angles, color=<span class="syntax-string">&quot;#8797a1&quot;</span>, linewidth=<span class="syntax-number">1</span>)
-    block_ax.scatter(midpoint[~included], angles[~included], color=<span class="syntax-string">&quot;#677785&quot;</span>, zorder=<span class="syntax-number">3</span>)
-    block_ax.scatter(midpoint[included], angles[included], color=<span class="syntax-string">&quot;#365e88&quot;</span>, zorder=<span class="syntax-number">3</span>)
-    block_ax.axhline(result.values[<span class="syntax-string">&quot;theta&quot;</span>], color=<span class="syntax-string">&quot;#a65d23&quot;</span>, linestyle=<span class="syntax-string">&quot;--&quot;</span>,
-                     linewidth=<span class="syntax-number">1.3</span>, label=<span class="syntax-string">&quot;Fit of averaged profile&quot;</span>)
-    block_ax.<span class="syntax-builtin">set</span>(title=<span class="syntax-string">&quot;Angle across the full trajectory&quot;</span>, xlim=(first_ps, last_ps),
-                 xlabel=<span class="syntax-string">&quot;Time (ps)&quot;</span>, ylabel=<span class="syntax-string">&quot;Contact angle (deg)&quot;</span>)
-    block_ax.legend(frameon=<span class="syntax-keyword">False</span>, loc=<span class="syntax-string">&quot;best&quot;</span>, fontsize=<span class="syntax-number">9</span>)
-    plot_density_map(density, ax=map_ax)
-    map_ax.set_title(<span class="syntax-string">&quot;Density map in the averaging window&quot;</span>)
-    figure.savefig(prefix.with_name(prefix.name + <span class="syntax-string">&quot;-diagnostics.png&quot;</span>), dpi=<span class="syntax-number">160</span>)
-    plt.close(figure)</code></pre></div></details></section><section><h2 id="run-the-block-analysis-on-example-data">Run the block analysis on example data</h2>
-<p>Download <a href="synthetic-roll-blocks.npz" download>synthetic-roll-blocks.npz</a> into the working directory. The file contains eight independent synthetic profiles generated with a 120° contact angle.</p>
-<div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> ProfileSet, SlitPore, fit_blocks
-
-profiles = ProfileSet.load(<span class="syntax-string">&quot;synthetic-roll-blocks.npz&quot;</span>)
-pore = SlitPore(width_nm=<span class="syntax-number">8.0</span>, length_nm=<span class="syntax-number">16.0</span>)
-roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
-result = roll.fit(profiles.mean(), density_bulk_per_nm3=<span class="syntax-number">30.0</span>)
-blocks = fit_blocks(roll, profiles, result.spec)
-<span class="syntax-builtin">print</span>(result.summary())
-<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Block SD = {blocks.std(&#x27;theta&#x27;):.3f} deg&quot;</span>)
-<span class="syntax-builtin">print</span>(<span class="syntax-string">f&quot;Block mean = {blocks.mean(&#x27;theta&#x27;):.3f} deg&quot;</span>)</code></pre></div><div class="cell-output"><div class="cell-label">Output</div><pre><code>slit/roll  regime: non_wetting  loss: 0.0008747
-   theta = 119.985  (free)
-   delta = 0.0301568  (free)
-     phi = 0.400031  (fixed)
-   shift = 0  (fixed)
-Block SD = 0.273 deg
-Block mean = 119.992 deg</code></pre></div><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
-
-angles = blocks.values(<span class="syntax-string">&quot;theta&quot;</span>)
-fig, ax = plt.subplots()
-ax.plot(<span class="syntax-builtin">range</span>(<span class="syntax-number">1</span>, <span class="syntax-builtin">len</span>(angles) + <span class="syntax-number">1</span>), angles, <span class="syntax-string">&quot;o-&quot;</span>, label=<span class="syntax-string">&quot;Block fit&quot;</span>)
-ax.axhline(<span class="syntax-number">120</span>, linestyle=<span class="syntax-string">&quot;--&quot;</span>, label=<span class="syntax-string">&quot;Input angle&quot;</span>)
-ax.<span class="syntax-builtin">set</span>(xlabel=<span class="syntax-string">&quot;Synthetic block&quot;</span>, ylabel=<span class="syntax-string">&quot;Contact angle (deg)&quot;</span>)
-ax.legend()
-plt.show()</code></pre></div><figure class="cell-figure"><img src="synthetic-block-angles.png" alt="Eight synthetic block angle estimates scattered around the input angle of 120 degrees"><figcaption>Each marker is a separate fit. The dashed line marks the 120° input. <a href="synthetic-block-angles.csv" download>Download the block angles</a>.</figcaption></figure></section><section><h2 id="check-the-profile">Check the profile</h2>
-<p>Match the bulk density to the selected particle representation. Check wall selections, centering, bin width, and the periodic box geometry. Use <code>density_map(..., shape="roll")</code> to inspect the two-dimensional morphology if multiple models fit similarly.</p>
-<p>Reload the full-run profiles with <code>ProfileSet.load("gromacs-blocks.npz")</code> and the averaged profile with <code>DensityProfile.load("gromacs-average.npz")</code>. Use the corresponding <code>lammps-</code> filenames for that run.</p></section>
-<nav class="pager" aria-label="Adjacent pages"><a href="geometries.html">← Pores and shapes</a><a href="fitting.html">Fitting and interpretation →</a></nav></main>
-<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#download-and-run-the-examples">Download and run the examples</a><a href="#gromacs">GROMACS</a><a href="#lammps">LAMMPS</a><a href="#full-trajectory-and-averaging-window">Full trajectory and averaging window</a><a href="#run-the-block-analysis-on-example-data">Run the block analysis on example data</a><a href="#check-the-profile">Check the profile</a></nav></aside>
+python md_lammps.py</code></pre></div><p>Each script writes an NPZ with the full-run block profiles, an NPZ with the averaged profile, and a PNG with three diagnostic panels.</p></section><section><h2 id="choose-an-example">Choose an example</h2>
+<ul>
+<li id="gromacs"><a href="trajectory-gromacs.html">GROMACS</a> · GRO topology, XTC trajectory, and residue selections.</li>
+<li id="lammps"><a href="trajectory-lammps.html">LAMMPS</a> · DATA topology, custom dump, atom types, and timestep.</li>
+<li id="full-trajectory-and-averaging-window"><a id="plot-trajectory-diagnostics" href="trajectory-averaging.html">Full trajectory and averaging window</a> · profile, density map, and angle history.</li>
+<li id="run-the-block-analysis-on-example-data"><a href="block-example.html">Fit saved blocks</a> · reuse existing density profiles.</li>
+</ul></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="triangle-example.html">← Triangular filament</a><a href="trajectory-gromacs.html">GROMACS →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#download-and-run-the-examples">Download and run the examples</a><a href="#choose-an-example">Choose an example</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
 <dialog aria-label="Search documentation">
