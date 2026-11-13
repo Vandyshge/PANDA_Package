@@ -268,6 +268,8 @@ page("User guide", "shape-gallery", "3D shape gallery",
      'Cards marked “Formula draft” show geometries from the research formulas.</p>'
      '<p>Graphite marks the solid walls, dark brown the wetting phase, and blue the non-wetting phase. '
      'The contact angle is measured through the blue phase. The volume fraction refers to the full pore, including for cutaway views.</p>'
+     '<p>For polygonal pores, <code>w</code> counts walls touched and <code>c</code> counts corners occupied by the blue phase. '
+     'In a square pore, <code>filament_w2c0</code> touches opposite walls.</p>'
      '{{gallery}}')
 
 page("User guide", "triangle-example", "Triangular filament",
@@ -457,13 +459,15 @@ def gallery():
         for item in items:
             if item["pore"] != pore:
                 continue
-            name = escape(item["shape"])
-            base = f"models/{pore}/{name}"
+            source_name = item["shape"]
+            display_name = item.get("display_name", source_name)
+            name = escape(display_name)
+            base = f"models/{pore}/{escape(source_name)}"
             theta = item["theta_deg"]
             params = f'θ = {theta}° · ' if theta is not None else ''
             params += f'φ = {item["phi"]:.2f}'
-            status = "In package catalog" if (pore, item["shape"]) in registered else "Formula draft"
-            cut = ' · Cutaway' if name == "perforation" or pore == "cylinder" or name.startswith("capsule_w") else ""
+            status = "In package catalog" if (pore, display_name) in registered else "Formula draft"
+            cut = ' · Cutaway' if source_name == "perforation" or pore == "cylinder" or name.startswith("capsule_w") else ""
             cards.append(
                 f'<article class="shape-card"><img src="{base}.webp" width="760" height="589" loading="lazy" '
                 f'alt="{name} in a {pore} pore"><h3><code>{name}</code></h3>'

@@ -140,7 +140,8 @@
     "delta_nm": 0.12,
     "theta_deg": null,
     "phi": 0.3833426523297491,
-    "mesh_phi": 0.3833330509837971
+    "mesh_phi": 0.3833330509837971,
+    "display_name": "filament_w0c0"
   },
   {
     "pore": "square",
@@ -151,7 +152,8 @@
     "delta_nm": 0.12,
     "theta_deg": null,
     "phi": 0.4888164874551971,
-    "mesh_phi": 0.4888114841836317
+    "mesh_phi": 0.4888114841836317,
+    "display_name": "filament_w0c0_straight"
   },
   {
     "pore": "square",
@@ -162,7 +164,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.3701584229390681,
-    "mesh_phi": 0.3701486068064123
+    "mesh_phi": 0.3701486068064123,
+    "display_name": "filament_w1c0"
   },
   {
     "pore": "square",
@@ -173,7 +176,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.7426129032258064,
-    "mesh_phi": 0.7425938907656522
+    "mesh_phi": 0.7425938907656522,
+    "display_name": "filament_w4c0"
   },
   {
     "pore": "square",
@@ -184,7 +188,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.78875770609319,
-    "mesh_phi": 0.7887409032107708
+    "mesh_phi": 0.7887409032107708,
+    "display_name": "filament_w4c1"
   },
   {
     "pore": "square",
@@ -195,7 +200,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.8316064516129033,
-    "mesh_phi": 0.831596806400031
+    "mesh_phi": 0.831596806400031,
+    "display_name": "filament_w4c2"
   },
   {
     "pore": "square",
@@ -206,7 +212,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.7426129032258064,
-    "mesh_phi": 0.7425679579749194
+    "mesh_phi": 0.7425679579749194,
+    "display_name": "filament_w4c3"
   },
   {
     "pore": "square",
@@ -217,7 +224,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.5349612903225807,
-    "mesh_phi": 0.5349429771934461
+    "mesh_phi": 0.5349429771934461,
+    "display_name": "filament_w3c2"
   },
   {
     "pore": "square",
@@ -228,7 +236,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.5844021505376344,
-    "mesh_phi": 0.5843851326572593
+    "mesh_phi": 0.5843851326572593,
+    "display_name": "filament_w2c0"
   },
   {
     "pore": "square",
@@ -239,7 +248,8 @@
     "delta_nm": 0.12,
     "theta_deg": 125,
     "phi": 0.43278351254480285,
-    "mesh_phi": 0.43277090024191245
+    "mesh_phi": 0.43277090024191245,
+    "display_name": "filament_w2c1"
   },
   {
     "pore": "square",
@@ -250,7 +260,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.14546972860125262,
-    "mesh_phi": 0.14523932207499687
+    "mesh_phi": 0.14523932207499687,
+    "display_name": "droplet_w1c0"
   },
   {
     "pore": "square",
@@ -261,7 +272,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.1775741127348643,
-    "mesh_phi": 0.17733072224444232
+    "mesh_phi": 0.17733072224444232,
+    "display_name": "droplet_w2c0"
   },
   {
     "pore": "square",
@@ -272,7 +284,8 @@
     "delta_nm": 0.12,
     "theta_deg": 125,
     "phi": 0.23448643006263048,
-    "mesh_phi": 0.23422956740561476
+    "mesh_phi": 0.23422956740561476,
+    "display_name": "droplet_w2c1"
   },
   {
     "pore": "square",
@@ -283,7 +296,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.8480867383512545,
-    "mesh_phi": 0.8477393638225896
+    "mesh_phi": 0.8477393638225896,
+    "display_name": "perforation_w4c4"
   },
   {
     "pore": "slit",
@@ -393,7 +407,8 @@
     "delta_nm": 0.12,
     "theta_deg": 150,
     "phi": 0.5382573476702509,
-    "mesh_phi": 0.5378666048472447
+    "mesh_phi": 0.5378666048472447,
+    "display_name": "capsule_w4c0"
   },
   {
     "pore": "square",
@@ -404,6 +419,7 @@
     "delta_nm": 0.12,
     "theta_deg": 130,
     "phi": 0.7030602150537635,
-    "mesh_phi": 0.7027549602388049
+    "mesh_phi": 0.7027549602388049,
+    "display_name": "capsule_w4c4"
   }
 ]
