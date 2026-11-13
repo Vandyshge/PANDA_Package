@@ -22,8 +22,9 @@ DYNAMIC = "https://vandyshge.github.io/PANDA_Dynamic/"
 POLYGON = "https://vandyshge.github.io/PANDA_Polygon/"
 PAGES = []
 SUBPAGES = {
-    "triangle-example", "trajectory-gromacs", "trajectory-lammps",
-    "trajectory-averaging", "block-example", "validation",
+    "geometries": ("triangle-example",),
+    "trajectories": ("trajectory-gromacs", "trajectory-lammps", "trajectory-averaging", "block-example"),
+    "fitting": ("validation",),
 }
 
 
@@ -241,12 +242,12 @@ page("Start here", "quickstart", "Quick start",
 page("User guide", "geometries", "Pores and shapes",
      "A pore defines the confinement geometry. A named shape defines the analytical interface inside it.",
      section("Set up a pore", """
-<div class="table"><table><thead><tr><th>Geometry</th><th>Python class</th><th>Characteristic size</th></tr></thead><tbody>
-<tr><td>Slit</td><td><code>SlitPore</code></td><td>Wall-to-wall width H</td></tr>
-<tr><td>Triangle</td><td><code>TrianglePore</code></td><td>Side length a</td></tr>
-<tr><td>Square</td><td><code>SquarePore</code></td><td>Side length a</td></tr>
-<tr><td>Cylinder</td><td><code>CylinderPore</code></td><td>Tube diameter D</td></tr>
-</tbody></table></div>
+<div class="pore-grid">
+<figure><img src="pore-slit.png" width="360" height="230" alt="Two parallel walls separated by H"><figcaption><strong>Slit</strong><code>SlitPore</code><span>Wall-to-wall width <i>H</i></span></figcaption></figure>
+<figure><img src="pore-triangle.png" width="360" height="230" alt="Equilateral triangular cross-section with side a"><figcaption><strong>Triangle</strong><code>TrianglePore</code><span>Side length <i>a</i></span></figcaption></figure>
+<figure><img src="pore-square.png" width="360" height="230" alt="Square cross-section with side a"><figcaption><strong>Square</strong><code>SquarePore</code><span>Side length <i>a</i></span></figcaption></figure>
+<figure><img src="pore-cylinder.png" width="360" height="230" alt="Circular cross-section with diameter D"><figcaption><strong>Cylinder</strong><code>CylinderPore</code><span>Tube diameter <i>D</i></span></figcaption></figure>
+</div>
 <p><code>pore.interface("roll")</code> selects an analytical model for the slit. Polygon names encode the number of walls touched (<code>w</code>) and corners occupied (<code>c</code>).</p>
 """) + section("Shape catalog", """
 <p>This snapshot lists 26 shapes. Of these, 18 supply a density profile and 24 supply surface terms. Availability describes the implemented formulas. Check the individual angle and volume-fraction limits before fitting.</p>
@@ -458,14 +459,30 @@ def sidebar(active):
         return "".join(links)
     links = []
     current_group = None
+    child_pages = {child for children in SUBPAGES.values() for child in children}
+    titles = {slug: title for _, slug, title, _, _ in PAGES}
+
+    def link(slug, label=None):
+        current = ' aria-current="page"' if slug == active else ""
+        return f'<a href="{slug}.html"{current}>{label or titles[slug]}</a>'
+
     for group, slug, title, _, _ in PAGES:
+        if slug in child_pages:
+            continue
         menu_group = "Reference" if group == "Python API" else group
         if current_group != menu_group:
             links.append(f"<p>{menu_group}</p>")
             current_group = menu_group
-        current = ' aria-current="page"' if slug == active else ""
-        level = ' class="subpage"' if slug in SUBPAGES else ""
-        links.append(f'<a href="{slug}.html"{level}{current}>{title}</a>')
+        if children := SUBPAGES.get(slug):
+            expanded = slug == active or active in children
+            state = ' open' if expanded else ''
+            links.append(
+                f'<details class="nav-branch"{state}><summary>{title}</summary>'
+                f'<div class="nav-children">{link(slug, "Section overview")}'
+                + "".join(link(child) for child in children) + "</div></details>"
+            )
+        else:
+            links.append(link(slug))
     return "".join(links)
 
 
@@ -502,6 +519,9 @@ def render(index, entry, sequence, search_version, script_version):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{escape(lead or 'PANDA documentation for contact angles and interface shapes in confined liquids.', quote=True)}">
 <title>{title} · PANDA Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
 <link rel="stylesheet" href="panda-theme.css?v={THEME_VERSION}">
 <script src="search-index.js?v={search_version}" defer></script><script src="site.js?v={script_version}" defer></script>
 </head>
@@ -560,6 +580,7 @@ def build(output):
         "synthetic-block-angles.png", "roll-validation.png",
         "validation-roll-noise.csv", "validation-roll-angle.csv",
         "md-trajectory-examples.zip", "md-trajectory-diagnostics.png",
+        "pore-slit.png", "pore-triangle.png", "pore-square.png", "pore-cylinder.png",
     ):
         shutil.copyfile(ROOT / filename, output / filename)
 

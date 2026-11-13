@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Use the full angle history to show which frames contribute to the reported fit.">
 <title>Trajectory averaging · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
-<script src="search-index.js?v=9536c008d7" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
+<link rel="stylesheet" href="panda-theme.css?v=d0db2b770d">
+<script src="search-index.js?v=06f2c34030" defer></script><script src="site.js?v=239066dbc9" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -19,7 +22,7 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage" aria-current="page">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch" open><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html" aria-current="page">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / Trajectory averaging</p><h1>Trajectory averaging</h1><p class="lead">Use the full angle history to show which frames contribute to the reported fit.</p><section><h2 id="full-trajectory-and-averaging-window">Full trajectory and averaging window</h2>
 <p>Panel (a) shows the density map centered on the roll axis and the slit midplane. Panel (b) shows the density profile and its fit, with the slit midplane at <em>z/H</em> = 0. Both panels use the same 2–10 ns averaging window.</p>
 <p>Panel (c) shows all twenty 0.5 ns blocks across 0–10 ns. Open markers show the four early blocks. Green shading begins at 2 ns, and the horizontal dashed line gives the angle from fitting the averaged profile.</p>

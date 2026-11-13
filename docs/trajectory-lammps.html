@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Read a DATA topology and a custom trajectory dump.">
 <title>LAMMPS · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
-<script src="search-index.js?v=9536c008d7" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
+<link rel="stylesheet" href="panda-theme.css?v=d0db2b770d">
+<script src="search-index.js?v=06f2c34030" defer></script><script src="site.js?v=239066dbc9" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -19,7 +22,7 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage" aria-current="page">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch" open><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html" aria-current="page">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / LAMMPS</p><h1>LAMMPS</h1><p class="lead">Read a DATA topology and a custom trajectory dump.</p><section><h2 id="run-the-lammps-example">Run the LAMMPS example</h2>
 <p><a href="trajectories.html#download-and-run-the-examples">Download the example files and install the extras</a>.</p>
 <p>The example pairs an <code>atom_style atomic</code> DATA file with a custom dump. Type 1 is the wall and type 2 is the selected liquid. For your run, substitute its atom types and set <code>atom_style</code> to the columns in the DATA file’s <code>Atoms</code> section. The dump and DATA file must have matching atom IDs.</p>
