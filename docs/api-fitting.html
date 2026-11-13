@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Configure optimization, read parameters, and inspect diagnostic flags.">
+<title>Fitting and results · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
+<script src="search-index.js?v=6870a62510" defer></script><script src="site.js?v=239066dbc9" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html">User guide</a><a href="api.html" aria-current="true">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><a href="geometries.html">← User guide</a><p>Python API</p><a href="api.html">Reference index</a><a href="api-pores.html">Pores and models</a><a href="api-fitting.html" aria-current="page">Fitting and results</a><a href="api-data.html">Profiles and trajectories</a><a href="api-analysis.html">Blocks and morphology</a><a href="api-synthetic.html">Synthetic data and accuracy</a><a href="api-plotting.html">Plotting</a><a href="api-types.html">Enums and exceptions</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / <a href="api.html">Python API</a> / Fitting and results</p><h1>Fitting and results</h1><p class="lead">Configure optimization, read parameters, and inspect diagnostic flags.</p><p><a href="fitting.html">Fitting guide →</a></p><section class="api-symbol"><h2 id="fitspec">FitSpec</h2><p class="api-path"><code>panda_md.FitSpec</code></p><pre class="api-signature"><code>FitSpec(
+    *,
+    optimize: tuple[str, Ellipsis] | NoneType = None,
+    fixed: Mapping[str, float] = dict(),
+    bounds: Mapping[str, tuple[float, float]] = dict(),
+    initial: Mapping[str, float] = dict(),
+    normalization: core.enums.Normalization = Normalization.AUTO,
+    density_bulk_per_nm3: float | NoneType = None,
+    loss: core.enums.LossFunction = LossFunction.L1,
+    window: tuple[float, float] | NoneType = None,
+    starts_per_parameter: int = 5,
+    optimizer: core.enums.OptimizerMethod = OptimizerMethod.NELDER_MEAD,
+    regime: core.enums.Regime | NoneType = None,
+) -&gt; None</code></pre><p>Reusable settings for a fit, shape comparison, or block analysis. Bounds narrow the model domain. The fit window uses reduced coordinates.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>optimize</code></td><td><code>tuple[str, Ellipsis] | NoneType</code></td></tr><tr><td><code>fixed</code></td><td><code>Mapping[str, float]</code></td></tr><tr><td><code>bounds</code></td><td><code>Mapping[str, tuple[float, float]]</code></td></tr><tr><td><code>initial</code></td><td><code>Mapping[str, float]</code></td></tr><tr><td><code>normalization</code></td><td><code>core.enums.Normalization</code></td></tr><tr><td><code>density_bulk_per_nm3</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>loss</code></td><td><code>core.enums.LossFunction</code></td></tr><tr><td><code>window</code></td><td><code>tuple[float, float] | NoneType</code></td></tr><tr><td><code>starts_per_parameter</code></td><td><code>int</code></td></tr><tr><td><code>optimizer</code></td><td><code>core.enums.OptimizerMethod</code></td></tr><tr><td><code>regime</code></td><td><code>core.enums.Regime | NoneType</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/spec.py#L9">View definition ↗</a></p></section><section class="api-symbol"><h2 id="interfacemodel-fit">InterfaceModel.fit</h2><p class="api-path"><code>panda_md.InterfaceModel.fit</code></p><pre class="api-signature"><code>fit(
+    profile: core.profile.DensityProfile,
+    *,
+    optimize: Sequence[str] | NoneType = None,
+    fixed: Mapping[str, float] | NoneType = None,
+    bounds: Mapping[str, tuple[float, float]] | NoneType = None,
+    initial: Mapping[str, float] | NoneType = None,
+    normalization: core.enums.Normalization = Normalization.AUTO,
+    density_bulk_per_nm3: float | NoneType = None,
+    loss: core.enums.LossFunction = LossFunction.L1,
+    window: tuple[float, float] | NoneType = None,
+    starts_per_parameter: int = 5,
+    optimizer: core.enums.OptimizerMethod = OptimizerMethod.NELDER_MEAD,
+    regime: core.enums.Regime | NoneType = None,
+) -&gt; FitResult</code></pre><p>Fit one DensityProfile and return a FitResult. Set density_bulk_per_nm3 for bulk normalization. The default loss is mean absolute deviation.</p><h3>Parameters</h3><div class="table"><table><thead><tr><th scope='col'>Argument</th><th scope='col'>Meaning</th></tr></thead><tbody><tr><td><code>profile</code></td><td>DensityProfile in physical units.</td></tr><tr><td><code>optimize, fixed</code></td><td>Choose the free parameter names or assign fixed values. An omitted optimize uses the model defaults.</td></tr><tr><td><code>bounds, initial</code></td><td>Optionally narrow parameter bounds and supply an extra starting point in user units.</td></tr><tr><td><code>normalization, density_bulk_per_nm3</code></td><td>Auto normalization uses bulk density if supplied, otherwise the profile mean density.</td></tr><tr><td><code>window</code></td><td>Fit interval on the reduced profile coordinate.</td></tr><tr><td><code>regime</code></td><td>Restrict the search to a supported wetting regime.</td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/model.py#L110">View definition ↗</a></p></section><section class="api-symbol"><h2 id="fitresult">FitResult</h2><p class="api-path"><code>panda_md.FitResult</code></p><pre class="api-signature"><code>FitResult(
+    *,
+    pore_name: str,
+    shape_name: str,
+    regime: core.enums.Regime | NoneType,
+    frame: core.enums.Frame,
+    normalization: core.enums.Normalization,
+    values: Mapping[str, float],
+    free_parameters: tuple[str, Ellipsis],
+    fixed_parameters: tuple[str, Ellipsis],
+    loss: float,
+    success: bool,
+    message: str,
+    start_count: int,
+    evaluation_count: int,
+    feasible: bool,
+    at_bounds: tuple[str, Ellipsis],
+    at_regime_boundary: bool,
+    wall_layer_thickness_nm: float | NoneType,
+    density_bulk_derived_per_nm3: float | NoneType,
+    volume_fraction_from_data: float | NoneType,
+    coordinate: NDArray[float64],
+    data: NDArray[float64],
+    model_curve: NDArray[float64],
+    alternatives: tuple[core.result.FitResult, Ellipsis] = (),
+    spec: core.spec.FitSpec,
+    library_version: str | NoneType = None,
+) -&gt; None</code></pre><p>Fitted values, optimizer diagnostics, normalized fit data, and model curve. Use values[&#x27;theta&#x27;] for the contact angle when the shape has one.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>pore_name</code></td><td><code>str</code></td></tr><tr><td><code>shape_name</code></td><td><code>str</code></td></tr><tr><td><code>regime</code></td><td><code>core.enums.Regime | NoneType</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>normalization</code></td><td><code>core.enums.Normalization</code></td></tr><tr><td><code>values</code></td><td><code>Mapping[str, float]</code></td></tr><tr><td><code>free_parameters</code></td><td><code>tuple[str, Ellipsis]</code></td></tr><tr><td><code>fixed_parameters</code></td><td><code>tuple[str, Ellipsis]</code></td></tr><tr><td><code>loss</code></td><td><code>float</code></td></tr><tr><td><code>success</code></td><td><code>bool</code></td></tr><tr><td><code>message</code></td><td><code>str</code></td></tr><tr><td><code>start_count</code></td><td><code>int</code></td></tr><tr><td><code>evaluation_count</code></td><td><code>int</code></td></tr><tr><td><code>feasible</code></td><td><code>bool</code></td></tr><tr><td><code>at_bounds</code></td><td><code>tuple[str, Ellipsis]</code></td></tr><tr><td><code>at_regime_boundary</code></td><td><code>bool</code></td></tr><tr><td><code>wall_layer_thickness_nm</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>density_bulk_derived_per_nm3</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>volume_fraction_from_data</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>coordinate</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>data</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>model_curve</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>alternatives</code></td><td><code>tuple[core.result.FitResult, Ellipsis]</code></td></tr><tr><td><code>spec</code></td><td><code>core.spec.FitSpec</code></td></tr><tr><td><code>library_version</code></td><td><code>str | NoneType</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="fitresult-summary"><code>summary() -&gt; str</code></dt><dd>Return a human-readable summary of the result and its diagnostics.</dd><dt id="fitresult-problems"><code>problems() -&gt; tuple[str, Ellipsis]</code></dt><dd>Check flags: empty — the fit converged inside the existence domain and did not hit the bounds.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/result.py#L8">View definition ↗</a></p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="api-pores.html">← Pores and models</a><a href="api-data.html">Profiles and trajectories →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#fitspec">FitSpec</a><a href="#interfacemodel-fit">InterfaceModel.fit</a><a href="#fitresult">FitResult</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

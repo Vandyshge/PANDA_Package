@@ -1,0 +1,1336 @@
+{
+  "commit": "eff655eef267bfdcc0b18c7e45f719b5c6af31ed",
+  "symbols": {
+    "panda_md.SlitPore": {
+      "name": "panda_md.SlitPore",
+      "source": "src/panda_md/pores/slit/pore.py#L59",
+      "signature": "SlitPore(\n    *,\n    normal_axis: core.enums.Axis = Axis.Z,\n    wall_selection: str | NoneType = None,\n    width_nm: float,\n    length_nm: float,\n    base_aspect_ratio: float = 1.0,\n    length_axis: core.enums.Axis = Axis.X,\n    wall_offset_nm: float = 0.0,\n) -> None",
+      "fields": [
+        [
+          "normal_axis",
+          "core.enums.Axis"
+        ],
+        [
+          "wall_selection",
+          "str | NoneType"
+        ],
+        [
+          "width_nm",
+          "float"
+        ],
+        [
+          "length_nm",
+          "float"
+        ],
+        [
+          "base_aspect_ratio",
+          "float"
+        ],
+        [
+          "length_axis",
+          "core.enums.Axis"
+        ],
+        [
+          "wall_offset_nm",
+          "float"
+        ]
+      ],
+      "members": {
+        "from_trajectory": {
+          "signature": "from_trajectory(\n    trajectory: core.trajectory.Trajectory,\n    *,\n    walls: str,\n    length_axis: core.enums.Axis = Axis.X,\n    normal_axis: core.enums.Axis = Axis.Z,\n    time: float | str = 0.0,\n    liquid: str | NoneType = None,\n    wall_offset_nm: float = 0.0,\n) -> SlitPore",
+          "description": "Measure the wall-to-wall gap and box lengths from a selected trajectory frame."
+        },
+        "shape_names": {
+          "signature": "shape_names() -> tuple[str, Ellipsis]",
+          "description": ""
+        },
+        "interface": {
+          "signature": "interface(shape_name: str) -> InterfaceModel",
+          "description": ""
+        },
+        "characteristic_size_nm": {
+          "signature": "characteristic_size_nm() -> float",
+          "description": "Size to which the coordinate and δ are reduced: H for the slit, a for polygons."
+        },
+        "volume_nm3": {
+          "signature": "volume_nm3() -> float",
+          "description": "Pore volume relative to which φ is defined."
+        }
+      }
+    },
+    "panda_md.TrianglePore": {
+      "name": "panda_md.TrianglePore",
+      "source": "src/panda_md/pores/triangle/pore.py#L46",
+      "signature": "TrianglePore(\n    *,\n    normal_axis: core.enums.Axis = Axis.Z,\n    wall_selection: str | NoneType = None,\n    side_nm: float,\n    length_nm: float,\n    layer_width_nm: float,\n) -> None",
+      "fields": [
+        [
+          "normal_axis",
+          "core.enums.Axis"
+        ],
+        [
+          "wall_selection",
+          "str | NoneType"
+        ],
+        [
+          "side_nm",
+          "float"
+        ],
+        [
+          "length_nm",
+          "float"
+        ],
+        [
+          "layer_width_nm",
+          "float"
+        ]
+      ],
+      "members": {
+        "shape_names": {
+          "signature": "shape_names() -> tuple[str, Ellipsis]",
+          "description": ""
+        },
+        "interface": {
+          "signature": "interface(shape_name: str) -> InterfaceModel",
+          "description": ""
+        },
+        "characteristic_size_nm": {
+          "signature": "characteristic_size_nm() -> float",
+          "description": "Size to which the coordinate and δ are reduced: H for the slit, a for polygons."
+        },
+        "volume_nm3": {
+          "signature": "volume_nm3() -> float",
+          "description": "Pore volume relative to which φ is defined."
+        }
+      }
+    },
+    "panda_md.SquarePore": {
+      "name": "panda_md.SquarePore",
+      "source": "src/panda_md/pores/square/pore.py#L28",
+      "signature": "SquarePore(\n    *,\n    normal_axis: core.enums.Axis = Axis.Z,\n    wall_selection: str | NoneType = None,\n    side_nm: float,\n    length_nm: float,\n    layer_width_nm: float,\n) -> None",
+      "fields": [
+        [
+          "normal_axis",
+          "core.enums.Axis"
+        ],
+        [
+          "wall_selection",
+          "str | NoneType"
+        ],
+        [
+          "side_nm",
+          "float"
+        ],
+        [
+          "length_nm",
+          "float"
+        ],
+        [
+          "layer_width_nm",
+          "float"
+        ]
+      ],
+      "members": {
+        "shape_names": {
+          "signature": "shape_names() -> tuple[str, Ellipsis]",
+          "description": ""
+        },
+        "interface": {
+          "signature": "interface(shape_name: str) -> InterfaceModel",
+          "description": ""
+        },
+        "characteristic_size_nm": {
+          "signature": "characteristic_size_nm() -> float",
+          "description": "Size to which the coordinate and δ are reduced: H for the slit, a for polygons."
+        },
+        "volume_nm3": {
+          "signature": "volume_nm3() -> float",
+          "description": "Pore volume relative to which φ is defined."
+        }
+      }
+    },
+    "panda_md.CylinderPore": {
+      "name": "panda_md.CylinderPore",
+      "source": "src/panda_md/pores/cylinder/pore.py#L67",
+      "signature": "CylinderPore(\n    *,\n    normal_axis: core.enums.Axis = Axis.Z,\n    wall_selection: str | NoneType = None,\n    diameter_nm: float,\n    length_nm: float,\n    layer_width_nm: float,\n    axis: core.enums.Axis = Axis.X,\n    wall_offset_nm: float = 0.0,\n) -> None",
+      "fields": [
+        [
+          "normal_axis",
+          "core.enums.Axis"
+        ],
+        [
+          "wall_selection",
+          "str | NoneType"
+        ],
+        [
+          "diameter_nm",
+          "float"
+        ],
+        [
+          "length_nm",
+          "float"
+        ],
+        [
+          "layer_width_nm",
+          "float"
+        ],
+        [
+          "axis",
+          "core.enums.Axis"
+        ],
+        [
+          "wall_offset_nm",
+          "float"
+        ]
+      ],
+      "members": {
+        "from_trajectory": {
+          "signature": "from_trajectory(\n    trajectory: core.trajectory.Trajectory,\n    *,\n    walls: str,\n    axis: core.enums.Axis | str = Axis.X,\n    normal_axis: core.enums.Axis | str = Axis.Z,\n    time: float | str = 0.0,\n    liquid: str | NoneType = None,\n    wall_offset_nm: float = 0.0,\n) -> CylinderPore",
+          "description": "Measure the tube diameter and periodic length from the wall selection."
+        },
+        "shape_names": {
+          "signature": "shape_names() -> tuple[str, Ellipsis]",
+          "description": ""
+        },
+        "interface": {
+          "signature": "interface(shape_name: str) -> InterfaceModel",
+          "description": ""
+        },
+        "characteristic_size_nm": {
+          "signature": "characteristic_size_nm() -> float",
+          "description": "Size to which the coordinate and δ are reduced: H for the slit, a for polygons."
+        },
+        "volume_nm3": {
+          "signature": "volume_nm3() -> float",
+          "description": "Pore volume relative to which φ is defined."
+        }
+      }
+    },
+    "panda_md.InterfaceModel": {
+      "name": "panda_md.InterfaceModel",
+      "source": "src/panda_md/core/model.py#L27",
+      "signature": "InterfaceModel(pore: Pore, shape: InterfaceShape[Any]) -> None",
+      "members": {
+        "default_optimize": {
+          "signature": "default_optimize: tuple[str, Ellipsis]",
+          "description": "The parameter names optimized by default for this shape."
+        },
+        "profile": {
+          "signature": "profile(\n    coordinate: _typing._array_like._Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str],\n    **user_values: float,\n) -> NDArray[float64]",
+          "description": "Model ρ/ρ_bulk in the frame of reference of the shape formula."
+        },
+        "is_feasible": {
+          "signature": "is_feasible(**user_values: float) -> bool",
+          "description": "Whether the shape exists; outside the declared wetting regimes it does not."
+        },
+        "phi_limits": {
+          "signature": "phi_limits(**user_values: float) -> tuple[float, float]",
+          "description": "Lower and upper volume-fraction limits for the supplied parameters."
+        },
+        "surface_terms": {
+          "signature": "surface_terms(**user_values: float) -> core.shape.SurfaceTerms",
+          "description": "Return the interfacial areas used in the capillary-energy calculation."
+        },
+        "capillary_energy": {
+          "signature": "capillary_energy(**user_values: float) -> float",
+          "description": "Compute the relative capillary energy from the model's surface terms."
+        },
+        "fit": {
+          "signature": "fit(\n    profile: core.profile.DensityProfile,\n    *,\n    optimize: Sequence[str] | NoneType = None,\n    fixed: Mapping[str, float] | NoneType = None,\n    bounds: Mapping[str, tuple[float, float]] | NoneType = None,\n    initial: Mapping[str, float] | NoneType = None,\n    normalization: core.enums.Normalization = Normalization.AUTO,\n    density_bulk_per_nm3: float | NoneType = None,\n    loss: core.enums.LossFunction = LossFunction.L1,\n    window: tuple[float, float] | NoneType = None,\n    starts_per_parameter: int = 5,\n    optimizer: core.enums.OptimizerMethod = OptimizerMethod.NELDER_MEAD,\n    regime: core.enums.Regime | NoneType = None,\n) -> FitResult",
+          "description": "Fit this model to a density profile with the specified optimization settings."
+        }
+      }
+    },
+    "panda_md.Parameter": {
+      "name": "panda_md.Parameter",
+      "source": "src/panda_md/core/parameters.py#L22",
+      "signature": "Parameter(\n    *,\n    name: str,\n    default: float | NoneType,\n    bounds: tuple[float, float],\n    unit: core.enums.Unit = Unit.DIMENSIONLESS,\n    symbol: str = '',\n    description: str = '',\n    natural_lower_bound: bool = False,\n) -> None",
+      "fields": [
+        [
+          "name",
+          "str"
+        ],
+        [
+          "default",
+          "float | NoneType"
+        ],
+        [
+          "bounds",
+          "tuple[float, float]"
+        ],
+        [
+          "unit",
+          "core.enums.Unit"
+        ],
+        [
+          "symbol",
+          "str"
+        ],
+        [
+          "description",
+          "str"
+        ],
+        [
+          "natural_lower_bound",
+          "bool"
+        ]
+      ]
+    },
+    "panda_md.SymmetryAxis": {
+      "name": "panda_md.SymmetryAxis",
+      "source": "src/panda_md/core/centering.py#L29",
+      "signature": "SymmetryAxis(*, orientation: core.enums.AxisOrientation, locate: core.enums.AxisLocator) -> None",
+      "fields": [
+        [
+          "orientation",
+          "core.enums.AxisOrientation"
+        ],
+        [
+          "locate",
+          "core.enums.AxisLocator"
+        ]
+      ]
+    },
+    "panda_md.FitSpec": {
+      "name": "panda_md.FitSpec",
+      "source": "src/panda_md/core/spec.py#L9",
+      "signature": "FitSpec(\n    *,\n    optimize: tuple[str, Ellipsis] | NoneType = None,\n    fixed: Mapping[str, float] = dict(),\n    bounds: Mapping[str, tuple[float, float]] = dict(),\n    initial: Mapping[str, float] = dict(),\n    normalization: core.enums.Normalization = Normalization.AUTO,\n    density_bulk_per_nm3: float | NoneType = None,\n    loss: core.enums.LossFunction = LossFunction.L1,\n    window: tuple[float, float] | NoneType = None,\n    starts_per_parameter: int = 5,\n    optimizer: core.enums.OptimizerMethod = OptimizerMethod.NELDER_MEAD,\n    regime: core.enums.Regime | NoneType = None,\n) -> None",
+      "fields": [
+        [
+          "optimize",
+          "tuple[str, Ellipsis] | NoneType"
+        ],
+        [
+          "fixed",
+          "Mapping[str, float]"
+        ],
+        [
+          "bounds",
+          "Mapping[str, tuple[float, float]]"
+        ],
+        [
+          "initial",
+          "Mapping[str, float]"
+        ],
+        [
+          "normalization",
+          "core.enums.Normalization"
+        ],
+        [
+          "density_bulk_per_nm3",
+          "float | NoneType"
+        ],
+        [
+          "loss",
+          "core.enums.LossFunction"
+        ],
+        [
+          "window",
+          "tuple[float, float] | NoneType"
+        ],
+        [
+          "starts_per_parameter",
+          "int"
+        ],
+        [
+          "optimizer",
+          "core.enums.OptimizerMethod"
+        ],
+        [
+          "regime",
+          "core.enums.Regime | NoneType"
+        ]
+      ]
+    },
+    "panda_md.InterfaceModel.fit": {
+      "name": "panda_md.InterfaceModel.fit",
+      "source": "src/panda_md/core/model.py#L110",
+      "signature": "fit(\n    profile: core.profile.DensityProfile,\n    *,\n    optimize: Sequence[str] | NoneType = None,\n    fixed: Mapping[str, float] | NoneType = None,\n    bounds: Mapping[str, tuple[float, float]] | NoneType = None,\n    initial: Mapping[str, float] | NoneType = None,\n    normalization: core.enums.Normalization = Normalization.AUTO,\n    density_bulk_per_nm3: float | NoneType = None,\n    loss: core.enums.LossFunction = LossFunction.L1,\n    window: tuple[float, float] | NoneType = None,\n    starts_per_parameter: int = 5,\n    optimizer: core.enums.OptimizerMethod = OptimizerMethod.NELDER_MEAD,\n    regime: core.enums.Regime | NoneType = None,\n) -> FitResult"
+    },
+    "panda_md.FitResult": {
+      "name": "panda_md.FitResult",
+      "source": "src/panda_md/core/result.py#L8",
+      "signature": "FitResult(\n    *,\n    pore_name: str,\n    shape_name: str,\n    regime: core.enums.Regime | NoneType,\n    frame: core.enums.Frame,\n    normalization: core.enums.Normalization,\n    values: Mapping[str, float],\n    free_parameters: tuple[str, Ellipsis],\n    fixed_parameters: tuple[str, Ellipsis],\n    loss: float,\n    success: bool,\n    message: str,\n    start_count: int,\n    evaluation_count: int,\n    feasible: bool,\n    at_bounds: tuple[str, Ellipsis],\n    at_regime_boundary: bool,\n    wall_layer_thickness_nm: float | NoneType,\n    density_bulk_derived_per_nm3: float | NoneType,\n    volume_fraction_from_data: float | NoneType,\n    coordinate: NDArray[float64],\n    data: NDArray[float64],\n    model_curve: NDArray[float64],\n    alternatives: tuple[core.result.FitResult, Ellipsis] = (),\n    spec: core.spec.FitSpec,\n    library_version: str | NoneType = None,\n) -> None",
+      "fields": [
+        [
+          "pore_name",
+          "str"
+        ],
+        [
+          "shape_name",
+          "str"
+        ],
+        [
+          "regime",
+          "core.enums.Regime | NoneType"
+        ],
+        [
+          "frame",
+          "core.enums.Frame"
+        ],
+        [
+          "normalization",
+          "core.enums.Normalization"
+        ],
+        [
+          "values",
+          "Mapping[str, float]"
+        ],
+        [
+          "free_parameters",
+          "tuple[str, Ellipsis]"
+        ],
+        [
+          "fixed_parameters",
+          "tuple[str, Ellipsis]"
+        ],
+        [
+          "loss",
+          "float"
+        ],
+        [
+          "success",
+          "bool"
+        ],
+        [
+          "message",
+          "str"
+        ],
+        [
+          "start_count",
+          "int"
+        ],
+        [
+          "evaluation_count",
+          "int"
+        ],
+        [
+          "feasible",
+          "bool"
+        ],
+        [
+          "at_bounds",
+          "tuple[str, Ellipsis]"
+        ],
+        [
+          "at_regime_boundary",
+          "bool"
+        ],
+        [
+          "wall_layer_thickness_nm",
+          "float | NoneType"
+        ],
+        [
+          "density_bulk_derived_per_nm3",
+          "float | NoneType"
+        ],
+        [
+          "volume_fraction_from_data",
+          "float | NoneType"
+        ],
+        [
+          "coordinate",
+          "NDArray[float64]"
+        ],
+        [
+          "data",
+          "NDArray[float64]"
+        ],
+        [
+          "model_curve",
+          "NDArray[float64]"
+        ],
+        [
+          "alternatives",
+          "tuple[core.result.FitResult, Ellipsis]"
+        ],
+        [
+          "spec",
+          "core.spec.FitSpec"
+        ],
+        [
+          "library_version",
+          "str | NoneType"
+        ]
+      ],
+      "members": {
+        "summary": {
+          "signature": "summary() -> str",
+          "description": "Return a human-readable summary of the result and its diagnostics."
+        },
+        "problems": {
+          "signature": "problems() -> tuple[str, Ellipsis]",
+          "description": "Check flags: empty — the fit converged inside the existence domain and did not hit the bounds."
+        }
+      }
+    },
+    "panda_md.load_trajectory": {
+      "name": "panda_md.load_trajectory",
+      "source": "src/panda_md/trajectory/reader.py#L107",
+      "signature": "load_trajectory(\n    topology: str | pathlib.Path,\n    *trajectory_files: str | pathlib.Path,\n    **options: object,\n) -> trajectory.reader.MDATrajectory"
+    },
+    "panda_md.ArrayTrajectory": {
+      "name": "panda_md.ArrayTrajectory",
+      "source": "src/panda_md/trajectory/arrays.py#L13",
+      "signature": "ArrayTrajectory(\n    *,\n    positions_nm: NDArray[float64],\n    boxes_nm: NDArray[float64],\n    times_ps: NDArray[float64],\n    groups: Mapping[str, NDArray[int64]] = dict(),\n    molecule_ids: NDArray[int64] | NoneType = None,\n    masses: NDArray[float64] | NoneType = None,\n    axis_positions_nm: NDArray[float64] | NoneType = None,\n) -> None",
+      "fields": [
+        [
+          "positions_nm",
+          "NDArray[float64]"
+        ],
+        [
+          "boxes_nm",
+          "NDArray[float64]"
+        ],
+        [
+          "times_ps_values",
+          "NDArray[float64]"
+        ],
+        [
+          "groups",
+          "Mapping[str, NDArray[int64]]"
+        ],
+        [
+          "molecule_ids",
+          "NDArray[int64] | NoneType"
+        ],
+        [
+          "masses",
+          "NDArray[float64] | NoneType"
+        ],
+        [
+          "axis_positions_nm",
+          "NDArray[float64] | NoneType"
+        ]
+      ],
+      "members": {
+        "select": {
+          "signature": "select(selection: str | Sequence[int]) -> NDArray[int64]",
+          "description": "Atom indices of the selection. An empty selection — InvalidTrajectoryError."
+        },
+        "times_ps": {
+          "signature": "times_ps() -> NDArray[float64]",
+          "description": "Time of each frame, ps."
+        },
+        "frame_indices": {
+          "signature": "frame_indices(\n    *,\n    start: float | str = 0.0,\n    stop: float | str | NoneType = None,\n    stride: int = 1,\n) -> list[int]",
+          "description": ""
+        },
+        "frames": {
+          "signature": "frames(\n    groups: Sequence[NDArray[int64]],\n    *,\n    start: float | str = 0.0,\n    stop: float | str | NoneType = None,\n    stride: int = 1,\n) -> Iterator[core.trajectory.TrajectoryFrame]",
+          "description": "Frames with start ≤ t ≤ stop, every stride-th; streamed, without loading the whole trajectory into memory."
+        }
+      }
+    },
+    "panda_md.density_profile": {
+      "name": "panda_md.density_profile",
+      "source": "src/panda_md/trajectory/density.py#L47",
+      "signature": "density_profile(\n    trajectory: core.trajectory.Trajectory,\n    pore: core.pore.Pore,\n    select: str | Sequence[int],\n    *,\n    centering: core.enums.ProfileCentering | str | NoneType = None,\n    bins: int = 200,\n    bin_width_nm: float | NoneType = None,\n    start: float | str = 0.0,\n    stop: float | str | NoneType = None,\n    block: float | str | NoneType = None,\n    stride: int = 1,\n    pore_center_nm: float | NoneType = None,\n    orientation: core.enums.Orientation | str = Orientation.AUTO,\n    per: core.enums.ParticleGrouping | str = ParticleGrouping.ATOM,\n) -> core.profile.ProfileSet"
+    },
+    "panda_md.DensityProfile": {
+      "name": "panda_md.DensityProfile",
+      "source": "src/panda_md/core/profile.py#L24",
+      "signature": "DensityProfile(\n    *,\n    coordinate_nm: NDArray[float64],\n    density_per_nm3: NDArray[float64],\n    density_sem_per_nm3: NDArray[float64] | NoneType = None,\n    frame: core.enums.Frame = Frame.PORE,\n    particle_count: float | NoneType = None,\n    pore_volume_nm3: float | NoneType = None,\n    flipped: bool = False,\n    frame_count: int | NoneType = None,\n) -> None",
+      "fields": [
+        [
+          "coordinate_nm",
+          "NDArray[float64]"
+        ],
+        [
+          "density_per_nm3",
+          "NDArray[float64]"
+        ],
+        [
+          "density_sem_per_nm3",
+          "NDArray[float64] | NoneType"
+        ],
+        [
+          "frame",
+          "core.enums.Frame"
+        ],
+        [
+          "particle_count",
+          "float | NoneType"
+        ],
+        [
+          "pore_volume_nm3",
+          "float | NoneType"
+        ],
+        [
+          "flipped",
+          "bool"
+        ],
+        [
+          "frame_count",
+          "int | NoneType"
+        ]
+      ],
+      "members": {
+        "load": {
+          "signature": "load(path: str | pathlib.Path) -> DensityProfile",
+          "description": ""
+        },
+        "save": {
+          "signature": "save(path: str | pathlib.Path) -> None",
+          "description": "Save: .npz — everything; .csv — columns and metadata in comment lines."
+        },
+        "mean_density_per_nm3": {
+          "signature": "mean_density_per_nm3() -> float",
+          "description": "n̄ = N / V — mean density of the liquid in the pore."
+        }
+      }
+    },
+    "panda_md.ProfileSet": {
+      "name": "panda_md.ProfileSet",
+      "source": "src/panda_md/core/profile.py#L152",
+      "signature": "ProfileSet(\n    *,\n    bin_edges_nm: NDArray[float64],\n    block_densities_per_nm3: NDArray[float64],\n    block_start_ps: NDArray[float64],\n    block_stop_ps: NDArray[float64],\n    block_frame_counts: tuple[int, Ellipsis],\n    block_particle_counts: NDArray[float64],\n    frame: core.enums.Frame,\n    centering: core.enums.ProfileCentering,\n    selection: str,\n    pore_volume_nm3: float | NoneType = None,\n    flipped: bool = False,\n) -> None",
+      "fields": [
+        [
+          "bin_edges_nm",
+          "NDArray[float64]"
+        ],
+        [
+          "block_densities_per_nm3",
+          "NDArray[float64]"
+        ],
+        [
+          "block_start_ps",
+          "NDArray[float64]"
+        ],
+        [
+          "block_stop_ps",
+          "NDArray[float64]"
+        ],
+        [
+          "block_frame_counts",
+          "tuple[int, Ellipsis]"
+        ],
+        [
+          "block_particle_counts",
+          "NDArray[float64]"
+        ],
+        [
+          "frame",
+          "core.enums.Frame"
+        ],
+        [
+          "centering",
+          "core.enums.ProfileCentering"
+        ],
+        [
+          "selection",
+          "str"
+        ],
+        [
+          "pore_volume_nm3",
+          "float | NoneType"
+        ],
+        [
+          "flipped",
+          "bool"
+        ]
+      ],
+      "members": {
+        "load": {
+          "signature": "load(path: str | pathlib.Path) -> ProfileSet",
+          "description": ""
+        },
+        "save": {
+          "signature": "save(path: str | pathlib.Path) -> None",
+          "description": "Save to .npz (arrays and metadata)."
+        },
+        "mean": {
+          "signature": "mean() -> core.profile.DensityProfile",
+          "description": "Return the mean over blocks."
+        },
+        "block": {
+          "signature": "block(index: int) -> core.profile.DensityProfile",
+          "description": ""
+        },
+        "std": {
+          "signature": "std() -> NDArray[float64]",
+          "description": "Standard deviation of the density over blocks (0 for a single block)."
+        },
+        "sem": {
+          "signature": "sem() -> NDArray[float64]",
+          "description": "Standard error of the mean over blocks: std / √(number of blocks)."
+        },
+        "block_count": {
+          "signature": "block_count: int",
+          "description": "Number of available profiles or time blocks."
+        },
+        "coordinate_nm": {
+          "signature": "coordinate_nm: NDArray[float64]",
+          "description": "Common bin centers in nm."
+        }
+      }
+    },
+    "panda_md.density_map": {
+      "name": "panda_md.density_map",
+      "source": "src/panda_md/trajectory/maps.py#L120",
+      "signature": "density_map(\n    trajectory: core.trajectory.Trajectory,\n    pore: pores.slit.pore.SlitPore,\n    select: str | Sequence[int],\n    *,\n    shape: str | NoneType = None,\n    centering: core.enums.ProfileCentering | str | NoneType = None,\n    bins: tuple[int, int] = (100, 100),\n    start: float | str = 0.0,\n    stop: float | str | NoneType = None,\n    stride: int = 1,\n    pore_center_nm: float | NoneType = None,\n    per: core.enums.ParticleGrouping | str = ParticleGrouping.ATOM,\n    orientation: core.enums.Orientation | str = Orientation.AUTO,\n    width_window_nm: float | NoneType = None,\n) -> trajectory.maps.DensityMap"
+    },
+    "panda_md.DensityMap": {
+      "name": "panda_md.DensityMap",
+      "source": "src/panda_md/trajectory/maps.py#L46",
+      "signature": "DensityMap(\n    *,\n    length_edges_nm: NDArray[float64],\n    height_edges_nm: NDArray[float64],\n    density_per_nm3: NDArray[float64],\n    frame: core.enums.Frame,\n    axis_centered: bool,\n    flipped: bool = False,\n    width_window_nm: float | NoneType = None,\n    frame_count: int,\n    selection: str,\n) -> None",
+      "fields": [
+        [
+          "length_edges_nm",
+          "NDArray[float64]"
+        ],
+        [
+          "height_edges_nm",
+          "NDArray[float64]"
+        ],
+        [
+          "density_per_nm3",
+          "NDArray[float64]"
+        ],
+        [
+          "frame",
+          "core.enums.Frame"
+        ],
+        [
+          "axis_centered",
+          "bool"
+        ],
+        [
+          "flipped",
+          "bool"
+        ],
+        [
+          "width_window_nm",
+          "float | NoneType"
+        ],
+        [
+          "frame_count",
+          "int"
+        ],
+        [
+          "selection",
+          "str"
+        ]
+      ]
+    },
+    "panda_md.fit_blocks": {
+      "name": "panda_md.fit_blocks",
+      "source": "src/panda_md/analysis/blocks.py#L92",
+      "signature": "fit_blocks(\n    model: core.model.InterfaceModel,\n    profiles: core.profile.ProfileSet,\n    spec: core.spec.FitSpec | NoneType = None,\n) -> analysis.blocks.FitResultSet"
+    },
+    "panda_md.FitResultSet": {
+      "name": "panda_md.FitResultSet",
+      "source": "src/panda_md/analysis/blocks.py#L25",
+      "signature": "FitResultSet(\n    *,\n    results: tuple[core.result.FitResult, Ellipsis],\n    block_start_ps: NDArray[float64],\n    block_stop_ps: NDArray[float64],\n) -> None",
+      "fields": [
+        [
+          "results",
+          "tuple[core.result.FitResult, Ellipsis]"
+        ],
+        [
+          "block_start_ps",
+          "NDArray[float64]"
+        ],
+        [
+          "block_stop_ps",
+          "NDArray[float64]"
+        ]
+      ],
+      "members": {
+        "values": {
+          "signature": "values(name: str) -> NDArray[float64]",
+          "description": "Value of the parameter (user units) in each block."
+        },
+        "mean": {
+          "signature": "mean(name: str) -> float",
+          "description": "Return the mean over blocks."
+        },
+        "std": {
+          "signature": "std(name: str) -> float",
+          "description": "Spread over blocks; not defined (nan) for a single block."
+        },
+        "sem": {
+          "signature": "sem(name: str) -> float",
+          "description": "Standard error of the mean: std / √(number of blocks) — valid if the blocks exceed the correlation time."
+        },
+        "summary": {
+          "signature": "summary() -> str",
+          "description": "Return a human-readable summary of the result and its diagnostics."
+        }
+      }
+    },
+    "panda_md.statistical_inefficiency": {
+      "name": "panda_md.statistical_inefficiency",
+      "source": "src/panda_md/analysis/blocks.py#L133",
+      "signature": "statistical_inefficiency(\n    values: Sequence[float] | NDArray[float64],\n    max_block_length: int | NoneType = None,\n) -> analysis.blocks.StatisticalInefficiency"
+    },
+    "panda_md.StatisticalInefficiency": {
+      "name": "panda_md.StatisticalInefficiency",
+      "source": "src/panda_md/analysis/blocks.py#L107",
+      "signature": "StatisticalInefficiency(\n    *,\n    block_lengths: tuple[int, Ellipsis],\n    inefficiency: NDArray[float64],\n    series_length: int,\n) -> None",
+      "fields": [
+        [
+          "block_lengths",
+          "tuple[int, Ellipsis]"
+        ],
+        [
+          "inefficiency",
+          "NDArray[float64]"
+        ],
+        [
+          "series_length",
+          "int"
+        ]
+      ],
+      "members": {
+        "plateau": {
+          "signature": "plateau() -> float",
+          "description": "Mean s over the last third of the lengths with at least MIN_BLOCKS blocks (otherwise over the last third"
+        }
+      }
+    },
+    "panda_md.compare_shapes": {
+      "name": "panda_md.compare_shapes",
+      "source": "src/panda_md/analysis/compare.py#L124",
+      "signature": "compare_shapes(\n    pore: core.pore.Pore,\n    profile: core.profile.DensityProfile,\n    spec: core.spec.FitSpec | NoneType = None,\n    shape_names: Sequence[str] | NoneType = None,\n) -> analysis.compare.ShapeComparison"
+    },
+    "panda_md.ShapeComparison": {
+      "name": "panda_md.ShapeComparison",
+      "source": "src/panda_md/analysis/compare.py#L60",
+      "signature": "ShapeComparison(*, pore_name: str, rows: tuple[analysis.compare.ShapeFit, Ellipsis]) -> None",
+      "fields": [
+        [
+          "pore_name",
+          "str"
+        ],
+        [
+          "rows",
+          "tuple[analysis.compare.ShapeFit, Ellipsis]"
+        ]
+      ],
+      "members": {
+        "fitted": {
+          "signature": "fitted: tuple[core.result.FitResult, Ellipsis]",
+          "description": "Successful candidate fits, in ranking order."
+        },
+        "best": {
+          "signature": "best: core.result.FitResult",
+          "description": "The lowest-loss fitted candidate."
+        },
+        "indistinguishable": {
+          "signature": "indistinguishable: tuple[str, Ellipsis]",
+          "description": "Feasible shapes with a loss at most LOSS_TIE_FRACTION above the best: the profile cannot tell them apart."
+        },
+        "summary": {
+          "signature": "summary() -> str",
+          "description": "Return a human-readable summary of the result and its diagnostics."
+        }
+      }
+    },
+    "panda_md.ShapeFit": {
+      "name": "panda_md.ShapeFit",
+      "source": "src/panda_md/analysis/compare.py#L46",
+      "signature": "ShapeFit(\n    *,\n    shape_name: str,\n    result: core.result.FitResult | NoneType = None,\n    skipped_reason: str | NoneType = None,\n) -> None",
+      "fields": [
+        [
+          "shape_name",
+          "str"
+        ],
+        [
+          "result",
+          "core.result.FitResult | NoneType"
+        ],
+        [
+          "skipped_reason",
+          "str | NoneType"
+        ]
+      ]
+    },
+    "panda_md.stability_diagram": {
+      "name": "panda_md.stability_diagram",
+      "source": "src/panda_md/analysis/stability.py#L43",
+      "signature": "stability_diagram(\n    pore: core.pore.Pore,\n    *,\n    contact_angle_deg: float,\n    wall_layer: float,\n    volume_fractions: Sequence[float],\n    length_ratios: Sequence[float],\n    shape_names: Sequence[str] | NoneType = None,\n) -> analysis.stability.StabilityDiagram"
+    },
+    "panda_md.StabilityDiagram": {
+      "name": "panda_md.StabilityDiagram",
+      "source": "src/panda_md/analysis/stability.py#L26",
+      "signature": "StabilityDiagram(\n    *,\n    pore_name: str,\n    contact_angle_deg: float,\n    wall_layer: float,\n    volume_fractions: tuple[float, Ellipsis],\n    length_ratios: tuple[float, Ellipsis],\n    shape_names: tuple[str, Ellipsis],\n    stable_shapes: tuple[tuple[str | NoneType, Ellipsis], Ellipsis],\n) -> None",
+      "fields": [
+        [
+          "pore_name",
+          "str"
+        ],
+        [
+          "contact_angle_deg",
+          "float"
+        ],
+        [
+          "wall_layer",
+          "float"
+        ],
+        [
+          "volume_fractions",
+          "tuple[float, Ellipsis]"
+        ],
+        [
+          "length_ratios",
+          "tuple[float, Ellipsis]"
+        ],
+        [
+          "shape_names",
+          "tuple[str, Ellipsis]"
+        ],
+        [
+          "stable_shapes",
+          "tuple[tuple[str | NoneType, Ellipsis], Ellipsis]"
+        ]
+      ]
+    },
+    "panda_md.synthetic_profile": {
+      "name": "panda_md.synthetic_profile",
+      "source": "src/panda_md/synthetic/profiles.py#L15",
+      "signature": "synthetic_profile(\n    model: core.model.InterfaceModel,\n    values: Mapping[str, float],\n    *,\n    density_bulk_per_nm3: float,\n    bin_count: int = 200,\n    noise_std: float = 0.0,\n    frame: core.enums.Frame = Frame.PORE,\n    offset: float = 0.0,\n    seed: int | NoneType = None,\n    noise_model: core.enums.NoiseModel = NoiseModel.CONSTANT,\n    sampling: core.enums.ProfileSampling = ProfileSampling.CENTER,\n) -> core.profile.DensityProfile"
+    },
+    "panda_md.synthetic_trajectory": {
+      "name": "panda_md.synthetic_trajectory",
+      "source": "src/panda_md/synthetic/points.py#L25",
+      "signature": "synthetic_trajectory(\n    model: core.model.InterfaceModel,\n    values: Mapping[str, float],\n    *,\n    density_bulk_per_nm3: float,\n    frame_count: int = 10,\n    time_step_ps: float = 10.0,\n    substrate_nm: float = 1.0,\n    seed: int | NoneType = None,\n) -> trajectory.arrays.ArrayTrajectory"
+    },
+    "panda_md.analysis.accuracy.AccuracyCase": {
+      "name": "panda_md.analysis.accuracy.AccuracyCase",
+      "source": "src/panda_md/analysis/accuracy.py#L24",
+      "signature": "AccuracyCase(\n    *,\n    truth: dict[str, float],\n    noise_std: float,\n    bin_count: int = 200,\n    offset: float = 0.0,\n    frame: core.enums.Frame = Frame.PORE,\n    optimize: tuple[str, Ellipsis] | NoneType = None,\n    fixed: dict[str, float] = dict(),\n    noise_model: core.enums.NoiseModel = NoiseModel.POISSON,\n    sampling: core.enums.ProfileSampling = ProfileSampling.BIN_AVERAGE,\n) -> None",
+      "fields": [
+        [
+          "truth",
+          "dict[str, float]"
+        ],
+        [
+          "noise_std",
+          "float"
+        ],
+        [
+          "bin_count",
+          "int"
+        ],
+        [
+          "offset",
+          "float"
+        ],
+        [
+          "frame",
+          "core.enums.Frame"
+        ],
+        [
+          "optimize",
+          "tuple[str, Ellipsis] | NoneType"
+        ],
+        [
+          "fixed",
+          "dict[str, float]"
+        ],
+        [
+          "noise_model",
+          "core.enums.NoiseModel"
+        ],
+        [
+          "sampling",
+          "core.enums.ProfileSampling"
+        ]
+      ]
+    },
+    "panda_md.analysis.accuracy.angle_errors": {
+      "name": "panda_md.analysis.accuracy.angle_errors",
+      "source": "src/panda_md/analysis/accuracy.py#L94",
+      "signature": "angle_errors(\n    model: core.model.InterfaceModel,\n    case: analysis.accuracy.AccuracyCase,\n    *,\n    density_bulk_per_nm3: float,\n    seeds: Sequence[int],\n) -> analysis.accuracy.AngleErrors"
+    },
+    "panda_md.analysis.accuracy.AngleErrors": {
+      "name": "panda_md.analysis.accuracy.AngleErrors",
+      "source": "src/panda_md/analysis/accuracy.py#L38",
+      "signature": "AngleErrors(*, errors_deg: NDArray[float64], at_bound: tuple[bool, Ellipsis]) -> None",
+      "fields": [
+        [
+          "errors_deg",
+          "NDArray[float64]"
+        ],
+        [
+          "at_bound",
+          "tuple[bool, Ellipsis]"
+        ]
+      ]
+    },
+    "panda_md.analysis.accuracy.accuracy_study": {
+      "name": "panda_md.analysis.accuracy.accuracy_study",
+      "source": "src/panda_md/analysis/accuracy.py#L121",
+      "signature": "accuracy_study(\n    model: core.model.InterfaceModel,\n    varied: str,\n    cases: Mapping[str, tuple[float, analysis.accuracy.AccuracyCase]],\n    *,\n    density_bulk_per_nm3: float,\n    seeds: Sequence[int],\n) -> analysis.accuracy.AccuracyStudy"
+    },
+    "panda_md.analysis.accuracy.AccuracyStudy": {
+      "name": "panda_md.analysis.accuracy.AccuracyStudy",
+      "source": "src/panda_md/analysis/accuracy.py#L45",
+      "signature": "AccuracyStudy(\n    *,\n    shape_name: str,\n    varied: str,\n    labels: tuple[str, Ellipsis],\n    values: NDArray[float64],\n    errors_deg: NDArray[float64],\n    at_bound_counts: tuple[int, Ellipsis],\n) -> None",
+      "fields": [
+        [
+          "shape_name",
+          "str"
+        ],
+        [
+          "varied",
+          "str"
+        ],
+        [
+          "labels",
+          "tuple[str, Ellipsis]"
+        ],
+        [
+          "values",
+          "NDArray[float64]"
+        ],
+        [
+          "errors_deg",
+          "NDArray[float64]"
+        ],
+        [
+          "at_bound_counts",
+          "tuple[int, Ellipsis]"
+        ]
+      ],
+      "members": {
+        "mean_absolute": {
+          "signature": "mean_absolute() -> NDArray[float64]",
+          "description": ""
+        },
+        "maximum_absolute": {
+          "signature": "maximum_absolute() -> NDArray[float64]",
+          "description": ""
+        },
+        "bias": {
+          "signature": "bias() -> NDArray[float64]",
+          "description": "Systematic shift: the mean of (recovered − true)."
+        },
+        "table": {
+          "signature": "table() -> str",
+          "description": "Format the accuracy metrics as a text table."
+        }
+      }
+    },
+    "panda_md.core.enums.NoiseModel": {
+      "name": "panda_md.core.enums.NoiseModel",
+      "source": "src/panda_md/core/enums.py#L133",
+      "values": [
+        [
+          "CONSTANT",
+          "constant"
+        ],
+        [
+          "POISSON",
+          "poisson"
+        ]
+      ]
+    },
+    "panda_md.core.enums.ProfileSampling": {
+      "name": "panda_md.core.enums.ProfileSampling",
+      "source": "src/panda_md/core/enums.py#L140",
+      "values": [
+        [
+          "CENTER",
+          "center"
+        ],
+        [
+          "BIN_AVERAGE",
+          "bin_average"
+        ]
+      ]
+    },
+    "panda_md.plotting.plot_profile": {
+      "name": "panda_md.plotting.plot_profile",
+      "source": "src/panda_md/plotting/figures.py#L41",
+      "signature": "plot_profile(\n    profile: core.profile.DensityProfile | core.profile.ProfileSet,\n    ax: axes._axes.Axes | NoneType = None,\n) -> axes._axes.Axes"
+    },
+    "panda_md.plotting.plot_fit": {
+      "name": "panda_md.plotting.plot_fit",
+      "source": "src/panda_md/plotting/figures.py#L58",
+      "signature": "plot_fit(\n    result: core.result.FitResult,\n    ax: axes._axes.Axes | NoneType = None,\n) -> axes._axes.Axes"
+    },
+    "panda_md.plotting.plot_blocks": {
+      "name": "panda_md.plotting.plot_blocks",
+      "source": "src/panda_md/plotting/figures.py#L85",
+      "signature": "plot_blocks(\n    blocks: analysis.blocks.FitResultSet,\n    parameter: str = 'theta',\n    ax: axes._axes.Axes | NoneType = None,\n) -> axes._axes.Axes"
+    },
+    "panda_md.plotting.plot_density_map": {
+      "name": "panda_md.plotting.plot_density_map",
+      "source": "src/panda_md/plotting/figures.py#L103",
+      "signature": "plot_density_map(\n    density: trajectory.maps.DensityMap,\n    ax: axes._axes.Axes | NoneType = None,\n) -> axes._axes.Axes"
+    },
+    "panda_md.plotting.plot_stability": {
+      "name": "panda_md.plotting.plot_stability",
+      "source": "src/panda_md/plotting/figures.py#L115",
+      "signature": "plot_stability(\n    diagram: analysis.stability.StabilityDiagram,\n    ax: axes._axes.Axes | NoneType = None,\n) -> axes._axes.Axes"
+    },
+    "panda_md.plotting.plot_accuracy": {
+      "name": "panda_md.plotting.plot_accuracy",
+      "source": "src/panda_md/plotting/figures.py#L144",
+      "signature": "plot_accuracy(\n    study: analysis.accuracy.AccuracyStudy,\n    ax: axes._axes.Axes | NoneType = None,\n) -> axes._axes.Axes"
+    },
+    "panda_md.plotting.save_fit_figure": {
+      "name": "panda_md.plotting.save_fit_figure",
+      "source": "src/panda_md/plotting/figures.py#L78",
+      "signature": "save_fit_figure(result: core.result.FitResult, path: str | pathlib.Path, dpi: int = 150) -> None"
+    },
+    "panda_md.plotting.supported_figure_formats": {
+      "name": "panda_md.plotting.supported_figure_formats",
+      "source": "src/panda_md/plotting/figures.py#L29",
+      "signature": "supported_figure_formats() -> tuple[str, Ellipsis]"
+    },
+    "panda_md.Axis": {
+      "name": "panda_md.Axis",
+      "source": "src/panda_md/core/enums.py#L59",
+      "values": [
+        [
+          "X",
+          "x"
+        ],
+        [
+          "Y",
+          "y"
+        ],
+        [
+          "Z",
+          "z"
+        ]
+      ],
+      "members": {
+        "column": {
+          "signature": "column: int",
+          "description": "Column index of the coordinate in the position array (x — 0, y — 1, z — 2)."
+        }
+      }
+    },
+    "panda_md.AxisLocator": {
+      "name": "panda_md.AxisLocator",
+      "source": "src/panda_md/core/enums.py#L126",
+      "values": [
+        [
+          "LIQUID_CENTER",
+          "liquid_center"
+        ],
+        [
+          "VOID_CENTER",
+          "void_center"
+        ]
+      ]
+    },
+    "panda_md.AxisOrientation": {
+      "name": "panda_md.AxisOrientation",
+      "source": "src/panda_md/core/enums.py#L117",
+      "values": [
+        [
+          "VERTICAL",
+          "vertical"
+        ],
+        [
+          "HORIZONTAL",
+          "horizontal"
+        ]
+      ]
+    },
+    "panda_md.Frame": {
+      "name": "panda_md.Frame",
+      "source": "src/panda_md/core/enums.py#L30",
+      "values": [
+        [
+          "PORE",
+          "pore"
+        ],
+        [
+          "LIQUID",
+          "liquid"
+        ]
+      ]
+    },
+    "panda_md.LossFunction": {
+      "name": "panda_md.LossFunction",
+      "source": "src/panda_md/core/enums.py#L45",
+      "values": [
+        [
+          "L1",
+          "l1"
+        ],
+        [
+          "L2",
+          "l2"
+        ]
+      ]
+    },
+    "panda_md.Normalization": {
+      "name": "panda_md.Normalization",
+      "source": "src/panda_md/core/enums.py#L37",
+      "values": [
+        [
+          "AUTO",
+          "auto"
+        ],
+        [
+          "BULK",
+          "bulk"
+        ],
+        [
+          "MEAN",
+          "mean"
+        ]
+      ]
+    },
+    "panda_md.OptimizerMethod": {
+      "name": "panda_md.OptimizerMethod",
+      "source": "src/panda_md/core/enums.py#L50",
+      "values": [
+        [
+          "NELDER_MEAD",
+          "Nelder-Mead"
+        ],
+        [
+          "POWELL",
+          "Powell"
+        ],
+        [
+          "LBFGSB",
+          "L-BFGS-B"
+        ]
+      ]
+    },
+    "panda_md.Orientation": {
+      "name": "panda_md.Orientation",
+      "source": "src/panda_md/core/enums.py#L89",
+      "values": [
+        [
+          "AUTO",
+          "auto"
+        ],
+        [
+          "KEEP",
+          "keep"
+        ]
+      ]
+    },
+    "panda_md.ParameterName": {
+      "name": "panda_md.ParameterName",
+      "source": "src/panda_md/core/enums.py#L6",
+      "values": [
+        [
+          "CONTACT_ANGLE",
+          "theta"
+        ],
+        [
+          "WALL_LAYER_THICKNESS",
+          "delta"
+        ],
+        [
+          "VOLUME_FRACTION",
+          "phi"
+        ],
+        [
+          "PROFILE_SHIFT",
+          "shift"
+        ]
+      ]
+    },
+    "panda_md.ParticleGrouping": {
+      "name": "panda_md.ParticleGrouping",
+      "source": "src/panda_md/core/enums.py#L82",
+      "values": [
+        [
+          "ATOM",
+          "atom"
+        ],
+        [
+          "MOLECULE",
+          "molecule"
+        ]
+      ]
+    },
+    "panda_md.ProfileCentering": {
+      "name": "panda_md.ProfileCentering",
+      "source": "src/panda_md/core/enums.py#L75",
+      "values": [
+        [
+          "PORE",
+          "pore"
+        ],
+        [
+          "LIQUID",
+          "liquid"
+        ]
+      ]
+    },
+    "panda_md.Regime": {
+      "name": "panda_md.Regime",
+      "source": "src/panda_md/core/enums.py#L23",
+      "values": [
+        [
+          "WETTING",
+          "wetting"
+        ],
+        [
+          "NON_WETTING",
+          "non_wetting"
+        ]
+      ]
+    },
+    "panda_md.Unit": {
+      "name": "panda_md.Unit",
+      "source": "src/panda_md/core/enums.py#L15",
+      "values": [
+        [
+          "DEGREE",
+          "degree"
+        ],
+        [
+          "PORE_SIZE",
+          "pore_size"
+        ],
+        [
+          "DIMENSIONLESS",
+          "dimensionless"
+        ]
+      ]
+    },
+    "panda_md.PandaError": {
+      "name": "panda_md.PandaError",
+      "source": "src/panda_md/core/errors.py#L4"
+    },
+    "panda_md.PandaWarning": {
+      "name": "panda_md.PandaWarning",
+      "source": "src/panda_md/core/errors.py#L78"
+    },
+    "panda_md.InfeasibleParametersError": {
+      "name": "panda_md.InfeasibleParametersError",
+      "source": "src/panda_md/core/errors.py#L46"
+    },
+    "panda_md.InvalidProfileError": {
+      "name": "panda_md.InvalidProfileError",
+      "source": "src/panda_md/core/errors.py#L62"
+    },
+    "panda_md.InvalidTrajectoryError": {
+      "name": "panda_md.InvalidTrajectoryError",
+      "source": "src/panda_md/core/errors.py#L70"
+    },
+    "panda_md.MissingDependencyError": {
+      "name": "panda_md.MissingDependencyError",
+      "source": "src/panda_md/core/errors.py#L74"
+    },
+    "panda_md.NotDerivedError": {
+      "name": "panda_md.NotDerivedError",
+      "source": "src/panda_md/core/errors.py#L8"
+    },
+    "panda_md.ProfileMismatchError": {
+      "name": "panda_md.ProfileMismatchError",
+      "source": "src/panda_md/core/errors.py#L66"
+    },
+    "panda_md.UnsupportedRegimeError": {
+      "name": "panda_md.UnsupportedRegimeError",
+      "source": "src/panda_md/core/errors.py#L54"
+    },
+    "panda_md.__version__": {
+      "name": "panda_md.__version__",
+      "source": ""
+    }
+  }
+}

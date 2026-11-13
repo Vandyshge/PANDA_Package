@@ -50,3 +50,5 @@ python site-src/build.py --output docs
 ```
 
 The site build uses the Python standard library. To regenerate the profile and validation figures, run `python site-src/plot_profile.py` with NumPy and Matplotlib installed, then rebuild the site. GitHub Pages publishes `main:/docs`.
+
+To refresh the Python API signatures, make the target PANDA checkout importable with its `plot` extra, then run `python site-src/refresh_api.py <PANDA-commit>` before rebuilding. The regular site build reads the checked-in API metadata.

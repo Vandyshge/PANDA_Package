@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Generate known-angle test data and measure reconstruction error.">
+<title>Synthetic data and accuracy · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
+<script src="search-index.js?v=6870a62510" defer></script><script src="site.js?v=239066dbc9" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html">User guide</a><a href="api.html" aria-current="true">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><a href="geometries.html">← User guide</a><p>Python API</p><a href="api.html">Reference index</a><a href="api-pores.html">Pores and models</a><a href="api-fitting.html">Fitting and results</a><a href="api-data.html">Profiles and trajectories</a><a href="api-analysis.html">Blocks and morphology</a><a href="api-synthetic.html" aria-current="page">Synthetic data and accuracy</a><a href="api-plotting.html">Plotting</a><a href="api-types.html">Enums and exceptions</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / <a href="api.html">Python API</a> / Synthetic data and accuracy</p><h1>Synthetic data and accuracy</h1><p class="lead">Generate known-angle test data and measure reconstruction error.</p><p><a href="validation.html">Angle recovery example →</a></p><section class="api-symbol"><h2 id="synthetic_profile">synthetic_profile</h2><p class="api-path"><code>panda_md.synthetic_profile</code></p><pre class="api-signature"><code>synthetic_profile(
+    model: core.model.InterfaceModel,
+    values: Mapping[str, float],
+    *,
+    density_bulk_per_nm3: float,
+    bin_count: int = 200,
+    noise_std: float = 0.0,
+    frame: core.enums.Frame = Frame.PORE,
+    offset: float = 0.0,
+    seed: int | NoneType = None,
+    noise_model: core.enums.NoiseModel = NoiseModel.CONSTANT,
+    sampling: core.enums.ProfileSampling = ProfileSampling.CENTER,
+) -&gt; core.profile.DensityProfile</code></pre><p>Generate a one-dimensional profile for known model parameters. Set seed for repeatable noise.</p><h3>Parameters</h3><div class="table"><table><thead><tr><th scope='col'>Argument</th><th scope='col'>Meaning</th></tr></thead><tbody><tr><td><code>values</code></td><td>Model parameters in user units, including theta in degrees where applicable.</td></tr><tr><td><code>noise_std, noise_model, seed</code></td><td>Noise magnitude relative to bulk density, its scaling rule, and the random seed.</td></tr><tr><td><code>sampling</code></td><td>Evaluate at bin centers or average within each bin.</td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/synthetic/profiles.py#L15">View definition ↗</a></p></section><section class="api-symbol"><h2 id="synthetic_trajectory">synthetic_trajectory</h2><p class="api-path"><code>panda_md.synthetic_trajectory</code></p><pre class="api-signature"><code>synthetic_trajectory(
+    model: core.model.InterfaceModel,
+    values: Mapping[str, float],
+    *,
+    density_bulk_per_nm3: float,
+    frame_count: int = 10,
+    time_step_ps: float = 10.0,
+    substrate_nm: float = 1.0,
+    seed: int | NoneType = None,
+) -&gt; trajectory.arrays.ArrayTrajectory</code></pre><p>Sample particle coordinates for a slit-pore shape that implements point containment. The returned trajectory includes liquid and walls groups.</p><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/synthetic/points.py#L25">View definition ↗</a></p></section><section class="api-symbol"><h2 id="accuracycase">AccuracyCase</h2><p class="api-path"><code>panda_md.analysis.accuracy.AccuracyCase</code></p><pre class="api-signature"><code>AccuracyCase(
+    *,
+    truth: dict[str, float],
+    noise_std: float,
+    bin_count: int = 200,
+    offset: float = 0.0,
+    frame: core.enums.Frame = Frame.PORE,
+    optimize: tuple[str, Ellipsis] | NoneType = None,
+    fixed: dict[str, float] = dict(),
+    noise_model: core.enums.NoiseModel = NoiseModel.POISSON,
+    sampling: core.enums.ProfileSampling = ProfileSampling.BIN_AVERAGE,
+) -&gt; None</code></pre><p>Configuration for one synthetic recovery case, including the input parameters and noise settings.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>truth</code></td><td><code>dict[str, float]</code></td></tr><tr><td><code>noise_std</code></td><td><code>float</code></td></tr><tr><td><code>bin_count</code></td><td><code>int</code></td></tr><tr><td><code>offset</code></td><td><code>float</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>optimize</code></td><td><code>tuple[str, Ellipsis] | NoneType</code></td></tr><tr><td><code>fixed</code></td><td><code>dict[str, float]</code></td></tr><tr><td><code>noise_model</code></td><td><code>core.enums.NoiseModel</code></td></tr><tr><td><code>sampling</code></td><td><code>core.enums.ProfileSampling</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/accuracy.py#L24">View definition ↗</a></p></section><section class="api-symbol"><h2 id="angle_errors">angle_errors</h2><p class="api-path"><code>panda_md.analysis.accuracy.angle_errors</code></p><pre class="api-signature"><code>angle_errors(
+    model: core.model.InterfaceModel,
+    case: analysis.accuracy.AccuracyCase,
+    *,
+    density_bulk_per_nm3: float,
+    seeds: Sequence[int],
+) -&gt; analysis.accuracy.AngleErrors</code></pre><p>Repeat a synthetic fit with independent seeds and collect fitted-angle errors.</p><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/accuracy.py#L94">View definition ↗</a></p></section><section class="api-symbol"><h2 id="angleerrors">AngleErrors</h2><p class="api-path"><code>panda_md.analysis.accuracy.AngleErrors</code></p><pre class="api-signature"><code>AngleErrors(*, errors_deg: NDArray[float64], at_bound: tuple[bool, Ellipsis]) -&gt; None</code></pre><p>Per-seed errors in degrees (fitted minus input) and flags for fits at the angle bound.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>errors_deg</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>at_bound</code></td><td><code>tuple[bool, Ellipsis]</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/accuracy.py#L38">View definition ↗</a></p></section><section class="api-symbol"><h2 id="accuracy_study">accuracy_study</h2><p class="api-path"><code>panda_md.analysis.accuracy.accuracy_study</code></p><pre class="api-signature"><code>accuracy_study(
+    model: core.model.InterfaceModel,
+    varied: str,
+    cases: Mapping[str, tuple[float, analysis.accuracy.AccuracyCase]],
+    *,
+    density_bulk_per_nm3: float,
+    seeds: Sequence[int],
+) -&gt; analysis.accuracy.AccuracyStudy</code></pre><p>Run a collection of synthetic recovery cases.</p><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/accuracy.py#L121">View definition ↗</a></p></section><section class="api-symbol"><h2 id="accuracystudy">AccuracyStudy</h2><p class="api-path"><code>panda_md.analysis.accuracy.AccuracyStudy</code></p><pre class="api-signature"><code>AccuracyStudy(
+    *,
+    shape_name: str,
+    varied: str,
+    labels: tuple[str, Ellipsis],
+    values: NDArray[float64],
+    errors_deg: NDArray[float64],
+    at_bound_counts: tuple[int, Ellipsis],
+) -&gt; None</code></pre><p>Collect case-by-case angle errors for tables or figures.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>shape_name</code></td><td><code>str</code></td></tr><tr><td><code>varied</code></td><td><code>str</code></td></tr><tr><td><code>labels</code></td><td><code>tuple[str, Ellipsis]</code></td></tr><tr><td><code>values</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>errors_deg</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>at_bound_counts</code></td><td><code>tuple[int, Ellipsis]</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="accuracystudy-mean_absolute"><code>mean_absolute() -&gt; NDArray[float64]</code></dt><dd></dd><dt id="accuracystudy-maximum_absolute"><code>maximum_absolute() -&gt; NDArray[float64]</code></dt><dd></dd><dt id="accuracystudy-bias"><code>bias() -&gt; NDArray[float64]</code></dt><dd>Systematic shift: the mean of (recovered − true).</dd><dt id="accuracystudy-table"><code>table() -&gt; str</code></dt><dd>Format the accuracy metrics as a text table.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/accuracy.py#L45">View definition ↗</a></p></section><section class="api-symbol"><h2 id="noisemodel">NoiseModel</h2><p class="api-path"><code>panda_md.core.enums.NoiseModel</code></p><p>Noise model for a synthetic density profile.</p><div class="table"><table><thead><tr><th scope='col'>Member</th><th scope='col'>Value</th></tr></thead><tbody><tr><td><code>CONSTANT</code></td><td><code>constant</code></td></tr><tr><td><code>POISSON</code></td><td><code>poisson</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/enums.py#L133">View definition ↗</a></p></section><section class="api-symbol"><h2 id="profilesampling">ProfileSampling</h2><p class="api-path"><code>panda_md.core.enums.ProfileSampling</code></p><p>Use the center of each bin or average the model across the bin.</p><div class="table"><table><thead><tr><th scope='col'>Member</th><th scope='col'>Value</th></tr></thead><tbody><tr><td><code>CENTER</code></td><td><code>center</code></td></tr><tr><td><code>BIN_AVERAGE</code></td><td><code>bin_average</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/enums.py#L140">View definition ↗</a></p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="api-analysis.html">← Blocks and morphology</a><a href="api-plotting.html">Plotting →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#synthetic_profile">synthetic_profile</a><a href="#synthetic_trajectory">synthetic_trajectory</a><a href="#accuracycase">AccuracyCase</a><a href="#angle_errors">angle_errors</a><a href="#angleerrors">AngleErrors</a><a href="#accuracy_study">accuracy_study</a><a href="#accuracystudy">AccuracyStudy</a><a href="#noisemodel">NoiseModel</a><a href="#profilesampling">ProfileSampling</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

@@ -13,6 +13,8 @@ from hashlib import sha256
 from html import escape
 from pathlib import Path
 
+from api_reference import reference_pages
+
 ROOT = Path(__file__).resolve().parent
 PACKAGE = "https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0"
 THEME_VERSION = sha256((ROOT / "panda-theme.css").read_bytes()).hexdigest()[:10]
@@ -390,24 +392,8 @@ blocks = true
 output = "result.json"
 """, "toml") + "<p>Save as <code>panda.toml</code> and run <code>panda run panda.toml</code>. Input paths are relative to the settings file.</p>"))
 
-page("Reference", "api", "Python API",
-     "A reference to the main objects and functions in the panda_md namespace.",
-     section("Geometry and fitting", """
-<dl><dt><code>SlitPore</code>, <code>TrianglePore</code>, <code>SquarePore</code>, <code>CylinderPore</code></dt><dd>Store pore dimensions in nm. Call <code>pore.interface(shape)</code> to construct an <code>InterfaceModel</code>.</dd>
-<dt><code>InterfaceModel.fit(profile, **settings)</code></dt><dd>Fit one morphology to one <code>DensityProfile</code>.</dd>
-<dt><code>FitSpec</code></dt><dd>Reusable fit settings, including normalization, free and fixed parameters, and bounds.</dd>
-<dt><code>FitResult</code></dt><dd>Inspect <code>values</code>, <code>loss</code>, <code>summary()</code>, and <code>problems()</code>.</dd></dl>
-""") + section("Profiles and trajectories", """
-<dl><dt><code>load_trajectory(topology, *trajectory_files, **options)</code></dt><dd>Read MD files through MDAnalysis. For in-memory data use <code>ArrayTrajectory</code>.</dd>
-<dt><code>density_profile(trajectory, pore, select, ...)</code></dt><dd>Build density profiles, optionally split into time blocks.</dd>
-<dt><code>DensityProfile</code>, <code>ProfileSet</code></dt><dd>Represent one profile or a series. A profile set provides <code>mean()</code>, <code>sem()</code>, and <code>block(i)</code>.</dd>
-<dt><code>density_map(...)</code>, <code>synthetic_profile(...)</code></dt><dd>Compute a two-dimensional density map or generate a synthetic one-dimensional profile from known model parameters.</dd></dl>
-""") + section("Analysis and plotting", f"""
-<dl><dt><code>fit_blocks(model, profiles, spec=None)</code></dt><dd>Fit each block and summarize parameter means and spread.</dd>
-<dt><code>compare_shapes(pore, profile, spec)</code></dt><dd>Rank fitted models and report skipped or near-indistinguishable candidates.</dd>
-<dt><code>stability_diagram(pore, *, contact_angle_deg, wall_layer, volume_fractions, length_ratios, shape_names=None)</code></dt><dd>Find minimum-energy candidates over a grid of liquid fractions and reduced pore lengths.</dd>
-<dt><code>panda_md.plotting</code></dt><dd>Optional plotting helpers including <code>plot_fit</code> and <code>plot_density_map</code>.</dd></dl>
-<p>For full signatures and extension guides, see the <a href="{PACKAGE}/tree/main/docs/manual">developer manual</a> (repository access required).</p>"""))
+API_PAGES, API_SEARCH = reference_pages(section, PACKAGE)
+PAGES.append(API_PAGES[0])
 
 PUBLICATIONS = [
     ("Kopanichuk et al.", "The shape of the liquid-liquid interface for oil/water mixtures in slit pores", "Colloids and Surfaces A 601 (2020), 124884", "https://doi.org/10.1016/j.colsurfa.2020.124884"),
@@ -463,32 +449,45 @@ def shape_rows():
 
 
 def sidebar(active):
+    if active == "api" or active.startswith("api-"):
+        links = ['<a href="geometries.html">← User guide</a><p>Python API</p>']
+        for _, slug, title, _, _ in API_PAGES:
+            current = ' aria-current="page"' if slug == active else ""
+            label = "Reference index" if slug == "api" else title
+            links.append(f'<a href="{slug}.html"{current}>{label}</a>')
+        return "".join(links)
     links = []
     current_group = None
     for group, slug, title, _, _ in PAGES:
-        if current_group != group:
-            links.append(f"<p>{group}</p>")
-            current_group = group
+        menu_group = "Reference" if group == "Python API" else group
+        if current_group != menu_group:
+            links.append(f"<p>{menu_group}</p>")
+            current_group = menu_group
         current = ' aria-current="page"' if slug == active else ""
         level = ' class="subpage"' if slug in SUBPAGES else ""
         links.append(f'<a href="{slug}.html"{level}{current}>{title}</a>')
     return "".join(links)
 
 
-def render(index, entry):
+def render(index, entry, sequence, search_version, script_version):
     group, slug, title, lead, body = entry
     headings = re.findall(r'<h2 id="([^"]+)">([^<]+)</h2>', body)
     toc = "".join(f'<a href="#{anchor}">{heading}</a>' for anchor, heading in headings)
     article = f'<h1>{title}</h1><p class="lead">{lead}</p>' if lead else ""
-    previous = PAGES[index - 1][1:3] if index else None
-    following = PAGES[index + 1][1:3] if index + 1 < len(PAGES) else None
+    breadcrumb = f"Documentation / {group} / {title}"
+    if slug == "api":
+        breadcrumb = "Documentation / Python API"
+    elif group == "Python API":
+        breadcrumb = f'Documentation / <a href="api.html">Python API</a> / {title}'
+    previous = sequence[index - 1][1:3] if index else None
+    following = sequence[index + 1][1:3] if index + 1 < len(sequence) else None
     back = f'<a href="{previous[0]}.html">← {previous[1]}</a>' if previous else "<span></span>"
     forward = f'<a href="{following[0]}.html">{following[1]} →</a>' if following else ""
     tabs = [
         ("Overview", "index", slug == "index"),
         ("Getting started", "quickstart", slug in {"installation", "quickstart"}),
         ("User guide", "geometries", group == "User guide"),
-        ("Python API", "api", slug == "api"),
+        ("Python API", "api", group == "Python API"),
         ("Citation", "citation", slug == "citation"),
     ]
     nav_links = []
@@ -504,7 +503,7 @@ def render(index, entry):
 <meta name="description" content="{escape(lead or 'PANDA documentation for contact angles and interface shapes in confined liquids.', quote=True)}">
 <title>{title} · PANDA Documentation</title>
 <link rel="stylesheet" href="panda-theme.css?v={THEME_VERSION}">
-<script src="search-index.js" defer></script><script src="site.js" defer></script>
+<script src="search-index.js?v={search_version}" defer></script><script src="site.js?v={script_version}" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -518,7 +517,7 @@ def render(index, entry):
 </div></header>
 <div class="layout">
 <aside class="side" id="sidebar"><nav aria-label="Documentation">{sidebar(slug)}</nav></aside>
-<main id="main"><p class="crumb">Documentation / {group} / {title}</p>{article}{body}
+<main id="main"><p class="crumb">{breadcrumb}</p>{article}{body}
 <nav class="pager" aria-label="Adjacent pages">{back}{forward}</nav></main>
 <aside class="toc"><nav aria-label="Page contents"><p>On this page</p>{toc}</nav></aside>
 </div>
@@ -534,14 +533,23 @@ def render(index, entry):
 def build(output):
     output.mkdir(parents=True, exist_ok=True)
     index = []
-    for order, entry in enumerate(PAGES):
+    rendered_pages = []
+    for entry in [*PAGES, *API_PAGES[1:]]:
         group, slug, title, lead, body = entry
         if slug == "geometries":
             body = body.replace("{{shapes}}", shape_rows())
+        sequence = API_PAGES if group == "Python API" else PAGES
+        order = sequence.index(entry)
         path = slug + ".html"
-        (output / path).write_text(render(order, (group, slug, title, lead, body)), encoding="utf-8")
+        rendered_pages.append((path, order, (group, slug, title, lead, body), sequence))
         index.append({"title": title, "href": path, "text": lead + " " + re.sub(r"<[^>]+>", " ", body)})
-    (output / "search-index.js").write_text("window.pandaSearch = " + json.dumps(index) + ";\n", encoding="utf-8")
+    search_index = "window.pandaSearch = " + json.dumps(index + API_SEARCH) + ";\n"
+    search_version = sha256(search_index.encode()).hexdigest()[:10]
+    script_version = sha256((ROOT / "site.js").read_bytes()).hexdigest()[:10]
+    for path, order, entry, sequence in rendered_pages:
+        html = render(order, entry, sequence, search_version, script_version)
+        (output / path).write_text(html, encoding="utf-8")
+    (output / "search-index.js").write_text(search_index, encoding="utf-8")
     (output / "quickstart.py").write_text(QUICKSTART + "\n", encoding="utf-8")
     (output / "panda-method.bib").write_text(BIBTEX + "\n", encoding="utf-8")
     (output / ".nojekyll").touch()

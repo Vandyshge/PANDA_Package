@@ -72,6 +72,14 @@ pre code{font-size:inherit}
 .cell-figure img{display:block;width:100%;max-width:660px;height:auto;margin:0 auto}
 .cell-figure figcaption{margin-top:8px;font-size:14px;color:var(--muted)}
 .table{overflow:auto}
+.api-symbol{border-top:1px solid var(--line);margin-top:30px}
+.api-symbol h2{font-family:var(--mono);font-size:clamp(18px,2.2vw,25px);overflow-wrap:anywhere;margin:20px 0 6px}
+.api-path{font-size:13px;margin-bottom:14px}
+.api-signature{padding:12px 14px;margin:12px 0}
+.api-members dt{margin-top:14px}
+.api-members dt code{display:block;white-space:pre-wrap;overflow-wrap:anywhere}
+.api-members dd{margin:4px 0 0;color:var(--muted)}
+.api-source{font-size:13px;margin-bottom:0}
 table{border-collapse:collapse;width:100%;font-size:14px}
 td,th{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
 th{background:var(--panel)}

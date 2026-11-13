@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Compare fitted shapes, estimate block spread, and map capillary stability.">
+<title>Blocks and morphology · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
+<script src="search-index.js?v=6870a62510" defer></script><script src="site.js?v=239066dbc9" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html">User guide</a><a href="api.html" aria-current="true">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><a href="geometries.html">← User guide</a><p>Python API</p><a href="api.html">Reference index</a><a href="api-pores.html">Pores and models</a><a href="api-fitting.html">Fitting and results</a><a href="api-data.html">Profiles and trajectories</a><a href="api-analysis.html" aria-current="page">Blocks and morphology</a><a href="api-synthetic.html">Synthetic data and accuracy</a><a href="api-plotting.html">Plotting</a><a href="api-types.html">Enums and exceptions</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / <a href="api.html">Python API</a> / Blocks and morphology</p><h1>Blocks and morphology</h1><p class="lead">Compare fitted shapes, estimate block spread, and map capillary stability.</p><p><a href="trajectory-averaging.html">Block averaging example →</a></p><section class="api-symbol"><h2 id="fit_blocks">fit_blocks</h2><p class="api-path"><code>panda_md.fit_blocks</code></p><pre class="api-signature"><code>fit_blocks(
+    model: core.model.InterfaceModel,
+    profiles: core.profile.ProfileSet,
+    spec: core.spec.FitSpec | NoneType = None,
+) -&gt; analysis.blocks.FitResultSet</code></pre><p>Fit each block of a ProfileSet with the same model and settings.</p><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/blocks.py#L92">View definition ↗</a></p></section><section class="api-symbol"><h2 id="fitresultset">FitResultSet</h2><p class="api-path"><code>panda_md.FitResultSet</code></p><pre class="api-signature"><code>FitResultSet(
+    *,
+    results: tuple[core.result.FitResult, Ellipsis],
+    block_start_ps: NDArray[float64],
+    block_stop_ps: NDArray[float64],
+) -&gt; None</code></pre><p>Per-block fits and summary statistics. Interpret SEM as uncertainty of the mean only when blocks are sufficiently independent.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>results</code></td><td><code>tuple[core.result.FitResult, Ellipsis]</code></td></tr><tr><td><code>block_start_ps</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_stop_ps</code></td><td><code>NDArray[float64]</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="fitresultset-values"><code>values(name: str) -&gt; NDArray[float64]</code></dt><dd>Value of the parameter (user units) in each block.</dd><dt id="fitresultset-mean"><code>mean(name: str) -&gt; float</code></dt><dd>Return the mean over blocks.</dd><dt id="fitresultset-std"><code>std(name: str) -&gt; float</code></dt><dd>Spread over blocks; not defined (nan) for a single block.</dd><dt id="fitresultset-sem"><code>sem(name: str) -&gt; float</code></dt><dd>Standard error of the mean: std / √(number of blocks) — valid if the blocks exceed the correlation time.</dd><dt id="fitresultset-summary"><code>summary() -&gt; str</code></dt><dd>Return a human-readable summary of the result and its diagnostics.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/blocks.py#L25">View definition ↗</a></p></section><section class="api-symbol"><h2 id="statistical_inefficiency">statistical_inefficiency</h2><p class="api-path"><code>panda_md.statistical_inefficiency</code></p><pre class="api-signature"><code>statistical_inefficiency(
+    values: Sequence[float] | NDArray[float64],
+    max_block_length: int | NoneType = None,
+) -&gt; analysis.blocks.StatisticalInefficiency</code></pre><p>Estimate how the variance of block means changes with block length for a series.</p><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/blocks.py#L133">View definition ↗</a></p></section><section class="api-symbol"><h2 id="statisticalinefficiency">StatisticalInefficiency</h2><p class="api-path"><code>panda_md.StatisticalInefficiency</code></p><pre class="api-signature"><code>StatisticalInefficiency(
+    *,
+    block_lengths: tuple[int, Ellipsis],
+    inefficiency: NDArray[float64],
+    series_length: int,
+) -&gt; None</code></pre><p>Block lengths and estimated inefficiencies, with a plateau estimate when enough reliable lengths exist.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>block_lengths</code></td><td><code>tuple[int, Ellipsis]</code></td></tr><tr><td><code>inefficiency</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>series_length</code></td><td><code>int</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="statisticalinefficiency-plateau"><code>plateau() -&gt; float</code></dt><dd>Mean s over the last third of the lengths with at least MIN_BLOCKS blocks (otherwise over the last third</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/blocks.py#L107">View definition ↗</a></p></section><section class="api-symbol"><h2 id="compare_shapes">compare_shapes</h2><p class="api-path"><code>panda_md.compare_shapes</code></p><pre class="api-signature"><code>compare_shapes(
+    pore: core.pore.Pore,
+    profile: core.profile.DensityProfile,
+    spec: core.spec.FitSpec | NoneType = None,
+    shape_names: Sequence[str] | NoneType = None,
+) -&gt; analysis.compare.ShapeComparison</code></pre><p>Fit candidate shapes to the same profile and rank by loss. The result retains skipped shapes and records nearly indistinguishable candidates.</p><h3>Parameters</h3><div class="table"><table><thead><tr><th scope='col'>Argument</th><th scope='col'>Meaning</th></tr></thead><tbody><tr><td><code>spec</code></td><td>Fit settings shared by the candidate shapes.</td></tr><tr><td><code>shape_names</code></td><td>Optional list of shapes to compare. By default, use all registered shapes for the pore.</td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/compare.py#L124">View definition ↗</a></p></section><section class="api-symbol"><h2 id="shapecomparison">ShapeComparison</h2><p class="api-path"><code>panda_md.ShapeComparison</code></p><pre class="api-signature"><code>ShapeComparison(*, pore_name: str, rows: tuple[analysis.compare.ShapeFit, Ellipsis]) -&gt; None</code></pre><p>Comparison of feasible fits and skipped candidates.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>pore_name</code></td><td><code>str</code></td></tr><tr><td><code>rows</code></td><td><code>tuple[analysis.compare.ShapeFit, Ellipsis]</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="shapecomparison-fitted"><code>fitted: tuple[core.result.FitResult, Ellipsis]</code></dt><dd>Successful candidate fits, in ranking order.</dd><dt id="shapecomparison-best"><code>best: core.result.FitResult</code></dt><dd>The lowest-loss fitted candidate.</dd><dt id="shapecomparison-indistinguishable"><code>indistinguishable: tuple[str, Ellipsis]</code></dt><dd>Feasible shapes with a loss at most LOSS_TIE_FRACTION above the best: the profile cannot tell them apart.</dd><dt id="shapecomparison-summary"><code>summary() -&gt; str</code></dt><dd>Return a human-readable summary of the result and its diagnostics.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/compare.py#L60">View definition ↗</a></p></section><section class="api-symbol"><h2 id="shapefit">ShapeFit</h2><p class="api-path"><code>panda_md.ShapeFit</code></p><pre class="api-signature"><code>ShapeFit(
+    *,
+    shape_name: str,
+    result: core.result.FitResult | NoneType = None,
+    skipped_reason: str | NoneType = None,
+) -&gt; None</code></pre><p>One candidate&#x27;s fit result or the reason PANDA skipped it.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>shape_name</code></td><td><code>str</code></td></tr><tr><td><code>result</code></td><td><code>core.result.FitResult | NoneType</code></td></tr><tr><td><code>skipped_reason</code></td><td><code>str | NoneType</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/compare.py#L46">View definition ↗</a></p></section><section class="api-symbol"><h2 id="stability_diagram">stability_diagram</h2><p class="api-path"><code>panda_md.stability_diagram</code></p><pre class="api-signature"><code>stability_diagram(
+    pore: core.pore.Pore,
+    *,
+    contact_angle_deg: float,
+    wall_layer: float,
+    volume_fractions: Sequence[float],
+    length_ratios: Sequence[float],
+    shape_names: Sequence[str] | NoneType = None,
+) -&gt; analysis.stability.StabilityDiagram</code></pre><p>Find the minimum capillary energy over volume fractions and reduced pore lengths at a fixed angle and wall-layer thickness.</p><h3>Parameters</h3><div class="table"><table><thead><tr><th scope='col'>Argument</th><th scope='col'>Meaning</th></tr></thead><tbody><tr><td><code>contact_angle_deg, wall_layer</code></td><td>Fixed contact angle in degrees and effective wall-layer thickness in reduced pore units.</td></tr><tr><td><code>volume_fractions, length_ratios</code></td><td>Grid coordinates. Length ratios are relative to the characteristic pore size.</td></tr><tr><td><code>shape_names</code></td><td>Optional restriction to the listed morphologies.</td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/stability.py#L43">View definition ↗</a></p></section><section class="api-symbol"><h2 id="stabilitydiagram">StabilityDiagram</h2><p class="api-path"><code>panda_md.StabilityDiagram</code></p><pre class="api-signature"><code>StabilityDiagram(
+    *,
+    pore_name: str,
+    contact_angle_deg: float,
+    wall_layer: float,
+    volume_fractions: tuple[float, Ellipsis],
+    length_ratios: tuple[float, Ellipsis],
+    shape_names: tuple[str, Ellipsis],
+    stable_shapes: tuple[tuple[str | NoneType, Ellipsis], Ellipsis],
+) -&gt; None</code></pre><p>Grid of stable shape names, indexed by length ratio then volume fraction. None means no candidate exists at that point.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>pore_name</code></td><td><code>str</code></td></tr><tr><td><code>contact_angle_deg</code></td><td><code>float</code></td></tr><tr><td><code>wall_layer</code></td><td><code>float</code></td></tr><tr><td><code>volume_fractions</code></td><td><code>tuple[float, Ellipsis]</code></td></tr><tr><td><code>length_ratios</code></td><td><code>tuple[float, Ellipsis]</code></td></tr><tr><td><code>shape_names</code></td><td><code>tuple[str, Ellipsis]</code></td></tr><tr><td><code>stable_shapes</code></td><td><code>tuple[tuple[str | NoneType, Ellipsis], Ellipsis]</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/analysis/stability.py#L26">View definition ↗</a></p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="api-data.html">← Profiles and trajectories</a><a href="api-synthetic.html">Synthetic data and accuracy →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#fit_blocks">fit_blocks</a><a href="#fitresultset">FitResultSet</a><a href="#statistical_inefficiency">statistical_inefficiency</a><a href="#statisticalinefficiency">StatisticalInefficiency</a><a href="#compare_shapes">compare_shapes</a><a href="#shapecomparison">ShapeComparison</a><a href="#shapefit">ShapeFit</a><a href="#stability_diagram">stability_diagram</a><a href="#stabilitydiagram">StabilityDiagram</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

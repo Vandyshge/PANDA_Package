@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Choose a geometry, discover its shapes, and evaluate an interface.">
+<title>Pores and models · PANDA Documentation</title>
+<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
+<script src="search-index.js?v=6870a62510" defer></script><script src="site.js?v=239066dbc9" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html">User guide</a><a href="api.html" aria-current="true">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><a href="geometries.html">← User guide</a><p>Python API</p><a href="api.html">Reference index</a><a href="api-pores.html" aria-current="page">Pores and models</a><a href="api-fitting.html">Fitting and results</a><a href="api-data.html">Profiles and trajectories</a><a href="api-analysis.html">Blocks and morphology</a><a href="api-synthetic.html">Synthetic data and accuracy</a><a href="api-plotting.html">Plotting</a><a href="api-types.html">Enums and exceptions</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / <a href="api.html">Python API</a> / Pores and models</p><h1>Pores and models</h1><p class="lead">Choose a geometry, discover its shapes, and evaluate an interface.</p><p><a href="geometries.html">Pores and shapes guide →</a></p><section class="api-symbol"><h2 id="slitpore">SlitPore</h2><p class="api-path"><code>panda_md.SlitPore</code></p><pre class="api-signature"><code>SlitPore(
+    *,
+    normal_axis: core.enums.Axis = Axis.Z,
+    wall_selection: str | NoneType = None,
+    width_nm: float,
+    length_nm: float,
+    base_aspect_ratio: float = 1.0,
+    length_axis: core.enums.Axis = Axis.X,
+    wall_offset_nm: float = 0.0,
+) -&gt; None</code></pre><p>Parallel walls separated by width_nm. The characteristic size is the wall-to-wall gap.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>normal_axis</code></td><td><code>core.enums.Axis</code></td></tr><tr><td><code>wall_selection</code></td><td><code>str | NoneType</code></td></tr><tr><td><code>width_nm</code></td><td><code>float</code></td></tr><tr><td><code>length_nm</code></td><td><code>float</code></td></tr><tr><td><code>base_aspect_ratio</code></td><td><code>float</code></td></tr><tr><td><code>length_axis</code></td><td><code>core.enums.Axis</code></td></tr><tr><td><code>wall_offset_nm</code></td><td><code>float</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="slitpore-from_trajectory"><code>from_trajectory(
+    trajectory: core.trajectory.Trajectory,
+    *,
+    walls: str,
+    length_axis: core.enums.Axis = Axis.X,
+    normal_axis: core.enums.Axis = Axis.Z,
+    time: float | str = 0.0,
+    liquid: str | NoneType = None,
+    wall_offset_nm: float = 0.0,
+) -&gt; SlitPore</code></dt><dd>Measure the wall-to-wall gap and box lengths from a selected trajectory frame.</dd><dt id="slitpore-shape_names"><code>shape_names() -&gt; tuple[str, Ellipsis]</code></dt><dd></dd><dt id="slitpore-interface"><code>interface(shape_name: str) -&gt; InterfaceModel</code></dt><dd></dd><dt id="slitpore-characteristic_size_nm"><code>characteristic_size_nm() -&gt; float</code></dt><dd>Size to which the coordinate and δ are reduced: H for the slit, a for polygons.</dd><dt id="slitpore-volume_nm3"><code>volume_nm3() -&gt; float</code></dt><dd>Pore volume relative to which φ is defined.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/pores/slit/pore.py#L59">View definition ↗</a></p></section><section class="api-symbol"><h2 id="trianglepore">TrianglePore</h2><p class="api-path"><code>panda_md.TrianglePore</code></p><pre class="api-signature"><code>TrianglePore(
+    *,
+    normal_axis: core.enums.Axis = Axis.Z,
+    wall_selection: str | NoneType = None,
+    side_nm: float,
+    length_nm: float,
+    layer_width_nm: float,
+) -&gt; None</code></pre><p>Equilateral triangular channel. The characteristic size is side_nm.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>normal_axis</code></td><td><code>core.enums.Axis</code></td></tr><tr><td><code>wall_selection</code></td><td><code>str | NoneType</code></td></tr><tr><td><code>side_nm</code></td><td><code>float</code></td></tr><tr><td><code>length_nm</code></td><td><code>float</code></td></tr><tr><td><code>layer_width_nm</code></td><td><code>float</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="trianglepore-shape_names"><code>shape_names() -&gt; tuple[str, Ellipsis]</code></dt><dd></dd><dt id="trianglepore-interface"><code>interface(shape_name: str) -&gt; InterfaceModel</code></dt><dd></dd><dt id="trianglepore-characteristic_size_nm"><code>characteristic_size_nm() -&gt; float</code></dt><dd>Size to which the coordinate and δ are reduced: H for the slit, a for polygons.</dd><dt id="trianglepore-volume_nm3"><code>volume_nm3() -&gt; float</code></dt><dd>Pore volume relative to which φ is defined.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/pores/triangle/pore.py#L46">View definition ↗</a></p></section><section class="api-symbol"><h2 id="squarepore">SquarePore</h2><p class="api-path"><code>panda_md.SquarePore</code></p><pre class="api-signature"><code>SquarePore(
+    *,
+    normal_axis: core.enums.Axis = Axis.Z,
+    wall_selection: str | NoneType = None,
+    side_nm: float,
+    length_nm: float,
+    layer_width_nm: float,
+) -&gt; None</code></pre><p>Square channel. The characteristic size is side_nm.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>normal_axis</code></td><td><code>core.enums.Axis</code></td></tr><tr><td><code>wall_selection</code></td><td><code>str | NoneType</code></td></tr><tr><td><code>side_nm</code></td><td><code>float</code></td></tr><tr><td><code>length_nm</code></td><td><code>float</code></td></tr><tr><td><code>layer_width_nm</code></td><td><code>float</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="squarepore-shape_names"><code>shape_names() -&gt; tuple[str, Ellipsis]</code></dt><dd></dd><dt id="squarepore-interface"><code>interface(shape_name: str) -&gt; InterfaceModel</code></dt><dd></dd><dt id="squarepore-characteristic_size_nm"><code>characteristic_size_nm() -&gt; float</code></dt><dd>Size to which the coordinate and δ are reduced: H for the slit, a for polygons.</dd><dt id="squarepore-volume_nm3"><code>volume_nm3() -&gt; float</code></dt><dd>Pore volume relative to which φ is defined.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/pores/square/pore.py#L28">View definition ↗</a></p></section><section class="api-symbol"><h2 id="cylinderpore">CylinderPore</h2><p class="api-path"><code>panda_md.CylinderPore</code></p><pre class="api-signature"><code>CylinderPore(
+    *,
+    normal_axis: core.enums.Axis = Axis.Z,
+    wall_selection: str | NoneType = None,
+    diameter_nm: float,
+    length_nm: float,
+    layer_width_nm: float,
+    axis: core.enums.Axis = Axis.X,
+    wall_offset_nm: float = 0.0,
+) -&gt; None</code></pre><p>Circular channel. The characteristic size is diameter_nm.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>normal_axis</code></td><td><code>core.enums.Axis</code></td></tr><tr><td><code>wall_selection</code></td><td><code>str | NoneType</code></td></tr><tr><td><code>diameter_nm</code></td><td><code>float</code></td></tr><tr><td><code>length_nm</code></td><td><code>float</code></td></tr><tr><td><code>layer_width_nm</code></td><td><code>float</code></td></tr><tr><td><code>axis</code></td><td><code>core.enums.Axis</code></td></tr><tr><td><code>wall_offset_nm</code></td><td><code>float</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="cylinderpore-from_trajectory"><code>from_trajectory(
+    trajectory: core.trajectory.Trajectory,
+    *,
+    walls: str,
+    axis: core.enums.Axis | str = Axis.X,
+    normal_axis: core.enums.Axis | str = Axis.Z,
+    time: float | str = 0.0,
+    liquid: str | NoneType = None,
+    wall_offset_nm: float = 0.0,
+) -&gt; CylinderPore</code></dt><dd>Measure the tube diameter and periodic length from the wall selection.</dd><dt id="cylinderpore-shape_names"><code>shape_names() -&gt; tuple[str, Ellipsis]</code></dt><dd></dd><dt id="cylinderpore-interface"><code>interface(shape_name: str) -&gt; InterfaceModel</code></dt><dd></dd><dt id="cylinderpore-characteristic_size_nm"><code>characteristic_size_nm() -&gt; float</code></dt><dd>Size to which the coordinate and δ are reduced: H for the slit, a for polygons.</dd><dt id="cylinderpore-volume_nm3"><code>volume_nm3() -&gt; float</code></dt><dd>Pore volume relative to which φ is defined.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/pores/cylinder/pore.py#L67">View definition ↗</a></p></section><section class="api-symbol"><h2 id="interfacemodel">InterfaceModel</h2><p class="api-path"><code>panda_md.InterfaceModel</code></p><pre class="api-signature"><code>InterfaceModel(pore: Pore, shape: InterfaceShape[Any]) -&gt; None</code></pre><p>A named interface bound to a pore. Construct it with pore.interface(shape_name). Supply theta in degrees, delta and shift in reduced pore units, and phi as a fraction.</p><h3>Methods and properties</h3><dl class='api-members'><dt id="interfacemodel-default_optimize"><code>default_optimize: tuple[str, Ellipsis]</code></dt><dd>The parameter names optimized by default for this shape.</dd><dt id="interfacemodel-profile"><code>profile(
+    coordinate: _typing._array_like._Buffer | _SupportsArray[dtype[Any]] | _NestedSequence[_SupportsArray[dtype[Any]]] | complex | bytes | str | _NestedSequence[complex | bytes | str],
+    **user_values: float,
+) -&gt; NDArray[float64]</code></dt><dd>Model ρ/ρ_bulk in the frame of reference of the shape formula.</dd><dt id="interfacemodel-is_feasible"><code>is_feasible(**user_values: float) -&gt; bool</code></dt><dd>Whether the shape exists; outside the declared wetting regimes it does not.</dd><dt id="interfacemodel-phi_limits"><code>phi_limits(**user_values: float) -&gt; tuple[float, float]</code></dt><dd>Lower and upper volume-fraction limits for the supplied parameters.</dd><dt id="interfacemodel-surface_terms"><code>surface_terms(**user_values: float) -&gt; core.shape.SurfaceTerms</code></dt><dd>Return the interfacial areas used in the capillary-energy calculation.</dd><dt id="interfacemodel-capillary_energy"><code>capillary_energy(**user_values: float) -&gt; float</code></dt><dd>Compute the relative capillary energy from the model&#x27;s surface terms.</dd><dt id="interfacemodel-fit"><code>fit(
+    profile: core.profile.DensityProfile,
+    *,
+    optimize: Sequence[str] | NoneType = None,
+    fixed: Mapping[str, float] | NoneType = None,
+    bounds: Mapping[str, tuple[float, float]] | NoneType = None,
+    initial: Mapping[str, float] | NoneType = None,
+    normalization: core.enums.Normalization = Normalization.AUTO,
+    density_bulk_per_nm3: float | NoneType = None,
+    loss: core.enums.LossFunction = LossFunction.L1,
+    window: tuple[float, float] | NoneType = None,
+    starts_per_parameter: int = 5,
+    optimizer: core.enums.OptimizerMethod = OptimizerMethod.NELDER_MEAD,
+    regime: core.enums.Regime | NoneType = None,
+) -&gt; FitResult</code></dt><dd>Fit this model to a density profile with the specified optimization settings.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/model.py#L27">View definition ↗</a></p></section><section class="api-symbol"><h2 id="parameter">Parameter</h2><p class="api-path"><code>panda_md.Parameter</code></p><pre class="api-signature"><code>Parameter(
+    *,
+    name: str,
+    default: float | NoneType,
+    bounds: tuple[float, float],
+    unit: core.enums.Unit = Unit.DIMENSIONLESS,
+    symbol: str = &#x27;&#x27;,
+    description: str = &#x27;&#x27;,
+    natural_lower_bound: bool = False,
+) -&gt; None</code></pre><p>Definition of a shape parameter and its units, allowed range, and default value.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>name</code></td><td><code>str</code></td></tr><tr><td><code>default</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>bounds</code></td><td><code>tuple[float, float]</code></td></tr><tr><td><code>unit</code></td><td><code>core.enums.Unit</code></td></tr><tr><td><code>symbol</code></td><td><code>str</code></td></tr><tr><td><code>description</code></td><td><code>str</code></td></tr><tr><td><code>natural_lower_bound</code></td><td><code>bool</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/parameters.py#L22">View definition ↗</a></p></section><section class="api-symbol"><h2 id="symmetryaxis">SymmetryAxis</h2><p class="api-path"><code>panda_md.SymmetryAxis</code></p><pre class="api-signature"><code>SymmetryAxis(*, orientation: core.enums.AxisOrientation, locate: core.enums.AxisLocator) -&gt; None</code></pre><p>Orientation and location rule used to center a shape in trajectory maps.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>orientation</code></td><td><code>core.enums.AxisOrientation</code></td></tr><tr><td><code>locate</code></td><td><code>core.enums.AxisLocator</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/centering.py#L29">View definition ↗</a></p></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="api.html">← Python API</a><a href="api-fitting.html">Fitting and results →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#slitpore">SlitPore</a><a href="#trianglepore">TrianglePore</a><a href="#squarepore">SquarePore</a><a href="#cylinderpore">CylinderPore</a><a href="#interfacemodel">InterfaceModel</a><a href="#parameter">Parameter</a><a href="#symmetryaxis">SymmetryAxis</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

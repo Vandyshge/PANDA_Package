@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A reference to the main objects and functions in the panda_md namespace.">
+<meta name="description" content="Find functions, classes, parameters, and return types by topic.">
 <title>Python API · PANDA Documentation</title>
-<link rel="stylesheet" href="panda-theme.css?v=1da233f20f">
-<script src="search-index.js" defer></script><script src="site.js" defer></script>
+<link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
+<script src="search-index.js?v=6870a62510" defer></script><script src="site.js?v=239066dbc9" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -19,25 +19,10 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><a href="geometries.html">Pores and shapes</a><a href="triangle-example.html" class="subpage">Triangular filament</a><a href="trajectories.html">From a trajectory</a><a href="trajectory-gromacs.html" class="subpage">GROMACS</a><a href="trajectory-lammps.html" class="subpage">LAMMPS</a><a href="trajectory-averaging.html" class="subpage">Trajectory averaging</a><a href="block-example.html" class="subpage">Fit saved blocks</a><a href="fitting.html">Fitting and interpretation</a><a href="validation.html" class="subpage">Angle recovery</a><a href="cli.html">Command line</a><p>Reference</p><a href="api.html" aria-current="page">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
-<main id="main"><p class="crumb">Documentation / Reference / Python API</p><h1>Python API</h1><p class="lead">A reference to the main objects and functions in the panda_md namespace.</p><section><h2 id="geometry-and-fitting">Geometry and fitting</h2>
-<dl><dt><code>SlitPore</code>, <code>TrianglePore</code>, <code>SquarePore</code>, <code>CylinderPore</code></dt><dd>Store pore dimensions in nm. Call <code>pore.interface(shape)</code> to construct an <code>InterfaceModel</code>.</dd>
-<dt><code>InterfaceModel.fit(profile, **settings)</code></dt><dd>Fit one morphology to one <code>DensityProfile</code>.</dd>
-<dt><code>FitSpec</code></dt><dd>Reusable fit settings, including normalization, free and fixed parameters, and bounds.</dd>
-<dt><code>FitResult</code></dt><dd>Inspect <code>values</code>, <code>loss</code>, <code>summary()</code>, and <code>problems()</code>.</dd></dl>
-</section><section><h2 id="profiles-and-trajectories">Profiles and trajectories</h2>
-<dl><dt><code>load_trajectory(topology, *trajectory_files, **options)</code></dt><dd>Read MD files through MDAnalysis. For in-memory data use <code>ArrayTrajectory</code>.</dd>
-<dt><code>density_profile(trajectory, pore, select, ...)</code></dt><dd>Build density profiles, optionally split into time blocks.</dd>
-<dt><code>DensityProfile</code>, <code>ProfileSet</code></dt><dd>Represent one profile or a series. A profile set provides <code>mean()</code>, <code>sem()</code>, and <code>block(i)</code>.</dd>
-<dt><code>density_map(...)</code>, <code>synthetic_profile(...)</code></dt><dd>Compute a two-dimensional density map or generate a synthetic one-dimensional profile from known model parameters.</dd></dl>
-</section><section><h2 id="analysis-and-plotting">Analysis and plotting</h2>
-<dl><dt><code>fit_blocks(model, profiles, spec=None)</code></dt><dd>Fit each block and summarize parameter means and spread.</dd>
-<dt><code>compare_shapes(pore, profile, spec)</code></dt><dd>Rank fitted models and report skipped or near-indistinguishable candidates.</dd>
-<dt><code>stability_diagram(pore, *, contact_angle_deg, wall_layer, volume_fractions, length_ratios, shape_names=None)</code></dt><dd>Find minimum-energy candidates over a grid of liquid fractions and reduced pore lengths.</dd>
-<dt><code>panda_md.plotting</code></dt><dd>Optional plotting helpers including <code>plot_fit</code> and <code>plot_density_map</code>.</dd></dl>
-<p>For full signatures and extension guides, see the <a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/tree/main/docs/manual">developer manual</a> (repository access required).</p></section>
-<nav class="pager" aria-label="Adjacent pages"><a href="cli.html">← Command line</a><a href="citation.html">Citing PANDA →</a></nav></main>
-<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#geometry-and-fitting">Geometry and fitting</a><a href="#profiles-and-trajectories">Profiles and trajectories</a><a href="#analysis-and-plotting">Analysis and plotting</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><a href="geometries.html">← User guide</a><p>Python API</p><a href="api.html" aria-current="page">Reference index</a><a href="api-pores.html">Pores and models</a><a href="api-fitting.html">Fitting and results</a><a href="api-data.html">Profiles and trajectories</a><a href="api-analysis.html">Blocks and morphology</a><a href="api-synthetic.html">Synthetic data and accuracy</a><a href="api-plotting.html">Plotting</a><a href="api-types.html">Enums and exceptions</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / Python API</p><h1>Python API</h1><p class="lead">Find functions, classes, parameters, and return types by topic.</p><section><h2 id="reference-by-topic">Reference by topic</h2><div class="table"><table><thead><tr><th scope='col'>Topic</th><th scope='col'>Description</th></tr></thead><tbody><tr><td><a href="api-pores.html">Pores and models</a></td><td>Choose a geometry, discover its shapes, and evaluate an interface.</td></tr><tr><td><a href="api-fitting.html">Fitting and results</a></td><td>Configure optimization, read parameters, and inspect diagnostic flags.</td></tr><tr><td><a href="api-data.html">Profiles and trajectories</a></td><td>Load simulation files or arrays, then compute, store, or inspect densities.</td></tr><tr><td><a href="api-analysis.html">Blocks and morphology</a></td><td>Compare fitted shapes, estimate block spread, and map capillary stability.</td></tr><tr><td><a href="api-synthetic.html">Synthetic data and accuracy</a></td><td>Generate known-angle test data and measure reconstruction error.</td></tr><tr><td><a href="api-plotting.html">Plotting</a></td><td>Draw figures from existing PANDA objects. Requires the plot extra.</td></tr><tr><td><a href="api-types.html">Enums and exceptions</a></td><td>Look up supported values and diagnose failures.</td></tr></tbody></table></div></section><section><h2 id="version-and-imports">Version and imports</h2><p>Signatures are generated from PANDA 0.1.0 alpha at commit <a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/tree/eff655eef267bfdcc0b18c7e45f719b5c6af31ed"><code>eff655e</code></a>. Most entries can be imported from <code>panda_md</code>. Plotting helpers are in <code>panda_md.plotting</code>. Definition links may require access to the package repository.</p></section>
+<nav class="pager" aria-label="Adjacent pages"><span></span><a href="api-pores.html">Pores and models →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#reference-by-topic">Reference by topic</a><a href="#version-and-imports">Version and imports</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
 <dialog aria-label="Search documentation">

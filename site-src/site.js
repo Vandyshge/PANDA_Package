@@ -10,10 +10,19 @@
   const results = dialog.querySelector('ul');
   const status = dialog.querySelector('[role="status"]');
   function search() {
-    const words = query.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    const matches = window.pandaSearch.filter(({ title, text }) =>
-      words.every(word => (title + ' ' + text).toLowerCase().includes(word))
-    );
+    const term = query.value.toLowerCase().trim();
+    const words = term.split(/\s+/).filter(Boolean);
+    const score = ({ title }) => {
+      const name = title.toLowerCase();
+      if (name === term || 'panda_md.' + name === term) return 0;
+      if (name.includes(term)) return 1;
+      return 2;
+    };
+    const matches = term
+      ? window.pandaSearch.filter(({ title, text }) =>
+        words.every(word => (title + ' ' + text).toLowerCase().includes(word))
+      ).sort((left, right) => score(left) - score(right))
+      : window.pandaSearch.filter(({ href }) => !href.includes('#'));
     results.replaceChildren(...matches.map(({ title, href }) => {
       const item = document.createElement('li');
       const link = document.createElement('a');
