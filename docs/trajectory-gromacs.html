@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
-<link rel="stylesheet" href="panda-theme.css?v=d0db2b770d">
-<script src="search-index.js?v=06f2c34030" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<link rel="stylesheet" href="panda-theme.css?v=9188516f8a">
+<script src="search-index.js?v=c6959f2296" defer></script><script src="site.js?v=f8e95ec516" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -22,7 +22,7 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch" open><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html" aria-current="page">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="shape-gallery.html">3D shape gallery</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch" open><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html" aria-current="page">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / GROMACS</p><h1>GROMACS</h1><p class="lead">Read a GRO or TPR topology and an XTC trajectory.</p><section><h2 id="run-the-gromacs-example">Run the GROMACS example</h2>
 <p><a href="trajectories.html#download-and-run-the-examples">Download the example files and install the extras</a>.</p>
 <p>The example reads <code>slit.gro</code> and <code>slit.xtc</code>. For a simulation, use a matching <code>.tpr</code> or <code>.gro</code> with your trajectory, and substitute the residue and atom names from that topology. The XTC stores frame times. If counting water oxygens, use the bulk <em>oxygen number density</em> in nm⁻³.</p>

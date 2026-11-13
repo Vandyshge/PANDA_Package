@@ -5,7 +5,7 @@
     menu.setAttribute('aria-expanded', sidebar.classList.toggle('open'));
   });
 
-  const dialog = document.querySelector('dialog');
+  const dialog = document.querySelector('dialog[aria-label="Search documentation"]');
   const query = dialog.querySelector('input');
   const results = dialog.querySelector('ul');
   const status = dialog.querySelector('[role="status"]');

@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
-<link rel="stylesheet" href="panda-theme.css?v=d0db2b770d">
-<script src="search-index.js?v=06f2c34030" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<link rel="stylesheet" href="panda-theme.css?v=9188516f8a">
+<script src="search-index.js?v=c6959f2296" defer></script><script src="site.js?v=f8e95ec516" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -22,7 +22,7 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch" open><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="triangle-example.html" aria-current="page">Triangular filament</a></div></details><details class="nav-branch"><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch" open><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="shape-gallery.html">3D shape gallery</a><a href="triangle-example.html" aria-current="page">Triangular filament</a></div></details><details class="nav-branch"><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / Triangular filament</p><h1>Triangular filament</h1><p class="lead">Recover the angle from a synthetic density profile in a triangular pore.</p><section><h2 id="fit-a-triangular-filament">Fit a triangular filament</h2>
 <p>This example fits a synthetic <code>filament_w3c0</code> profile. The filament touches three walls and occupies zero corners.</p>
 <div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> TrianglePore, synthetic_profile
@@ -45,7 +45,7 @@ ax = plot_fit(result)
 ax.set_xlabel(<span class="syntax-string">&quot;Reduced coordinate, z/a&quot;</span>)
 ax.figure.savefig(<span class="syntax-string">&quot;triangle-fit.png&quot;</span>, dpi=<span class="syntax-number">150</span>)
 plt.show()</code></pre></div><figure class="cell-figure"><img src="triangle-fit.png?v=aa47b5d729" alt="Analytical fit overlaid on a synthetic triangular filament density profile"><figcaption>Archived synthetic fit for a triangular pore. <a href="triangle-profile.csv" download>Download CSV</a> · <a href="triangle-fit.png" download>Download PNG</a>.</figcaption></figure></section>
-<nav class="pager" aria-label="Adjacent pages"><a href="geometries.html">← Pores and shapes</a><a href="trajectories.html">From a trajectory →</a></nav></main>
+<nav class="pager" aria-label="Adjacent pages"><a href="shape-gallery.html">← 3D shape gallery</a><a href="trajectories.html">From a trajectory →</a></nav></main>
 <aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#fit-a-triangular-filament">Fit a triangular filament</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>

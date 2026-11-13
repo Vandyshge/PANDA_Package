@@ -17,7 +17,7 @@ PANDA (Predicting Angle from Nanoscale Density Analysis) estimates contact angle
 | Install PANDA and its optional dependencies | [Installation](https://vandyshge.github.io/PANDA_Package/installation.html) |
 | Recover a known angle from a synthetic slit-pore profile | [Quick start](https://vandyshge.github.io/PANDA_Package/quickstart.html) |
 | Analyze a molecular-dynamics trajectory | [GROMACS](https://vandyshge.github.io/PANDA_Package/trajectory-gromacs.html) · [LAMMPS](https://vandyshge.github.io/PANDA_Package/trajectory-lammps.html) |
-| Choose a pore geometry or interface shape | [Pores and shapes](https://vandyshge.github.io/PANDA_Package/geometries.html) |
+| Choose a pore geometry or interface shape | [Pores and shapes](https://vandyshge.github.io/PANDA_Package/geometries.html) · [3D shape gallery](https://vandyshge.github.io/PANDA_Package/shape-gallery.html) |
 | Fit a saved density profile and interpret the result | [Fitting](https://vandyshge.github.io/PANDA_Package/fitting.html) · [Angle recovery](https://vandyshge.github.io/PANDA_Package/validation.html) |
 | Look up functions or commands | [Python API](https://vandyshge.github.io/PANDA_Package/api.html) · [Command line](https://vandyshge.github.io/PANDA_Package/cli.html) |
 
@@ -50,5 +50,7 @@ python site-src/build.py --output docs
 ```
 
 The site build uses the Python standard library. To regenerate the profile and validation figures, run `python site-src/plot_profile.py` with NumPy and Matplotlib installed, then rebuild the site. GitHub Pages publishes `main:/docs`.
+
+The gallery reads model parameters from `docs/models/catalog.json`. Its WebP previews and GLB models are stored beside the catalog. The bundled 3D viewer loads when a visitor opens a model.
 
 To refresh the Python API signatures, make the target PANDA checkout importable with its `plot` extra, then run `python site-src/refresh_api.py <PANDA-commit>` before rebuilding. The regular site build reads the checked-in API metadata.

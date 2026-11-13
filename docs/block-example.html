@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
-<link rel="stylesheet" href="panda-theme.css?v=d0db2b770d">
-<script src="search-index.js?v=06f2c34030" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<link rel="stylesheet" href="panda-theme.css?v=9188516f8a">
+<script src="search-index.js?v=c6959f2296" defer></script><script src="site.js?v=f8e95ec516" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -22,7 +22,7 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch" open><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html" aria-current="page">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="shape-gallery.html">3D shape gallery</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch" open><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html" aria-current="page">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / Fit saved blocks</p><h1>Fit saved blocks</h1><p class="lead">Estimate the spread in contact angle from a saved set of density profiles.</p><section><h2 id="run-the-block-analysis-on-example-data">Run the block analysis on example data</h2>
 <p>Download <a href="synthetic-roll-blocks.npz" download>synthetic-roll-blocks.npz</a> into the working directory. The file contains eight independent synthetic profiles generated with a 120° contact angle.</p>
 <div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> ProfileSet, SlitPore, fit_blocks

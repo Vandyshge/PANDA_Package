@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
-<link rel="stylesheet" href="panda-theme.css?v=d0db2b770d">
-<script src="search-index.js?v=06f2c34030" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<link rel="stylesheet" href="panda-theme.css?v=9188516f8a">
+<script src="search-index.js?v=c6959f2296" defer></script><script src="site.js?v=f8e95ec516" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -22,14 +22,15 @@
 <button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
 </div></header>
 <div class="layout">
-<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch" open><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html" aria-current="page">Section overview</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch"><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch" open><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html" aria-current="page">Section overview</a><a href="shape-gallery.html">3D shape gallery</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch"><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch"><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
 <main id="main"><p class="crumb">Documentation / User guide / Pores and shapes</p><h1>Pores and shapes</h1><p class="lead">A pore defines the confinement geometry. A named shape defines the analytical interface inside it.</p><section><h2 id="set-up-a-pore">Set up a pore</h2>
 <div class="pore-grid">
-<figure><img src="pore-slit.png" width="360" height="230" alt="Two parallel walls separated by H"><figcaption><strong>Slit</strong><code>SlitPore</code><span>Wall-to-wall width <i>H</i></span></figcaption></figure>
-<figure><img src="pore-triangle.png" width="360" height="230" alt="Equilateral triangular cross-section with side a"><figcaption><strong>Triangle</strong><code>TrianglePore</code><span>Side length <i>a</i></span></figcaption></figure>
-<figure><img src="pore-square.png" width="360" height="230" alt="Square cross-section with side a"><figcaption><strong>Square</strong><code>SquarePore</code><span>Side length <i>a</i></span></figcaption></figure>
-<figure><img src="pore-cylinder.png" width="360" height="230" alt="Circular cross-section with diameter D"><figcaption><strong>Cylinder</strong><code>CylinderPore</code><span>Tube diameter <i>D</i></span></figcaption></figure>
+<figure><img src="pore-slit.png" width="360" height="230" alt="Two parallel walls separated by H"><figcaption><strong><a href="shape-gallery.html#slit">Slit</a></strong><code>SlitPore</code><span>Wall-to-wall width <i>H</i></span></figcaption></figure>
+<figure><img src="pore-triangle.png" width="360" height="230" alt="Equilateral triangular cross-section with side a"><figcaption><strong><a href="shape-gallery.html#triangle">Triangle</a></strong><code>TrianglePore</code><span>Side length <i>a</i></span></figcaption></figure>
+<figure><img src="pore-square.png" width="360" height="230" alt="Square cross-section with side a"><figcaption><strong><a href="shape-gallery.html#square">Square</a></strong><code>SquarePore</code><span>Side length <i>a</i></span></figcaption></figure>
+<figure><img src="pore-cylinder.png" width="360" height="230" alt="Circular cross-section with diameter D"><figcaption><strong><a href="shape-gallery.html#cylinder">Cylinder</a></strong><code>CylinderPore</code><span>Tube diameter <i>D</i></span></figcaption></figure>
 </div>
+<p>Choose a pore to open its <a href="shape-gallery.html">3D shape gallery</a>.</p>
 <p><code>pore.interface("roll")</code> selects an analytical model for the slit. Polygon names encode the number of walls touched (<code>w</code>) and corners occupied (<code>c</code>).</p>
 </section><section><h2 id="shape-catalog">Shape catalog</h2>
 <p>This snapshot lists 26 shapes. Of these, 18 supply a density profile and 24 supply surface terms. Availability describes the implemented formulas. Check the individual angle and volume-fraction limits before fitting.</p>
@@ -41,7 +42,7 @@
 <p>Run <code>panda shapes --pore triangle</code> to see the installed version’s models, parameter bounds, and regimes.</p>
 </section><section><h2 id="limits-of-the-models">Limits of the models</h2>
 <p>Slit and cylindrical contact-angle models cover the non-wetting side of 90°. Some polygon models have narrower domains. Models such as a flat <code>layer</code> have no contact-angle parameter. Check <code>model.is_feasible(...)</code> and <code>model.phi_limits(...)</code> for the specific shape.</p></section><section><h2 id="examples">Examples</h2><p id="fit-a-triangular-filament"><a href="triangle-example.html">Fit a triangular filament</a></p></section>
-<nav class="pager" aria-label="Adjacent pages"><a href="quickstart.html">← Quick start</a><a href="triangle-example.html">Triangular filament →</a></nav></main>
+<nav class="pager" aria-label="Adjacent pages"><a href="quickstart.html">← Quick start</a><a href="shape-gallery.html">3D shape gallery →</a></nav></main>
 <aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#set-up-a-pore">Set up a pore</a><a href="#shape-catalog">Shape catalog</a><a href="#limits-of-the-models">Limits of the models</a><a href="#examples">Examples</a></nav></aside>
 </div>
 <footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>

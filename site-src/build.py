@@ -22,7 +22,7 @@ DYNAMIC = "https://vandyshge.github.io/PANDA_Dynamic/"
 POLYGON = "https://vandyshge.github.io/PANDA_Polygon/"
 PAGES = []
 SUBPAGES = {
-    "geometries": ("triangle-example",),
+    "geometries": ("shape-gallery", "triangle-example"),
     "trajectories": ("trajectory-gromacs", "trajectory-lammps", "trajectory-averaging", "block-example"),
     "fitting": ("validation",),
 }
@@ -248,6 +248,7 @@ page("User guide", "geometries", "Pores and shapes",
 <figure><img src="pore-square.png" width="360" height="230" alt="Square cross-section with side a"><figcaption><strong>Square</strong><code>SquarePore</code><span>Side length <i>a</i></span></figcaption></figure>
 <figure><img src="pore-cylinder.png" width="360" height="230" alt="Circular cross-section with diameter D"><figcaption><strong>Cylinder</strong><code>CylinderPore</code><span>Tube diameter <i>D</i></span></figcaption></figure>
 </div>
+<p>Choose a pore to open its <a href="shape-gallery.html">3D shape gallery</a>.</p>
 <p><code>pore.interface("roll")</code> selects an analytical model for the slit. Polygon names encode the number of walls touched (<code>w</code>) and corners occupied (<code>c</code>).</p>
 """) + section("Shape catalog", """
 <p>This snapshot lists 26 shapes. Of these, 18 supply a density profile and 24 supply surface terms. Availability describes the implemented formulas. Check the individual angle and volume-fraction limits before fitting.</p>
@@ -260,6 +261,14 @@ page("User guide", "geometries", "Pores and shapes",
 """) + section("Limits of the models", """
 <p>Slit and cylindrical contact-angle models cover the non-wetting side of 90°. Some polygon models have narrower domains. Models such as a flat <code>layer</code> have no contact-angle parameter. Check <code>model.is_feasible(...)</code> and <code>model.phi_limits(...)</code> for the specific shape.</p>""") +
      section("Examples", '<p id="fit-a-triangular-filament"><a href="triangle-example.html">Fit a triangular filament</a></p>'))
+
+page("User guide", "shape-gallery", "3D shape gallery",
+     "Explore interface morphologies in slit, triangular, square, and cylindrical pores.",
+     '<p><a href="geometries.html#shape-catalog">Check the package capabilities</a> for density fitting and surface terms. '
+     'Cards marked “Formula draft” show geometries from the research formulas.</p>'
+     '<p>Graphite marks the solid walls, dark brown the wetting phase, and blue the non-wetting phase. '
+     'The contact angle is measured through the blue phase. The volume fraction refers to the full pore, including for cutaway views.</p>'
+     '{{gallery}}')
 
 page("User guide", "triangle-example", "Triangular filament",
      "Recover the angle from a synthetic density profile in a triangular pore.",
@@ -437,6 +446,41 @@ page("Reference", "citation", "Citing PANDA",
      section("Dynamic contact angles", '<p><a href="https://arxiv.org/abs/2610.21996">PANDA-D: Interface-free determination of two dynamic contact angles</a> (preprint, 2026). The two-angle extension jointly analyzes density and layerwise center-of-mass displacement.</p>'))
 
 
+def gallery():
+    with (ROOT / "shapes.csv").open(encoding="utf-8-sig", newline="") as source:
+        registered = {(row["pore"], row["shape"]) for row in csv.DictReader(source)}
+    assets = ROOT.parent / "docs" / "models"
+    items = json.loads((assets / "catalog.json").read_text(encoding="utf-8"))
+    groups = []
+    for pore in ("slit", "triangle", "square", "cylinder"):
+        cards = []
+        for item in items:
+            if item["pore"] != pore:
+                continue
+            name = escape(item["shape"])
+            base = f"models/{pore}/{name}"
+            theta = item["theta_deg"]
+            params = f'θ = {theta}° · ' if theta is not None else ''
+            params += f'φ = {item["phi"]:.2f}'
+            status = "In package catalog" if (pore, item["shape"]) in registered else "Formula draft"
+            cut = ' · Cutaway' if name == "perforation" or pore == "cylinder" or name.startswith("capsule_w") else ""
+            cards.append(
+                f'<article class="shape-card"><img src="{base}.webp" width="760" height="589" loading="lazy" '
+                f'alt="{name} in a {pore} pore"><h3><code>{name}</code></h3>'
+                f'<p>{params}</p><p>{status}{cut}</p><div class="shape-actions">'
+                f'<button type="button" data-model="{base}.glb" aria-haspopup="dialog" '
+                f'aria-label="View {name} in 3D">View in 3D</button>'
+                f'<a href="{base}.glb" download>Download GLB</a></div></article>'
+            )
+        groups.append(f'<h2 id="{pore}">{pore.title()}</h2><div class="shape-grid">{"".join(cards)}</div>')
+    return "".join(groups) + (
+        '<dialog class="shape-dialog" aria-labelledby="shape-dialog-title">'
+        '<form method="dialog"><h2 id="shape-dialog-title">3D model</h2><button>Close</button></form>'
+        '<p role="status"></p><div class="shape-view"></div><a download>Download GLB</a></dialog>'
+        '<script type="module" src="models/gallery.js"></script>'
+    )
+
+
 def shape_rows():
     with (ROOT / "shapes.csv").open(encoding="utf-8-sig", newline="") as source:
         rows = list(csv.DictReader(source))
@@ -558,6 +602,11 @@ def build(output):
         group, slug, title, lead, body = entry
         if slug == "geometries":
             body = body.replace("{{shapes}}", shape_rows())
+            for pore in ("slit", "triangle", "square", "cylinder"):
+                body = body.replace(f'<strong>{pore.title()}</strong>',
+                                    f'<strong><a href="shape-gallery.html#{pore}">{pore.title()}</a></strong>')
+        if slug == "shape-gallery":
+            body = body.replace("{{gallery}}", gallery())
         sequence = API_PAGES if group == "Python API" else PAGES
         order = sequence.index(entry)
         path = slug + ".html"
@@ -583,6 +632,9 @@ def build(output):
         "pore-slit.png", "pore-triangle.png", "pore-square.png", "pore-cylinder.png",
     ):
         shutil.copyfile(ROOT / filename, output / filename)
+    assets = ROOT.parent / "docs" / "models"
+    if (output / "models").resolve() != assets.resolve():
+        shutil.copytree(assets, output / "models", dirs_exist_ok=True)
 
 
 if __name__ == "__main__":
