@@ -269,7 +269,7 @@ page("User guide", "shape-gallery", "3D shape gallery",
      '<p>Graphite marks the solid walls, dark brown the wetting phase, and blue the non-wetting phase. '
      'The contact angle is measured through the blue phase. The volume fraction refers to the full pore, including for cutaway views.</p>'
      '<p>For polygonal pores, <code>w</code> counts walls touched and <code>c</code> counts corners occupied by the blue phase. '
-     'In a square pore, <code>filament_w2c0</code> touches opposite walls.</p>'
+     'In a square pore, <code>filament_w2c0_opp</code> touches opposite walls.</p>'
      '{{gallery}}')
 
 page("User guide", "triangle-example", "Triangular filament",
