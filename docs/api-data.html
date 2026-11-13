@@ -6,7 +6,7 @@
 <meta name="description" content="Load simulation files or arrays, then compute, store, or inspect densities.">
 <title>Profiles and trajectories · PANDA Documentation</title>
 <link rel="stylesheet" href="panda-theme.css?v=2d5997c8c4">
-<script src="search-index.js?v=6870a62510" defer></script><script src="site.js?v=239066dbc9" defer></script>
+<script src="search-index.js?v=9536c008d7" defer></script><script src="site.js?v=239066dbc9" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -30,73 +30,73 @@
     boxes_nm: NDArray[float64],
     times_ps: NDArray[float64],
     groups: Mapping[str, NDArray[int64]] = dict(),
-    molecule_ids: NDArray[int64] | NoneType = None,
-    masses: NDArray[float64] | NoneType = None,
-    axis_positions_nm: NDArray[float64] | NoneType = None,
-) -&gt; None</code></pre><p>In-memory trajectory. Supply particle positions and box lengths in nm, and frame times in ps.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>positions_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>boxes_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>times_ps_values</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>groups</code></td><td><code>Mapping[str, NDArray[int64]]</code></td></tr><tr><td><code>molecule_ids</code></td><td><code>NDArray[int64] | NoneType</code></td></tr><tr><td><code>masses</code></td><td><code>NDArray[float64] | NoneType</code></td></tr><tr><td><code>axis_positions_nm</code></td><td><code>NDArray[float64] | NoneType</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="arraytrajectory-select"><code>select(selection: str | Sequence[int]) -&gt; NDArray[int64]</code></dt><dd>Atom indices of the selection. An empty selection — InvalidTrajectoryError.</dd><dt id="arraytrajectory-times_ps"><code>times_ps() -&gt; NDArray[float64]</code></dt><dd>Time of each frame, ps.</dd><dt id="arraytrajectory-frame_indices"><code>frame_indices(
+    molecule_ids: NDArray[int64] | None = None,
+    masses: NDArray[float64] | None = None,
+    axis_positions_nm: NDArray[float64] | None = None,
+) -&gt; None</code></pre><p>In-memory trajectory. Supply particle positions and box lengths in nm, and frame times in ps.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>positions_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>boxes_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>times_ps_values</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>groups</code></td><td><code>Mapping[str, NDArray[int64]]</code></td></tr><tr><td><code>molecule_ids</code></td><td><code>NDArray[int64] | None</code></td></tr><tr><td><code>masses</code></td><td><code>NDArray[float64] | None</code></td></tr><tr><td><code>axis_positions_nm</code></td><td><code>NDArray[float64] | None</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="arraytrajectory-select"><code>select(selection: str | Sequence[int]) -&gt; NDArray[int64]</code></dt><dd>Atom indices of the selection. An empty selection — InvalidTrajectoryError.</dd><dt id="arraytrajectory-times_ps"><code>times_ps() -&gt; NDArray[float64]</code></dt><dd>Time of each frame, ps.</dd><dt id="arraytrajectory-frame_indices"><code>frame_indices(
     *,
     start: float | str = 0.0,
-    stop: float | str | NoneType = None,
+    stop: float | str | None = None,
     stride: int = 1,
 ) -&gt; list[int]</code></dt><dd></dd><dt id="arraytrajectory-frames"><code>frames(
     groups: Sequence[NDArray[int64]],
     *,
     start: float | str = 0.0,
-    stop: float | str | NoneType = None,
+    stop: float | str | None = None,
     stride: int = 1,
 ) -&gt; Iterator[core.trajectory.TrajectoryFrame]</code></dt><dd>Frames with start ≤ t ≤ stop, every stride-th; streamed, without loading the whole trajectory into memory.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/trajectory/arrays.py#L13">View definition ↗</a></p></section><section class="api-symbol"><h2 id="density_profile">density_profile</h2><p class="api-path"><code>panda_md.density_profile</code></p><pre class="api-signature"><code>density_profile(
     trajectory: core.trajectory.Trajectory,
     pore: core.pore.Pore,
     select: str | Sequence[int],
     *,
-    centering: core.enums.ProfileCentering | str | NoneType = None,
+    centering: core.enums.ProfileCentering | str | None = None,
     bins: int = 200,
-    bin_width_nm: float | NoneType = None,
+    bin_width_nm: float | None = None,
     start: float | str = 0.0,
-    stop: float | str | NoneType = None,
-    block: float | str | NoneType = None,
+    stop: float | str | None = None,
+    block: float | str | None = None,
     stride: int = 1,
-    pore_center_nm: float | NoneType = None,
+    pore_center_nm: float | None = None,
     orientation: core.enums.Orientation | str = Orientation.AUTO,
     per: core.enums.ParticleGrouping | str = ParticleGrouping.ATOM,
 ) -&gt; core.profile.ProfileSet</code></pre><p>Bin number density along the pore axis. The selection accepts an MDAnalysis selection string or atom indices. A numeric time is in ps. A block setting produces time-resolved profiles.</p><h3>Parameters</h3><div class="table"><table><thead><tr><th scope='col'>Argument</th><th scope='col'>Meaning</th></tr></thead><tbody><tr><td><code>bins, bin_width_nm</code></td><td>Set the bin count or the width in nm.</td></tr><tr><td><code>start, stop, stride</code></td><td>Select a frame interval and subsample it. Time can be numeric ps or a string such as &#x27;2 ns&#x27;.</td></tr><tr><td><code>block</code></td><td>Length of a time block. The default returns a ProfileSet with one averaged profile.</td></tr><tr><td><code>centering, orientation</code></td><td>Choose the coordinate origin and whether PANDA may reflect the pore-frame profile.</td></tr><tr><td><code>per</code></td><td>Count atoms or molecule centers of mass.</td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/trajectory/density.py#L47">View definition ↗</a></p></section><section class="api-symbol"><h2 id="densityprofile">DensityProfile</h2><p class="api-path"><code>panda_md.DensityProfile</code></p><pre class="api-signature"><code>DensityProfile(
     *,
     coordinate_nm: NDArray[float64],
     density_per_nm3: NDArray[float64],
-    density_sem_per_nm3: NDArray[float64] | NoneType = None,
+    density_sem_per_nm3: NDArray[float64] | None = None,
     frame: core.enums.Frame = Frame.PORE,
-    particle_count: float | NoneType = None,
-    pore_volume_nm3: float | NoneType = None,
+    particle_count: float | None = None,
+    pore_volume_nm3: float | None = None,
     flipped: bool = False,
-    frame_count: int | NoneType = None,
-) -&gt; None</code></pre><p>One number-density profile with coordinates in nm and densities in nm⁻³. Supports NPZ or CSV input and output.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>coordinate_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>density_per_nm3</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>density_sem_per_nm3</code></td><td><code>NDArray[float64] | NoneType</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>particle_count</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>pore_volume_nm3</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>flipped</code></td><td><code>bool</code></td></tr><tr><td><code>frame_count</code></td><td><code>int | NoneType</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="densityprofile-load"><code>load(path: str | pathlib.Path) -&gt; DensityProfile</code></dt><dd></dd><dt id="densityprofile-save"><code>save(path: str | pathlib.Path) -&gt; None</code></dt><dd>Save: .npz — everything; .csv — columns and metadata in comment lines.</dd><dt id="densityprofile-mean_density_per_nm3"><code>mean_density_per_nm3() -&gt; float</code></dt><dd>n̄ = N / V — mean density of the liquid in the pore.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/profile.py#L24">View definition ↗</a></p></section><section class="api-symbol"><h2 id="profileset">ProfileSet</h2><p class="api-path"><code>panda_md.ProfileSet</code></p><pre class="api-signature"><code>ProfileSet(
+    frame_count: int | None = None,
+) -&gt; None</code></pre><p>One number-density profile with coordinates in nm and densities in nm⁻³. Supports NPZ or CSV input and output.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>coordinate_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>density_per_nm3</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>density_sem_per_nm3</code></td><td><code>NDArray[float64] | None</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>particle_count</code></td><td><code>float | None</code></td></tr><tr><td><code>pore_volume_nm3</code></td><td><code>float | None</code></td></tr><tr><td><code>flipped</code></td><td><code>bool</code></td></tr><tr><td><code>frame_count</code></td><td><code>int | None</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="densityprofile-load"><code>load(path: str | pathlib.Path) -&gt; DensityProfile</code></dt><dd></dd><dt id="densityprofile-save"><code>save(path: str | pathlib.Path) -&gt; None</code></dt><dd>Save: .npz — everything; .csv — columns and metadata in comment lines.</dd><dt id="densityprofile-mean_density_per_nm3"><code>mean_density_per_nm3() -&gt; float</code></dt><dd>n̄ = N / V — mean density of the liquid in the pore.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/profile.py#L24">View definition ↗</a></p></section><section class="api-symbol"><h2 id="profileset">ProfileSet</h2><p class="api-path"><code>panda_md.ProfileSet</code></p><pre class="api-signature"><code>ProfileSet(
     *,
     bin_edges_nm: NDArray[float64],
     block_densities_per_nm3: NDArray[float64],
     block_start_ps: NDArray[float64],
     block_stop_ps: NDArray[float64],
-    block_frame_counts: tuple[int, Ellipsis],
+    block_frame_counts: tuple[int, ...],
     block_particle_counts: NDArray[float64],
     frame: core.enums.Frame,
     centering: core.enums.ProfileCentering,
     selection: str,
-    pore_volume_nm3: float | NoneType = None,
+    pore_volume_nm3: float | None = None,
     flipped: bool = False,
-) -&gt; None</code></pre><p>One or more profiles on a common bin grid. The time bounds and frame counts describe the samples contributing to each block. Use NPZ to persist the set.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>bin_edges_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_densities_per_nm3</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_start_ps</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_stop_ps</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_frame_counts</code></td><td><code>tuple[int, Ellipsis]</code></td></tr><tr><td><code>block_particle_counts</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>centering</code></td><td><code>core.enums.ProfileCentering</code></td></tr><tr><td><code>selection</code></td><td><code>str</code></td></tr><tr><td><code>pore_volume_nm3</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>flipped</code></td><td><code>bool</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="profileset-load"><code>load(path: str | pathlib.Path) -&gt; ProfileSet</code></dt><dd></dd><dt id="profileset-save"><code>save(path: str | pathlib.Path) -&gt; None</code></dt><dd>Save to .npz (arrays and metadata).</dd><dt id="profileset-mean"><code>mean() -&gt; core.profile.DensityProfile</code></dt><dd>Return the mean over blocks.</dd><dt id="profileset-block"><code>block(index: int) -&gt; core.profile.DensityProfile</code></dt><dd></dd><dt id="profileset-std"><code>std() -&gt; NDArray[float64]</code></dt><dd>Standard deviation of the density over blocks (0 for a single block).</dd><dt id="profileset-sem"><code>sem() -&gt; NDArray[float64]</code></dt><dd>Standard error of the mean over blocks: std / √(number of blocks).</dd><dt id="profileset-block_count"><code>block_count: int</code></dt><dd>Number of available profiles or time blocks.</dd><dt id="profileset-coordinate_nm"><code>coordinate_nm: NDArray[float64]</code></dt><dd>Common bin centers in nm.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/profile.py#L152">View definition ↗</a></p></section><section class="api-symbol"><h2 id="density_map">density_map</h2><p class="api-path"><code>panda_md.density_map</code></p><pre class="api-signature"><code>density_map(
+) -&gt; None</code></pre><p>One or more profiles on a common bin grid. The time bounds and frame counts describe the samples contributing to each block. Use NPZ to persist the set.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>bin_edges_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_densities_per_nm3</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_start_ps</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_stop_ps</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>block_frame_counts</code></td><td><code>tuple[int, ...]</code></td></tr><tr><td><code>block_particle_counts</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>centering</code></td><td><code>core.enums.ProfileCentering</code></td></tr><tr><td><code>selection</code></td><td><code>str</code></td></tr><tr><td><code>pore_volume_nm3</code></td><td><code>float | None</code></td></tr><tr><td><code>flipped</code></td><td><code>bool</code></td></tr></tbody></table></div><h3>Methods and properties</h3><dl class='api-members'><dt id="profileset-load"><code>load(path: str | pathlib.Path) -&gt; ProfileSet</code></dt><dd></dd><dt id="profileset-save"><code>save(path: str | pathlib.Path) -&gt; None</code></dt><dd>Save to .npz (arrays and metadata).</dd><dt id="profileset-mean"><code>mean() -&gt; core.profile.DensityProfile</code></dt><dd>Return the mean over blocks.</dd><dt id="profileset-block"><code>block(index: int) -&gt; core.profile.DensityProfile</code></dt><dd></dd><dt id="profileset-std"><code>std() -&gt; NDArray[float64]</code></dt><dd>Standard deviation of the density over blocks (0 for a single block).</dd><dt id="profileset-sem"><code>sem() -&gt; NDArray[float64]</code></dt><dd>Standard error of the mean over blocks: std / √(number of blocks).</dd><dt id="profileset-block_count"><code>block_count: int</code></dt><dd>Number of available profiles or time blocks.</dd><dt id="profileset-coordinate_nm"><code>coordinate_nm: NDArray[float64]</code></dt><dd>Common bin centers in nm.</dd></dl><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/core/profile.py#L152">View definition ↗</a></p></section><section class="api-symbol"><h2 id="density_map">density_map</h2><p class="api-path"><code>panda_md.density_map</code></p><pre class="api-signature"><code>density_map(
     trajectory: core.trajectory.Trajectory,
     pore: pores.slit.pore.SlitPore,
     select: str | Sequence[int],
     *,
-    shape: str | NoneType = None,
-    centering: core.enums.ProfileCentering | str | NoneType = None,
+    shape: str | None = None,
+    centering: core.enums.ProfileCentering | str | None = None,
     bins: tuple[int, int] = (100, 100),
     start: float | str = 0.0,
-    stop: float | str | NoneType = None,
+    stop: float | str | None = None,
     stride: int = 1,
-    pore_center_nm: float | NoneType = None,
+    pore_center_nm: float | None = None,
     per: core.enums.ParticleGrouping | str = ParticleGrouping.ATOM,
     orientation: core.enums.Orientation | str = Orientation.AUTO,
-    width_window_nm: float | NoneType = None,
+    width_window_nm: float | None = None,
 ) -&gt; trajectory.maps.DensityMap</code></pre><p>Compute a two-dimensional number-density map in a slit pore. A supported shape name enables alignment on the shape symmetry axis.</p><h3>Parameters</h3><div class="table"><table><thead><tr><th scope='col'>Argument</th><th scope='col'>Meaning</th></tr></thead><tbody><tr><td><code>bins</code></td><td>Number of bins along the long side and profile axis.</td></tr><tr><td><code>shape</code></td><td>Optional interface name for locating the in-plane symmetry axis.</td></tr><tr><td><code>width_window_nm</code></td><td>Optional strip width along the short side for a vertical symmetry axis.</td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/trajectory/maps.py#L120">View definition ↗</a></p></section><section class="api-symbol"><h2 id="densitymap">DensityMap</h2><p class="api-path"><code>panda_md.DensityMap</code></p><pre class="api-signature"><code>DensityMap(
     *,
     length_edges_nm: NDArray[float64],
@@ -105,10 +105,10 @@
     frame: core.enums.Frame,
     axis_centered: bool,
     flipped: bool = False,
-    width_window_nm: float | NoneType = None,
+    width_window_nm: float | None = None,
     frame_count: int,
     selection: str,
-) -&gt; None</code></pre><p>Binned two-dimensional number density in nm⁻³ and its bin edges in nm.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>length_edges_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>height_edges_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>density_per_nm3</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>axis_centered</code></td><td><code>bool</code></td></tr><tr><td><code>flipped</code></td><td><code>bool</code></td></tr><tr><td><code>width_window_nm</code></td><td><code>float | NoneType</code></td></tr><tr><td><code>frame_count</code></td><td><code>int</code></td></tr><tr><td><code>selection</code></td><td><code>str</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/trajectory/maps.py#L46">View definition ↗</a></p></section>
+) -&gt; None</code></pre><p>Binned two-dimensional number density in nm⁻³ and its bin edges in nm.</p><h3>Fields</h3><div class="table"><table><thead><tr><th scope='col'>Field</th><th scope='col'>Type</th></tr></thead><tbody><tr><td><code>length_edges_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>height_edges_nm</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>density_per_nm3</code></td><td><code>NDArray[float64]</code></td></tr><tr><td><code>frame</code></td><td><code>core.enums.Frame</code></td></tr><tr><td><code>axis_centered</code></td><td><code>bool</code></td></tr><tr><td><code>flipped</code></td><td><code>bool</code></td></tr><tr><td><code>width_window_nm</code></td><td><code>float | None</code></td></tr><tr><td><code>frame_count</code></td><td><code>int</code></td></tr><tr><td><code>selection</code></td><td><code>str</code></td></tr></tbody></table></div><p class="api-source"><a href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0/blob/eff655eef267bfdcc0b18c7e45f719b5c6af31ed/src/panda_md/trajectory/maps.py#L46">View definition ↗</a></p></section>
 <nav class="pager" aria-label="Adjacent pages"><a href="api-fitting.html">← Fitting and results</a><a href="api-analysis.html">Blocks and morphology →</a></nav></main>
 <aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#load_trajectory">load_trajectory</a><a href="#arraytrajectory">ArrayTrajectory</a><a href="#density_profile">density_profile</a><a href="#densityprofile">DensityProfile</a><a href="#profileset">ProfileSet</a><a href="#density_map">density_map</a><a href="#densitymap">DensityMap</a></nav></aside>
 </div>

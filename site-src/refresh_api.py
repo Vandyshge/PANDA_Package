@@ -43,6 +43,10 @@ def resolve(qualified):
 def annotation_text(value):
     if value is inspect.Parameter.empty:
         return ""
+    if value is Ellipsis:
+        return "..."
+    if value is None or value is type(None):
+        return "None"
     origin = get_origin(value)
     arguments = get_args(value)
     if origin is Annotated:
