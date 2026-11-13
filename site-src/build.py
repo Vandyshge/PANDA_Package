@@ -265,11 +265,13 @@ page("User guide", "geometries", "Pores and shapes",
 page("User guide", "shape-gallery", "3D shape gallery",
      "Explore interface morphologies in slit, triangular, square, and cylindrical pores.",
      '<p><a href="geometries.html#shape-catalog">Check the package capabilities</a> for density fitting and surface terms. '
-     'Cards marked “Formula draft” show geometries from the research formulas.</p>'
+     'Cards marked “Formula draft” show geometries from the research formulas. '
+     '“Geometry preview” marks a standalone reconstruction.</p>'
      '<p>Graphite marks the solid walls, dark brown the wetting phase, and blue the non-wetting phase. '
      'The contact angle is measured through the blue phase. The volume fraction refers to the full pore, including for cutaway views.</p>'
      '<p>For polygonal pores, <code>w</code> counts walls touched and <code>c</code> counts corners occupied by the blue phase. '
-     'In a square pore, <code>filament_w2c0_opp</code> touches opposite walls.</p>'
+     'In a square pore, <code>filament_w2c0</code> touches adjacent walls and '
+     '<code>filament_w2c0_opp</code> touches opposite walls.</p>'
      '{{gallery}}')
 
 page("User guide", "triangle-example", "Triangular filament",
@@ -467,9 +469,11 @@ def gallery():
             params = f'θ = {theta}° · ' if theta is not None else ''
             params += f'φ = {item["phi"]:.2f}'
             status = "In package catalog" if (pore, display_name) in registered else "Formula draft"
+            if pore == "square" and source_name == "filament_w2c0":
+                status = "Geometry preview"
             cut = ' · Cutaway' if source_name == "perforation" or pore == "cylinder" or name.startswith("capsule_w") else ""
             cards.append(
-                f'<article class="shape-card"><img src="{base}.webp" width="760" height="589" loading="lazy" '
+                f'<article class="shape-card" id="{pore}-{name}"><img src="{base}.webp" width="760" height="589" loading="lazy" '
                 f'alt="{name} in a {pore} pore"><h3><code>{name}</code></h3>'
                 f'<p>{params}</p><p>{status}{cut}</p><div class="shape-actions">'
                 f'<button type="button" data-model="{base}.glb" aria-haspopup="dialog" '

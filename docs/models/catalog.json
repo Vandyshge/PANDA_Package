@@ -421,5 +421,17 @@
     "phi": 0.7030602150537635,
     "mesh_phi": 0.7027549602388049,
     "display_name": "capsule_w4c4"
+  },
+  {
+    "pore": "square",
+    "shape": "filament_w2c0",
+    "display_name": "filament_w2c0",
+    "length_nm": 12.0,
+    "width_nm": 6,
+    "characteristic_size_nm": 6,
+    "delta_nm": 0.12,
+    "theta_deg": 150,
+    "phi": 0.30314705983258977,
+    "mesh_phi": 0.3031394469520024
   }
 ]
