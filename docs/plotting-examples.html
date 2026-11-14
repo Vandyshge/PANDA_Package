@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Use PANDA’s built-in plotting functions to visualize trajectories, fits, and stability calculations.">
+<title>Plotting examples · PANDA Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
+<link rel="stylesheet" href="panda-theme.css?v=9188516f8a">
+<script src="search-index.js?v=f31a438009" defer></script><script src="site.js?v=f8e95ec516" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a href="index.html" class="brand"><img src="panda-logo.png" alt="PANDA"><span>Documentation</span></a>
+<nav class="header-links" aria-label="Main navigation"><a href="index.html">Overview</a><a href="quickstart.html">Getting started</a><a href="geometries.html" aria-current="true">User guide</a><a href="api.html">Python API</a><a href="citation.html">Citation</a></nav>
+<div class="actions">
+<button class="search-toggle" type="button" aria-haspopup="dialog">Search <kbd>Ctrl K</kbd></button>
+<a class="source" href="https://github.com/Ilya-Garanov-WorkingAcc/PANDA_2.0">Package source ↗</a>
+<button class="mobile menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+</div></header>
+<div class="layout">
+<aside class="side" id="sidebar"><nav aria-label="Documentation"><p>Start here</p><a href="index.html">Overview</a><a href="installation.html">Installation</a><a href="quickstart.html">Quick start</a><p>User guide</p><details class="nav-branch"><summary>Pores and shapes</summary><div class="nav-children"><a href="geometries.html">Section overview</a><a href="shape-gallery.html">3D shape gallery</a><a href="triangle-example.html">Triangular filament</a></div></details><details class="nav-branch"><summary>From a trajectory</summary><div class="nav-children"><a href="trajectories.html">Section overview</a><a href="trajectory-gromacs.html">GROMACS</a><a href="trajectory-lammps.html">LAMMPS</a><a href="trajectory-averaging.html">Trajectory averaging</a><a href="block-example.html">Fit saved blocks</a></div></details><details class="nav-branch" open><summary>Fitting and interpretation</summary><div class="nav-children"><a href="fitting.html">Section overview</a><a href="validation.html">Angle recovery</a><a href="plotting-examples.html" aria-current="page">Plotting examples</a></div></details><a href="cli.html">Command line</a><p>Reference</p><a href="api.html">Python API</a><a href="citation.html">Citing PANDA</a></nav></aside>
+<main id="main"><p class="crumb">Documentation / User guide / Plotting examples</p><h1>Plotting examples</h1><p class="lead">Use PANDA’s built-in plotting functions to visualize trajectories, fits, and stability calculations.</p><section><h2 id="setup">Setup</h2><p>Enable the <a href="installation.html#optional-dependencies">plot extra</a>. The examples share a synthetic 10 ns slit-pore trajectory. Keep the Matplotlib style file beside the script.</p><p><a href="plotting_examples.py" download>Download Python script</a> · <a href="scientific.mplstyle" download>Download Matplotlib style</a> · <a href="api-plotting.html">Plotting API</a></p><div class="code"><div class="cell-label">Python</div><pre><code class="language-python"><span class="syntax-keyword">from</span> pathlib <span class="syntax-keyword">import</span> Path
+
+<span class="syntax-keyword">import</span> matplotlib <span class="syntax-keyword">as</span> mpl
+<span class="syntax-keyword">import</span> matplotlib.pyplot <span class="syntax-keyword">as</span> plt
+<span class="syntax-keyword">import</span> numpy <span class="syntax-keyword">as</span> np
+
+<span class="syntax-keyword">from</span> panda_md <span class="syntax-keyword">import</span> (
+    FitSpec, SlitPore, density_map, density_profile, fit_blocks,
+    stability_diagram, synthetic_trajectory,
+)
+<span class="syntax-keyword">from</span> panda_md.analysis.accuracy <span class="syntax-keyword">import</span> AccuracyCase, accuracy_study
+<span class="syntax-keyword">from</span> panda_md.plotting <span class="syntax-keyword">import</span> (
+    plot_accuracy, plot_blocks, plot_density_map, plot_fit, plot_profile, plot_stability,
+)
+
+output = Path(__file__).resolve().parent
+plt.style.use(output / <span class="syntax-string">&quot;scientific.mplstyle&quot;</span>)
+mpl.rcParams[<span class="syntax-string">&quot;image.cmap&quot;</span>] = <span class="syntax-string">&quot;Greens&quot;</span>
+mpl.rcParams[<span class="syntax-string">&quot;axes.prop_cycle&quot;</span>] = mpl.cycler(color=[<span class="syntax-string">&quot;#276647&quot;</span>, <span class="syntax-string">&quot;#a45d2b&quot;</span>, <span class="syntax-string">&quot;#465b73&quot;</span>])
+
+
+<span class="syntax-keyword">def</span> panel():
+    <span class="syntax-keyword">return</span> plt.subplots(figsize=(<span class="syntax-number">5.3</span>, <span class="syntax-number">3.4</span>), layout=<span class="syntax-string">&quot;constrained&quot;</span>)
+
+
+<span class="syntax-keyword">def</span> save(fig, name):
+    fig.savefig(output / <span class="syntax-string">f&quot;plot-example-{name}.png&quot;</span>, dpi=<span class="syntax-number">180</span>)
+    plt.close(fig)
+
+
+pore = SlitPore(width_nm=<span class="syntax-number">4</span>, length_nm=<span class="syntax-number">8</span>, base_aspect_ratio=<span class="syntax-number">0.5</span>)
+roll = pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
+truth = {<span class="syntax-string">&quot;theta&quot;</span>: <span class="syntax-number">120.0</span>, <span class="syntax-string">&quot;delta&quot;</span>: <span class="syntax-number">0.03</span>, <span class="syntax-string">&quot;phi&quot;</span>: <span class="syntax-number">0.4</span>}
+bulk = <span class="syntax-number">30.0</span>
+trajectory = synthetic_trajectory(
+    roll, truth, density_bulk_per_nm3=bulk, frame_count=<span class="syntax-number">201</span>,
+    time_step_ps=<span class="syntax-number">50</span>, seed=<span class="syntax-number">5</span>,
+)
+measured_pore = SlitPore.from_trajectory(trajectory, walls=<span class="syntax-string">&quot;walls&quot;</span>, liquid=<span class="syntax-string">&quot;liquid&quot;</span>)
+roll = measured_pore.interface(<span class="syntax-string">&quot;roll&quot;</span>)
+profiles = density_profile(trajectory, measured_pore, <span class="syntax-string">&quot;liquid&quot;</span>, bins=<span class="syntax-number">64</span>, block=<span class="syntax-string">&quot;1 ns&quot;</span>)
+production = density_profile(
+    trajectory, measured_pore, <span class="syntax-string">&quot;liquid&quot;</span>, bins=<span class="syntax-number">64</span>, start=<span class="syntax-string">&quot;2 ns&quot;</span>, stop=<span class="syntax-string">&quot;10 ns&quot;</span>, block=<span class="syntax-string">&quot;1 ns&quot;</span>,
+)</code></pre></div></section><section><h2 id="profile">Profile</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">fig, ax = panel()
+plot_profile(production, ax=ax)
+save(fig, <span class="syntax-string">&quot;profile&quot;</span>)</code></pre></div><figure class="cell-figure"><img src="plot-example-profile.png?v=472a2d251c" alt="Density profile with standard errors"><figcaption>Mean density profile from the 2–10 ns window. Error bars are standard errors across the 1 ns blocks. <a href="plot-example-profile.png" download>Download PNG</a>.</figcaption></figure></section><section><h2 id="fit">Fit</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">result = roll.fit(production.mean(), density_bulk_per_nm3=bulk)
+fig, ax = panel()
+plot_fit(result, ax=ax)
+save(fig, <span class="syntax-string">&quot;fit&quot;</span>)</code></pre></div><figure class="cell-figure"><img src="plot-example-fit.png?v=1c519d81f0" alt="Analytical fit over the averaged density profile"><figcaption>The model is fitted to the mean profile over 2–10 ns. The legend shows the recovered contact angle. <a href="plot-example-fit.png" download>Download PNG</a>.</figcaption></figure></section><section><h2 id="blocks">Blocks</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">blocks = fit_blocks(roll, profiles, FitSpec(density_bulk_per_nm3=bulk))
+fig, ax = panel()
+plot_blocks(blocks, ax=ax)
+ax.axvspan(<span class="syntax-number">2</span>, <span class="syntax-number">10</span>, color=<span class="syntax-string">&quot;#e7f0df&quot;</span>, zorder=<span class="syntax-number">0</span>, label=<span class="syntax-string">&quot;Profile averaging: 2–10 ns&quot;</span>)
+ax.<span class="syntax-builtin">set</span>(xlim=(<span class="syntax-number">0</span>, <span class="syntax-number">10</span>), ylabel=<span class="syntax-string">&quot;θ (°)&quot;</span>)
+ax.legend()
+save(fig, <span class="syntax-string">&quot;blocks&quot;</span>)</code></pre></div><figure class="cell-figure"><img src="plot-example-blocks.png?v=8768fe437f" alt="Contact angle across the full 0–10 ns trajectory"><figcaption>Each point is a fit at the midpoint of a 1 ns block. The horizontal line is the mean across all plotted blocks. Shading marks the window used to average the density profile. <a href="plot-example-blocks.png" download>Download PNG</a>.</figcaption></figure></section><section><h2 id="density-map">Density map</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">density = density_map(
+    trajectory, measured_pore, <span class="syntax-string">&quot;liquid&quot;</span>, shape=<span class="syntax-string">&quot;roll&quot;</span>, bins=(<span class="syntax-number">64</span>, <span class="syntax-number">36</span>), start=<span class="syntax-string">&quot;2 ns&quot;</span>, stop=<span class="syntax-string">&quot;10 ns&quot;</span>,
+)
+fig, ax = panel()
+plot_density_map(density, ax=ax)
+save(fig, <span class="syntax-string">&quot;density-map&quot;</span>)</code></pre></div><figure class="cell-figure"><img src="plot-example-density-map.png?v=c83fd35452" alt="Centred two-dimensional density map of the slit-pore roll"><figcaption>Density in the projected x–z plane, averaged over 2–10 ns. The roll axis is centred at x = 0. <a href="plot-example-density-map.png" download>Download PNG</a>.</figcaption></figure></section><section><h2 id="stability">Stability</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">diagram = stability_diagram(
+    pore, contact_angle_deg=<span class="syntax-number">150</span>, wall_layer=<span class="syntax-number">0.02</span>,
+    volume_fractions=np.linspace(<span class="syntax-number">0.01</span>, <span class="syntax-number">0.99</span>, <span class="syntax-number">100</span>),
+    length_ratios=np.linspace(<span class="syntax-number">0.5</span>, <span class="syntax-number">4</span>, <span class="syntax-number">90</span>),
+)
+fig, ax = panel()
+plot_stability(diagram, ax=ax)
+ax.set_title(<span class="syntax-string">&quot;&quot;</span>)
+handles, labels = ax.get_legend_handles_labels()
+ax.legend(handles, labels, loc=<span class="syntax-string">&quot;upper left&quot;</span>, bbox_to_anchor=(<span class="syntax-number">1</span>, <span class="syntax-number">1</span>))
+save(fig, <span class="syntax-string">&quot;stability&quot;</span>)</code></pre></div><figure class="cell-figure"><img src="plot-example-stability.png?v=ecaf14f388" alt="Stable slit-pore morphologies versus liquid fraction and pore length"><figcaption>Minimum capillary energy at θ = 150° and δ/H = 0.02, among the shapes with surface terms. Light gray cells have no feasible candidate. <a href="plot-example-stability.png" download>Download PNG</a>.</figcaption></figure></section><section><h2 id="accuracy">Accuracy</h2><div class="code"><div class="cell-label">Python</div><pre><code class="language-python">cases = {
+    <span class="syntax-string">f&quot;{noise:g}&quot;</span>: (noise, AccuracyCase(truth=truth, noise_std=noise / <span class="syntax-number">100</span>))
+    <span class="syntax-keyword">for</span> noise <span class="syntax-keyword">in</span> (<span class="syntax-number">0.5</span>, <span class="syntax-number">1</span>, <span class="syntax-number">2</span>, <span class="syntax-number">4</span>)
+}
+study = accuracy_study(roll, <span class="syntax-string">&quot;Noise amplitude (% of bulk density)&quot;</span>, cases,
+                       density_bulk_per_nm3=bulk, seeds=<span class="syntax-builtin">range</span>(<span class="syntax-number">8</span>))
+fig, ax = panel()
+plot_accuracy(study, ax=ax)
+ax.set_title(<span class="syntax-string">&quot;&quot;</span>)
+save(fig, <span class="syntax-string">&quot;accuracy&quot;</span>)</code></pre></div><figure class="cell-figure"><img src="plot-example-accuracy.png?v=35ffb08189" alt="Angle recovery error versus synthetic profile noise"><figcaption>Mean and maximum absolute error and signed bias from eight seeds per noise level. The signed error is fitted angle minus input angle. <a href="plot-example-accuracy.png" download>Download PNG</a>.</figcaption></figure></section>
+<nav class="pager" aria-label="Adjacent pages"><a href="validation.html">← Angle recovery</a><a href="cli.html">Command line →</a></nav></main>
+<aside class="toc"><nav aria-label="Page contents"><p>On this page</p><a href="#setup">Setup</a><a href="#profile">Profile</a><a href="#fit">Fit</a><a href="#blocks">Blocks</a><a href="#density-map">Density map</a><a href="#stability">Stability</a><a href="#accuracy">Accuracy</a></nav></aside>
+</div>
+<footer><span>PANDA · Predicting Angle from Nanoscale Density Analysis</span><a href="citation.html">Cite PANDA</a></footer>
+<dialog aria-label="Search documentation">
+<form method="dialog"><input type="search" placeholder="Search by topic or API name" aria-label="Search query"><button type="submit">Close</button></form>
+<p role="status"></p><ul></ul>
+</dialog>
+</body></html>

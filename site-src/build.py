@@ -24,7 +24,7 @@ PAGES = []
 SUBPAGES = {
     "geometries": ("shape-gallery", "triangle-example"),
     "trajectories": ("trajectory-gromacs", "trajectory-lammps", "trajectory-averaging", "block-example"),
-    "fitting": ("validation",),
+    "fitting": ("validation", "plotting-examples"),
 }
 
 
@@ -381,6 +381,42 @@ page("User guide", "validation", "Angle recovery",
     'Archived validation data. <a href="validation-roll-noise.csv" download>Noise sweep CSV</a> · <a href="validation-roll-angle.csv" download>Angle sweep CSV</a>.'
 )))
 
+PLOT_EXAMPLES = (
+    ("Profile", "profile", "Density profile with standard errors",
+     "Mean density profile from the 2–10 ns window. Error bars are standard errors across the 1 ns blocks."),
+    ("Fit", "fit", "Analytical fit over the averaged density profile",
+     "The model is fitted to the mean profile over 2–10 ns. The legend shows the recovered contact angle."),
+    ("Blocks", "blocks", "Contact angle across the full 0–10 ns trajectory",
+     "Each point is a fit at the midpoint of a 1 ns block. The horizontal line is the mean across all plotted blocks. Shading marks the window used to average the density profile."),
+    ("Density map", "density-map", "Centred two-dimensional density map of the slit-pore roll",
+     "Density in the projected x–z plane, averaged over 2–10 ns. The roll axis is centred at x = 0."),
+    ("Stability", "stability", "Stable slit-pore morphologies versus liquid fraction and pore length",
+     "Minimum capillary energy at θ = 150° and δ/H = 0.02, among the shapes with surface terms. Light gray cells have no feasible candidate."),
+    ("Accuracy", "accuracy", "Angle recovery error versus synthetic profile noise",
+     "Mean and maximum absolute error and signed bias from eight seeds per noise level. The signed error is fitted angle minus input angle."),
+)
+
+
+def plotting_examples():
+    script = (ROOT / "plotting_examples.py").read_text(encoding="utf-8")
+    cells = dict(part.strip().split("\n", 1) for part in script.split("# %% ")[1:])
+    downloads = ('<p><a href="plotting_examples.py" download>Download Python script</a> · '
+                 '<a href="scientific.mplstyle" download>Download Matplotlib style</a> · '
+                 '<a href="api-plotting.html">Plotting API</a></p>')
+    body = section("Setup", '<p>Enable the <a href="installation.html#optional-dependencies">plot extra</a>. '
+                   'The examples share a synthetic 10 ns slit-pore trajectory. Keep the Matplotlib style file beside the script.</p>'
+                   + downloads + code(cells["Setup"], "python"))
+    for title, key, alt, caption in PLOT_EXAMPLES:
+        path = f"plot-example-{key}.png"
+        body += section(title, code(cells[title], "python") +
+                        figure(path, alt, f'{caption} <a href="{path}" download>Download PNG</a>.'))
+    return body
+
+
+page("User guide", "plotting-examples", "Plotting examples",
+     "Use PANDA’s built-in plotting functions to visualize trajectories, fits, and stability calculations.",
+     "{{plotting-examples}}")
+
 page("User guide", "cli", "Command line",
      "Use panda to build profiles, fit a known shape, or compare candidate models from the shell.",
      section("Inspect available models", code("panda shapes --pore slit\npanda profile --help\npanda fit --help")) +
@@ -627,6 +663,10 @@ def build(output):
                                     f'<strong><a href="shape-gallery.html#{pore}">{pore.title()}</a></strong>')
         if slug == "shape-gallery":
             body = body.replace("{{gallery}}", gallery())
+        if slug == "plotting-examples":
+            body = body.replace("{{plotting-examples}}", plotting_examples())
+        if slug in {"fitting", "trajectories", "api-plotting"}:
+            body += '<p><a href="plotting-examples.html">See runnable plotting examples and figures</a>.</p>'
         sequence = API_PAGES if group == "Python API" else PAGES
         order = sequence.index(entry)
         path = slug + ".html"
@@ -650,6 +690,8 @@ def build(output):
         "validation-roll-noise.csv", "validation-roll-angle.csv",
         "md-trajectory-examples.zip", "md-trajectory-diagnostics.png",
         "pore-slit.png", "pore-triangle.png", "pore-square.png", "pore-cylinder.png",
+        "plotting_examples.py", "scientific.mplstyle",
+        *(f"plot-example-{key}.png" for _, key, _, _ in PLOT_EXAMPLES),
     ):
         shutil.copyfile(ROOT / filename, output / filename)
     assets = ROOT.parent / "docs" / "models"
