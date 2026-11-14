@@ -53,4 +53,4 @@ The site build uses the Python standard library. To regenerate the profile and v
 
 The gallery reads model parameters from `docs/models/catalog.json`. Its WebP previews and GLB models are stored beside the catalog. The bundled 3D viewer loads when a visitor opens a model.
 
-To refresh the Python API signatures, make the target PANDA checkout importable with its `plot` extra, then run `python site-src/refresh_api.py <PANDA-commit>` before rebuilding. The regular site build reads the checked-in API metadata.
+To refresh the Python API signatures and the shape catalog, make the target PANDA checkout importable with its `plot` extra, then run `python site-src/refresh_api.py <PANDA-commit>` before rebuilding. The regular site build reads the checked-in API metadata and shape catalog.

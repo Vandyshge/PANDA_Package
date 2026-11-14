@@ -10,6 +10,8 @@ from pathlib import Path
 from types import UnionType
 from typing import Annotated, Union, get_args, get_origin
 
+import csv
+
 import panda_md
 
 from api_reference import API_GROUPS, METADATA_PATH
@@ -173,6 +175,13 @@ def main(commit):
         json.dumps({"commit": commit, "symbols": symbols}, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+    with METADATA_PATH.with_name("shapes.csv").open("w", encoding="utf-8", newline="") as output:
+        writer = csv.writer(output, lineterminator="\n")
+        writer.writerow(("pore", "shape", "has_profile", "has_surface_terms"))
+        for pore in (panda_md.SlitPore, panda_md.TrianglePore, panda_md.SquarePore, panda_md.CylinderPore):
+            for name, shape_class in pore.own_registry().items():
+                shape = shape_class()
+                writer.writerow((pore.name, name, int(shape.has_profile()), int(shape.has_surface_terms())))
 
 
 if __name__ == "__main__":

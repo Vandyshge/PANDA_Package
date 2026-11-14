@@ -251,13 +251,16 @@ page("User guide", "geometries", "Pores and shapes",
 <p>Choose a pore to open its <a href="shape-gallery.html">3D shape gallery</a>.</p>
 <p><code>pore.interface("roll")</code> selects an analytical model for the slit. Polygon names encode the number of walls touched (<code>w</code>) and corners occupied (<code>c</code>).</p>
 """) + section("Shape catalog", """
-<p>This snapshot lists 26 shapes. Of these, 18 supply a density profile and 24 supply surface terms. Availability describes the implemented formulas. Check the individual angle and volume-fraction limits before fitting.</p>
+<p>{{shape-summary}} Check the individual angle and volume-fraction limits before fitting.</p>
 <form class="filters">
 <label>Pore <select name="pore"><option value="">All pores</option><option value="slit">Slit</option><option value="triangle">Triangle</option><option value="square">Square</option><option value="cylinder">Cylinder</option></select></label>
 <label>Operation <select name="operation"><option value="">All operations</option><option value="profile">Density profile</option><option value="surface">Surface terms</option></select></label>
 <output aria-live="polite"></output></form>
 <div class="table"><table><thead><tr><th>Pore</th><th>Shape</th><th>Density profile</th><th>Surface terms</th></tr></thead><tbody>{{shapes}}</tbody></table></div>
 <p>Run <code>panda shapes --pore triangle</code> to see the installed version’s models, parameter bounds, and regimes.</p>
+<p>In a square pore, <code>filament_w2c0_opp</code> touches opposite walls and supports both density fitting and stability diagrams.
+The square <code>filament_w2c0</code> shown in the gallery is a geometry preview of adjacent-wall contact.
+In a triangular pore, <code>droplet_w3c0</code> supplies surface terms for stability diagrams.</p>
 """) + section("Limits of the models", """
 <p>Slit and cylindrical contact-angle models cover the non-wetting side of 90°. Some polygon models have narrower domains. Models such as a flat <code>layer</code> have no contact-angle parameter. Check <code>model.is_feasible(...)</code> and <code>model.phi_limits(...)</code> for the specific shape.</p>""") +
      section("Examples", '<p id="fit-a-triangular-filament"><a href="triangle-example.html">Fit a triangular filament</a></p>'))
@@ -265,7 +268,6 @@ page("User guide", "geometries", "Pores and shapes",
 page("User guide", "shape-gallery", "3D shape gallery",
      "Explore interface morphologies in slit, triangular, square, and cylindrical pores.",
      '<p><a href="geometries.html#shape-catalog">Check the package capabilities</a> for density fitting and surface terms. '
-     'Cards marked “Formula draft” show geometries from the research formulas. '
      '“Geometry preview” marks a standalone reconstruction.</p>'
      '<p>Graphite marks the solid walls, dark brown the wetting phase, and blue the non-wetting phase. '
      'The contact angle is measured through the blue phase. The volume fraction refers to the full pore, including for cutaway views.</p>'
@@ -455,6 +457,11 @@ def gallery():
         registered = {(row["pore"], row["shape"]) for row in csv.DictReader(source)}
     assets = ROOT.parent / "docs" / "models"
     items = json.loads((assets / "catalog.json").read_text(encoding="utf-8"))
+    api_names = {
+        ("triangle", "filament_w0c0_straight"): "filament_w0c0_triangle",
+        ("square", "filament_w0c0_straight"): "filament_w0c0_square",
+        ("square", "perforation_w4c4"): "perforation",
+    }
     groups = []
     for pore in ("slit", "triangle", "square", "cylinder"):
         cards = []
@@ -463,14 +470,13 @@ def gallery():
                 continue
             source_name = item["shape"]
             display_name = item.get("display_name", source_name)
+            display_name = api_names.get((pore, display_name), display_name)
             name = escape(display_name)
             base = f"models/{pore}/{escape(source_name)}"
             theta = item["theta_deg"]
             params = f'θ = {theta}° · ' if theta is not None else ''
             params += f'φ = {item["phi"]:.2f}'
-            status = "In package catalog" if (pore, display_name) in registered else "Formula draft"
-            if pore == "square" and source_name == "filament_w2c0":
-                status = "Geometry preview"
+            status = "In package catalog" if (pore, display_name) in registered else "Geometry preview"
             cut = ' · Cutaway' if source_name == "perforation" or pore == "cylinder" or name.startswith("capsule_w") else ""
             cards.append(
                 f'<article class="shape-card" id="{pore}-{name}"><img src="{base}.webp" width="760" height="589" loading="lazy" '
@@ -493,12 +499,17 @@ def shape_rows():
     with (ROOT / "shapes.csv").open(encoding="utf-8-sig", newline="") as source:
         rows = list(csv.DictReader(source))
     labels = {"0": "—", "1": "Yes"}
-    return "".join(
+    profiles = sum(int(row["has_profile"]) for row in rows)
+    surfaces = sum(int(row["has_surface_terms"]) for row in rows)
+    summary = (f"This snapshot lists {len(rows)} shapes. Of these, {profiles} supply a density profile "
+               f"and {surfaces} supply surface terms.")
+    table = "".join(
         f'<tr data-pore="{pore}" data-profile="{profile}" data-surface="{surface}">'
         f'<td>{pore.title()}</td><td><code>{escape(shape)}</code></td>'
         f'<td>{labels[profile]}</td><td>{labels[surface]}</td></tr>'
         for pore, shape, profile, surface in (row.values() for row in rows)
     )
+    return summary, table
 
 
 def sidebar(active):
@@ -609,7 +620,8 @@ def build(output):
     for entry in [*PAGES, *API_PAGES[1:]]:
         group, slug, title, lead, body = entry
         if slug == "geometries":
-            body = body.replace("{{shapes}}", shape_rows())
+            summary, table = shape_rows()
+            body = body.replace("{{shapes}}", table).replace("{{shape-summary}}", summary)
             for pore in ("slit", "triangle", "square", "cylinder"):
                 body = body.replace(f'<strong>{pore.title()}</strong>',
                                     f'<strong><a href="shape-gallery.html#{pore}">{pore.title()}</a></strong>')
