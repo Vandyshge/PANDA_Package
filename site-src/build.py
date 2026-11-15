@@ -618,9 +618,6 @@ def render(index, entry, sequence, search_version, script_version):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="{escape(lead or 'PANDA documentation for contact angles and interface shapes in confined liquids.', quote=True)}">
 <title>{title} · PANDA Documentation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&display=swap">
 <link rel="stylesheet" href="panda-theme.css?v={THEME_VERSION}">
 <script src="search-index.js?v={search_version}" defer></script><script src="site.js?v={script_version}" defer></script>
 </head>
@@ -694,6 +691,7 @@ def build(output):
         *(f"plot-example-{key}.png" for _, key, _, _ in PLOT_EXAMPLES),
     ):
         shutil.copyfile(ROOT / filename, output / filename)
+    shutil.copytree(ROOT / "fonts", output / "fonts", dirs_exist_ok=True)
     assets = ROOT.parent / "docs" / "models"
     if (output / "models").resolve() != assets.resolve():
         shutil.copytree(assets, output / "models", dirs_exist_ok=True)

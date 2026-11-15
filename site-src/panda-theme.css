@@ -1,7 +1,9 @@
-:root{--paper:#fff;--panel:#f7f8f6;--ink:#171917;--muted:#555b54;--line:#d8ddd6;--green:#477b08;--light:#edf4e5;--heading:Orbitron,Arial,sans-serif;--body-size:16px;--section-size:24px;--title-size:32px;--mono:Consolas,monospace;--header:82px}
+@font-face{font-family:"Space Grotesk";src:url("fonts/space-grotesk.ttf") format("truetype");font-weight:300 700;font-display:swap}
+@font-face{font-family:Inter;src:url("fonts/inter.ttf") format("truetype");font-weight:100 900;font-display:swap}
+:root{--paper:#fff;--panel:#f7f8f6;--ink:#171917;--muted:#555b54;--line:#d8ddd6;--green:#477b08;--light:#edf4e5;--heading:"Space Grotesk",Arial,sans-serif;--body-size:16px;--section-size:24px;--title-size:32px;--mono:Consolas,monospace;--header:82px}
 *{box-sizing:border-box}
 html{scroll-padding-top:calc(var(--header) + 22px)}
-body{margin:0;background:var(--paper);color:var(--ink);font:var(--body-size)/1.65 Arial,Helvetica,sans-serif}
+body{margin:0;background:var(--paper);color:var(--ink);font:var(--body-size)/1.65 Inter,Arial,Helvetica,sans-serif}
 a{color:var(--green);text-underline-offset:3px}
 a:hover{text-decoration-thickness:2px}
 button,input,select{font:inherit}
